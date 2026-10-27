@@ -57,7 +57,8 @@ class ShipNet(nn.Module):
                     f"Either connect to the internet once, copy the timm cache "
                     f"(~/.cache/huggingface) from a machine that has it, or train with --no-pretrained "
                     f"(slower to learn, usually lower accuracy).") from None
-        dim = self.backbone.num_features
+        # timm's head_hidden_size is what forward() returns; num_features is smaller for MobileNetV3 (960 vs 1280)
+        dim = getattr(self.backbone, "head_hidden_size", None) or self.backbone.num_features
         self.dropout = nn.Dropout(drop_rate)
         self.class_head = nn.Linear(dim, n_classes)
         self.distance_head = nn.Linear(dim, 1)

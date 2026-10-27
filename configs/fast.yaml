@@ -1,0 +1,9 @@
+# Shorter runs for a deadline: stop after 3 passes without improvement (default 6) and at most 12 passes.
+# E2 found its best model at pass 5, so little is lost. Only these settings change; the rest comes from default.yaml.
+#   python src/train.py --task distance --init-from runs/class_f1_efficientnet_b0_vessel/best.pt --config configs/fast.yaml
+patience: 3
+epochs:
+  class: 12
+  distance: 12
+  speed: 12
+  multi: 12

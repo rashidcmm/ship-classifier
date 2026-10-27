@@ -36,6 +36,15 @@ def test_train_learns_mini(mini_data, tmp_path):
     assert log(rd).val_metric.max() > 0.5
 
 
+def test_train_config_file_overrides_defaults(mini_data, tmp_path):
+    extra = tmp_path / "strong.yaml"
+    extra.write_text("lr: 1.0e-4\ndrop_rate: 0.5\nspecaugment: {freq_masks: 3, freq_width: 24, time_masks: 3, time_width: 20}\n")
+    rd = run_train(mini_data, tmp_path, "--task", "class", "--epochs", "1", "--config", str(extra))
+    cfg = json.loads((rd / "config.json").read_text())
+    assert cfg["lr"] == 1e-4 and cfg["drop_rate"] == 0.5 and cfg["specaugment"]["time_width"] == 20
+    assert cfg["weight_decay"] == 0.01                 # not in the file: default.yaml value
+
+
 def test_train_distance_ignores_background(mini_data, tmp_path):
     rd = run_train(mini_data, tmp_path, "--task", "distance", "--epochs", "1")
     cfg = json.loads((rd / "config.json").read_text())

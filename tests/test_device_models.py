@@ -38,9 +38,11 @@ def test_shipnet_variable_frames():
     assert net(torch.randn(2, 1, 128, 501))["logits"].shape == (2, 9)
 
 
-def test_shipnet_timm_backbone_offline():
-    net = models.ShipNet("resnet18", n_classes=12, pretrained=False).eval()
-    assert net(torch.randn(2, 1, 128, 64))["logits"].shape == (2, 12)
+@pytest.mark.parametrize("backbone", models.BACKBONES)
+def test_shipnet_every_backbone_offline(backbone):
+    net = models.ShipNet(backbone, n_classes=12, pretrained=False).eval()
+    out = net(torch.randn(2, 1, 128, 64))
+    assert out["logits"].shape == (2, 12) and out["distance"].shape == (2,)
 
 
 def test_checkpoint_roundtrip(tmp_path):

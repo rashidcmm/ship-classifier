@@ -1,0 +1,11 @@
+# Stronger regularisation against overfitting to the training ships (lesson 06).
+# Only these settings change; everything else comes from default.yaml.
+#   python src/train.py --task class --config configs/strong_regularization.yaml --name class_f1_efficientnet_b0_vessel_reg
+lr: 1.0e-4                         # default 3e-4: smaller steps
+weight_decay: 0.05                 # default 0.01: keeps weights small
+drop_rate: 0.5                     # default 0.3
+specaugment:                       # default 2 x 16 bands, 2 x 50 frames: hide more of each spectrogram
+  freq_masks: 3
+  freq_width: 24
+  time_masks: 3
+  time_width: 80

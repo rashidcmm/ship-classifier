@@ -57,6 +57,7 @@ def make_parser() -> argparse.ArgumentParser:
     p.add_argument("--max-gpu-temp", type=int)
     p.add_argument("--limit-train", type=int, default=0, help="use only N training clips (quick tests)")
     p.add_argument("--limit-val", type=int, default=0)
+    p.add_argument("--config", type=Path, help="YAML file whose settings replace those in configs/default.yaml")
     p.add_argument("--name", help="run folder name (default: built from the options)")
     p.add_argument("--data-dir", type=Path, default=DATA_DIR)
     p.add_argument("--runs-dir", type=Path, default=RUNS_DIR)
@@ -191,6 +192,8 @@ def check_same_setup(source_cfg: dict, args) -> None:
 
 def run(args) -> Path:
     cfg = load_config()
+    if args.config:
+        cfg.update(load_config(args.config))
     backbone = args.backbone or cfg["backbone"]
     epochs = args.epochs if args.epochs is not None else cfg["epochs"][args.task]
     lr = args.lr or cfg["lr"]
@@ -254,7 +257,7 @@ def run(args) -> Path:
 
     config = {k: (str(v) if isinstance(v, Path) else v) for k, v in vars(args).items()}
     config.update(backbone=backbone, epochs=epochs, lr=lr, weight_decay=weight_decay, batch_size=batch_size,
-                  drop_rate=cfg["drop_rate"], device=str(device), known=known, n_train=int(len(train_rows)),
+                  drop_rate=cfg["drop_rate"], specaugment=cfg["specaugment"], device=str(device), known=known, n_train=int(len(train_rows)),
                   n_val=int(len(val_rows)), code_version=code_version(), run_dir=str(run_dir))
     if args.resume:
         # load on CPU: load_state_dict moves weights/optimizer state to the device itself, and RNG states must stay on CPU
