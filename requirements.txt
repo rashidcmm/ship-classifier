@@ -1,0 +1,16 @@
+# PyTorch is installed by setup/setup_windows.ps1 or setup/setup_unix.sh (the right build for the GPU).
+timm
+numpy
+pandas
+pyarrow
+scikit-learn
+scipy
+matplotlib
+soundfile
+tqdm
+pyyaml
+jupyterlab
+ipykernel
+nbformat
+nbclient
+pytest

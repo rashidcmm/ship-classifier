@@ -1,0 +1,7 @@
+# "Unknown ship" experiments: each group is removed from training and validation,
+# and its test clips should be flagged as unknown. background, pilotvessel and dredger
+# are always known (too few ships to be a useful unknown test set).
+groups:
+  A: [fishing, sailing, tanker]
+  B: [cargo, pleasurecraft, rescue]
+  C: [tug, passengership, other]

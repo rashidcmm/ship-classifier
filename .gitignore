@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Data: far too large for git (README section 1 lists what to copy by hand)
+data/
+gdrive_download/
+
+# Training outputs: keep the small result files (config, log.csv, eval/), not the model weights
+runs/**/*.pt
+runs/*.log
+
+.superpowers/

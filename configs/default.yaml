@@ -1,0 +1,23 @@
+# Default training settings. Every value can be overridden on the train.py command line.
+backbone: efficientnet_b0          # efficientnet_b0 | mobilenetv3_large_100 | resnet18 | tiny_cnn
+epochs:                            # maximum passes over the training data (early stopping may end sooner)
+  class: 25
+  distance: 20
+  speed: 20
+  multi: 25
+lr: 3.0e-4                         # AdamW learning rate
+weight_decay: 0.01
+warmup_epochs: 1                   # learning rate ramps up linearly, then follows a cosine decay
+drop_rate: 0.3                     # dropout before the output heads (also used by MC dropout)
+patience: 6                        # stop after this many epochs without a better validation score
+workers: 4                         # DataLoader worker processes
+specaugment:                       # random masking, training only
+  freq_masks: 2
+  freq_width: 16                   # mel bands
+  time_masks: 2
+  time_width: 50                   # frames (10 ms each)
+norm_clips: 2000                   # training clips sampled to compute per-band mean/std
+max_gpu_temp: 85                   # pause training above this (NVIDIA only) ...
+resume_gpu_temp: 75                # ... and continue below this
+mc_samples: 20                     # forward passes for Monte Carlo dropout
+ece_bins: 15                       # bins for expected calibration error
