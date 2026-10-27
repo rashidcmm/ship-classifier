@@ -57,6 +57,23 @@ def test_regression_report_bands():
     assert rep["rmse"] == pytest.approx(np.sqrt((50 ** 2 + 650 ** 2 + 100 ** 2) / 3))
 
 
+
+def test_distance_bin_report():
+    # 250 m bins up to 2 km: true bins 0, 2, 5, 7; predicted bins 0, 3, 5, 4
+    rep = M.distance_bin_report(np.array([100.0, 600, 1300, 1900]), np.array([200.0, 900, 1300, 1000]),
+                                width=250, top=2000, near=700)
+    assert rep["n_bins"] == 8
+    assert rep["bin_accuracy"] == pytest.approx(2 / 4)
+    assert rep["within_one_bin"] == pytest.approx(3 / 4)
+    # near (< 700 m): 1 of 2 found; far: 2 of 2 found
+    assert rep["near_far_balanced_accuracy"] == pytest.approx((1 / 2 + 2 / 2) / 2)
+
+
+def test_distance_bin_report_last_bin_is_open_ended():
+    rep = M.distance_bin_report(np.array([1900.0, 2000.0]), np.array([5000.0, 1800.0]), width=250, top=2000, near=700)
+    assert rep["bin_accuracy"] == pytest.approx(1.0)
+    assert rep["near_far_balanced_accuracy"] == pytest.approx(1.0)       # only far clips: averaged over far only
+
 def test_energy_lower_for_confident():
     logits = np.array([[10.0, 0, 0], [1, 1, 1]])
     e = R.energy_score(logits)

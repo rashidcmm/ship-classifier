@@ -79,6 +79,8 @@ def test_evaluate_regression(runs):
     reg = res["regression"]["distance"]
     assert reg["mae"] > 1 and reg["baseline_mae"] > 1          # metres, not km
     assert "band_accuracy" in reg
+    assert {"bin_accuracy", "within_one_bin", "near_far_balanced_accuracy"} <= set(reg)
+    assert "within_one_bin" in reg["baseline_bins"]                    # the always-median guess, scored the same way
     assert (runs["dist"] / "eval" / "distance_scatter.png").exists()
 
 

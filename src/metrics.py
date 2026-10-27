@@ -105,3 +105,16 @@ def regression_report(y_true, y_pred, bands: list[float]) -> dict:
     same_band = np.digitize(y_true, bands) == np.digitize(y_pred, bands)
     return {"mae": float(err.mean()), "median_ae": float(np.median(err)),
             "rmse": float(np.sqrt(np.mean(err ** 2))), "band_accuracy": float(same_band.mean())}
+
+
+def distance_bin_report(true_m, pred_m, width=250.0, top=2000.0, near=700.0) -> dict:
+    """Distance scored as classes: `width`-metre bins up to `top` (the last bin is open-ended), right bin,
+    within one bin, and near (< `near` m) / far balanced accuracy (mean recall over the groups present)."""
+    true_m, pred_m = np.asarray(true_m, float), np.asarray(pred_m, float)
+    n_bins = int(round(top / width))
+    bt, bp = (np.clip(np.floor(d / width), 0, n_bins - 1).astype(int) for d in (true_m, pred_m))
+    is_near, said_near = true_m < near, pred_m < near
+    recalls = [np.mean(said_near[g] == is_near[g]) for g in (is_near, ~is_near) if g.any()]
+    return {"bin_width_m": width, "n_bins": n_bins, "bin_accuracy": float(np.mean(bt == bp)),
+            "within_one_bin": float(np.mean(np.abs(bt - bp) <= 1)), "near_m": near,
+            "near_far_balanced_accuracy": float(np.mean(recalls))}

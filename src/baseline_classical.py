@@ -2,8 +2,11 @@
 
 Each clip becomes 257 hand-made numbers (average and spread of each mel band, plus overall loudness);
 gradient-boosted decision trees then learn class, distance and speed from those numbers. CPU only.
+--features rich adds MFCCs, percentiles and how fast the MFCCs change (761 numbers, ideas from a related
+project on the same kind of data).
 
   python src/baseline_classical.py --fold 1
+  python src/baseline_classical.py --fold 1 --features rich     # -> runs/baseline_rich_f1
 """
 import argparse
 import json
@@ -12,6 +15,7 @@ import time
 from pathlib import Path
 
 import numpy as np
+from scipy.fft import dct
 from sklearn.ensemble import HistGradientBoostingClassifier, HistGradientBoostingRegressor
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -21,21 +25,40 @@ from keepawake import keep_awake
 from labels import CLASSES
 from paths import DATA_DIR, RUNS_DIR
 
+N_MFCC = 20
+PERCENTILES = (10, 50, 90)
+
 
 def band_stats(mel_block: np.ndarray) -> np.ndarray:
     x = np.asarray(mel_block, dtype=np.float32)
     return np.concatenate([x.mean(axis=2), x.std(axis=2), x.mean(axis=(1, 2))[:, None]], axis=1)
 
 
-def features_for(mel, rows, chunk=1000):
-    return np.concatenate([band_stats(mel[rows[s:s + chunk]]) for s in range(0, len(rows), chunk)])
+def rich_stats(mel_block: np.ndarray) -> np.ndarray:
+    """band_stats, plus 20 MFCCs (the DCT of the log-mel bands: the shape of the spectrum in a few numbers) as
+    mean and std, the 10th / 50th / 90th percentile of every mel band and MFCC (quiet background, typical level,
+    loudest moments), and how fast each MFCC changes (std of its frame-to-frame change)."""
+    x = np.asarray(mel_block, dtype=np.float32)
+    mfcc = dct(x, type=2, norm="ortho", axis=1)[:, :N_MFCC]
+    return np.concatenate([band_stats(x), mfcc.mean(axis=2), mfcc.std(axis=2),
+                           *np.percentile(x, PERCENTILES, axis=2), *np.percentile(mfcc, PERCENTILES, axis=2),
+                           np.diff(mfcc, axis=2).std(axis=2)], axis=1)
 
 
-def run_baseline(data_dir, fold, out_dir, max_train=20000, seed=0) -> dict:
+FEATURE_SETS = {"basic": (band_stats, "per-band mean + std + overall mean (257)"),
+                "rich": (rich_stats, "basic + MFCC mean/std + mel and MFCC 10/50/90 percentiles + MFCC change (761)")}
+
+
+def features_for(mel, rows, chunk=1000, stats=band_stats):
+    return np.concatenate([stats(mel[rows[s:s + chunk]]) for s in range(0, len(rows), chunk)])
+
+
+def run_baseline(data_dir, fold, out_dir, max_train=20000, seed=0, features="basic") -> dict:
     t0 = time.time()
     mel, table = D.open_features(data_dir)
     rng = np.random.default_rng(seed)
-    result = {"fold": fold, "features": "per-band mean + std + overall mean (257)"}
+    stats, description = FEATURE_SETS[features]
+    result = {"fold": fold, "features": description}
     index = {c: i for i, c in enumerate(CLASSES)}
 
     for task in ("class", "distance", "speed"):
@@ -43,7 +66,7 @@ def run_baseline(data_dir, fold, out_dir, max_train=20000, seed=0) -> dict:
         te = D.select_rows(table, fold=fold, split="test", task=task)
         if len(tr) > max_train:
             tr = np.sort(rng.choice(tr, max_train, replace=False))
-        Xtr, Xte = features_for(mel, tr), features_for(mel, te)
+        Xtr, Xte = features_for(mel, tr, stats=stats), features_for(mel, te, stats=stats)
         if task == "class":
             ytr = np.array([index[c] for c in table.label.iloc[tr]])
             yte = np.array([index[c] for c in table.label.iloc[te]])
@@ -58,9 +81,13 @@ def run_baseline(data_dir, fold, out_dir, max_train=20000, seed=0) -> dict:
             ytr, yte = table[col].to_numpy(float)[tr], table[col].to_numpy(float)[te]
             reg = HistGradientBoostingRegressor(loss="absolute_error", random_state=seed).fit(Xtr, ytr)
             bands = [700, 1400] if task == "distance" else [6, 12]
-            rep = M.regression_report(yte, reg.predict(Xte), bands)
+            pred = reg.predict(Xte)
+            rep = M.regression_report(yte, pred, bands)
             rep.update(unit="m" if task == "distance" else "knots", n_train=int(len(tr)), n_test=int(len(te)),
                        baseline_mae=float(np.mean(np.abs(yte - np.median(ytr)))))
+            if task == "distance":
+                rep.update(M.distance_bin_report(yte, pred))
+                rep["baseline_bins"] = M.distance_bin_report(yte, np.full(len(yte), np.median(ytr)))
             result[task] = rep
     result["seconds"] = round(time.time() - t0, 1)
     out_dir = Path(out_dir)
@@ -73,12 +100,14 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--fold", type=int, default=1, choices=range(1, 6))
     p.add_argument("--max-train", type=int, default=20000)
+    p.add_argument("--features", default="basic", choices=list(FEATURE_SETS))
     p.add_argument("--data-dir", type=Path, default=DATA_DIR)
     p.add_argument("--runs-dir", type=Path, default=RUNS_DIR)
     a = p.parse_args(argv)
     with keep_awake():
         try:
-            res = run_baseline(a.data_dir, a.fold, a.runs_dir / f"baseline_f{a.fold}", a.max_train)
+            name = f"baseline_f{a.fold}" if a.features == "basic" else f"baseline_{a.features}_f{a.fold}"
+            res = run_baseline(a.data_dir, a.fold, a.runs_dir / name, a.max_train, features=a.features)
         except D.DataError as e:
             sys.exit(f"error: {e}")
     c = res["class"]

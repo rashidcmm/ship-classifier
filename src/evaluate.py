@@ -250,6 +250,9 @@ def evaluate_run(run_dir, *, ensemble=(), mc_samples=0, noise_snrs=(), audio_zip
         rep = M.regression_report(true[ok], guess, bands)
         rep.update(unit=unit, n=int(ok.sum()), baseline_median=baseline,
                    baseline_mae=float(np.mean(np.abs(true[ok] - baseline))))
+        if target == "distance":            # also scored as distance classes (250 m bins, near / far)
+            rep.update(M.distance_bin_report(true[ok], guess, near=DIST_BANDS[0]))
+            rep["baseline_bins"] = M.distance_bin_report(true[ok], np.full(int(ok.sum()), baseline), near=DIST_BANDS[0])
         regression[target] = rep
         plot_scatter(true[ok], guess, unit, out_dir / f"{target}_scatter.png")
     if regression:
