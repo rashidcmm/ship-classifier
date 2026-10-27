@@ -2,7 +2,9 @@
 
 Recognise the ship class from a 5-second hydrophone clip **on ships the model has never heard**, say
 **"unknown"** when it isn't sure, give a confidence you can trust, and estimate the ship's **distance** and **speed**.
-Data: the UniqueShip 12-class / 5-hour subset (Ocean Networks Canada).
+Data: the [UniqueShip](https://uniqueshipdata.org/) 12-class / 5-hour subset, recorded by
+[Ocean Networks Canada](https://data.oceannetworks.ca/). The data is not in this repository; see the UniqueShip
+website for access and for how to cite it.
 
 - Design and decisions: `docs/2026-10-24-ship-sound-plan.md`
 - Lessons (learn every step): `notebooks/` (start JupyterLab with `jupyter lab notebooks`)
