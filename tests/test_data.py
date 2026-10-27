@@ -130,3 +130,10 @@ def test_open_features_truncated(mini_data):
 def test_open_features_missing(tmp_path):
     with pytest.raises(data.DataError, match="clips.parquet|mel.npy"):
         data.open_features(tmp_path)
+
+
+def test_merge_into_other_relabels_only_listed_classes():
+    table = pd.DataFrame({"label": ["cargo", "pilotvessel", "rescue", "other", "background"]})
+    merged = data.merge_into_other(table, ["pilotvessel", "rescue"])
+    assert merged.label.tolist() == ["cargo", "other", "other", "other", "background"]
+    assert table.label.tolist()[1] == "pilotvessel"                    # the original table is unchanged

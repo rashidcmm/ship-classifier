@@ -67,6 +67,16 @@ def test_holdout_known_classes(mini_data, tmp_path):
     assert len(cfg["known"]) == 9 and "fishing" not in cfg["known"]
 
 
+
+def test_merge_into_other_known_classes(mini_data, tmp_path):
+    rd = run_train(mini_data, tmp_path, "--task", "class", "--epochs", "1",
+                   "--merge-into-other", "pilotvessel", "dredger", "rescue")
+    assert rd.name == "class_f1_tiny_cnn_vessel_merged"
+    cfg = json.loads((rd / "config.json").read_text())
+    assert len(cfg["known"]) == 9 and "other" in cfg["known"]
+    assert not {"pilotvessel", "dredger", "rescue"} & set(cfg["known"])
+    assert cfg["n_train"] == 96                                        # the merged clips are trained as "other"
+
 def test_resume_after_kill(mini_data, tmp_path):
     rd = run_train(mini_data, tmp_path, "--task", "class", "--epochs", "3", "--max-hours", "0")
     assert log(rd).epoch.tolist() == [1]

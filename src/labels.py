@@ -8,6 +8,8 @@ from paths import CONFIG_DIR
 # Fixed order: index i in every model output means CLASSES[i] (or known_classes(...)[i] for holdout runs).
 CLASSES = ["background", "cargo", "dredger", "fishing", "other", "passengership",
            "pilotvessel", "pleasurecraft", "rescue", "sailing", "tanker", "tug"]
+# ship types that can be trained as "other" instead (--merge-into-other)
+MERGEABLE = [c for c in CLASSES if c not in ("background", "other")]
 
 
 def load_config(path: Path | None = None) -> dict:

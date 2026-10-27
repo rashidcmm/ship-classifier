@@ -137,6 +137,8 @@ def evaluate_run(run_dir, *, ensemble=(), mc_samples=0, noise_snrs=(), audio_zip
     cfg, known, norm = info["config"], info["known"], info["norm"]
     data_dir = Path(data_dir or (cfg["data_dir"] if Path(cfg["data_dir"]).exists() else DATA_DIR))
     mel, table = D.open_features(data_dir)
+    if cfg.get("merge_into_other"):                     # score the merged classes as "other", as in training
+        table = D.merge_into_other(table, cfg["merge_into_other"])
     dev = pick_device(device)
     bs = auto_batch_size(cfg["backbone"], dev) * 2
     task = cfg["task"]

@@ -24,7 +24,8 @@ def runs(tmp_path_factory):
             "cls": tr("--task", "class", "--epochs", "6"),
             "cls_s1": tr("--task", "class", "--epochs", "6", "--seed", "1"),
             "hold": tr("--task", "class", "--epochs", "6", "--holdout", "A"),
-            "dist": tr("--task", "distance", "--epochs", "2")}
+            "dist": tr("--task", "distance", "--epochs", "2"),
+            "merged": tr("--task", "class", "--epochs", "2", "--merge-into-other", "pilotvessel", "dredger", "rescue")}
 
 
 def test_evaluate_closed_set_outputs(runs):
@@ -83,6 +84,13 @@ def test_evaluate_regression(runs):
     assert "within_one_bin" in reg["baseline_bins"]                    # the always-median guess, scored the same way
     assert (runs["dist"] / "eval" / "distance_scatter.png").exists()
 
+
+
+def test_evaluate_merged_run_scores_merged_clips_as_other(runs):
+    res = evaluate.evaluate_run(runs["merged"], device="cpu")
+    pred = pd.read_parquet(runs["merged"] / "eval" / "predictions.parquet")
+    assert (pred["y_class"] >= 0).all()                     # pilot vessel, dredger, rescue clips count as "other"
+    assert res["closed_set"]["n_test"] == 12 and "open_set" not in res
 
 def test_add_noise_snr():
     rng = np.random.default_rng(0)

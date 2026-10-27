@@ -7,6 +7,7 @@ project on the same kind of data).
 
   python src/baseline_classical.py --fold 1
   python src/baseline_classical.py --fold 1 --features rich     # -> runs/baseline_rich_f1
+  python src/baseline_classical.py --fold 1 --merge-into-other pilotvessel dredger rescue   # -> runs/baseline_merged_f1
 """
 import argparse
 import json
@@ -22,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import data as D
 import metrics as M
 from keepawake import keep_awake
-from labels import CLASSES
+from labels import CLASSES, MERGEABLE
 from paths import DATA_DIR, RUNS_DIR
 
 N_MFCC = 20
@@ -49,17 +50,22 @@ FEATURE_SETS = {"basic": (band_stats, "per-band mean + std + overall mean (257)"
                 "rich": (rich_stats, "basic + MFCC mean/std + mel and MFCC 10/50/90 percentiles + MFCC change (761)")}
 
 
-def features_for(mel, rows, chunk=1000, stats=band_stats):
+def features_for(mel, rows, chunk=250, stats=band_stats):
+    # 250 clips at a time: rich_stats needs about 4 copies of a chunk (~250 MB), fine on a busy 16 GB laptop
     return np.concatenate([stats(mel[rows[s:s + chunk]]) for s in range(0, len(rows), chunk)])
 
 
-def run_baseline(data_dir, fold, out_dir, max_train=20000, seed=0, features="basic") -> dict:
+def run_baseline(data_dir, fold, out_dir, max_train=20000, seed=0, features="basic", merge=()) -> dict:
     t0 = time.time()
     mel, table = D.open_features(data_dir)
     rng = np.random.default_rng(seed)
     stats, description = FEATURE_SETS[features]
     result = {"fold": fold, "features": description}
-    index = {c: i for i, c in enumerate(CLASSES)}
+    if merge:
+        table = D.merge_into_other(table, merge)
+        result["merge_into_other"] = list(merge)
+    classes = [c for c in CLASSES if c not in merge]
+    index = {c: i for i, c in enumerate(classes)}
 
     for task in ("class", "distance", "speed"):
         tr = D.select_rows(table, fold=fold, split="train", task=task)
@@ -72,9 +78,9 @@ def run_baseline(data_dir, fold, out_dir, max_train=20000, seed=0, features="bas
             yte = np.array([index[c] for c in table.label.iloc[te]])
             clf = HistGradientBoostingClassifier(class_weight="balanced", random_state=seed).fit(Xtr, ytr)
             p = clf.predict(Xte)
-            result["class"] = {"accuracy": M.accuracy(yte, p), "macro_f1": M.macro_f1(yte, p, len(CLASSES)),
+            result["class"] = {"accuracy": M.accuracy(yte, p), "macro_f1": M.macro_f1(yte, p, len(classes)),
                                "per_class_recall": {c: (None if np.isnan(r) else float(r)) for c, r in
-                                                    zip(CLASSES, M.per_class_recall(yte, p, len(CLASSES)))},
+                                                    zip(classes, M.per_class_recall(yte, p, len(classes)))},
                                "n_train": int(len(tr)), "n_test": int(len(te))}
         else:
             col = "mean_distance" if task == "distance" else "mean_sog"
@@ -101,13 +107,17 @@ def main(argv=None):
     p.add_argument("--fold", type=int, default=1, choices=range(1, 6))
     p.add_argument("--max-train", type=int, default=20000)
     p.add_argument("--features", default="basic", choices=list(FEATURE_SETS))
+    p.add_argument("--merge-into-other", nargs="+", default=[], metavar="CLASS", choices=MERGEABLE,
+                   help="score these classes as 'other' (e.g. pilotvessel dredger rescue)")
     p.add_argument("--data-dir", type=Path, default=DATA_DIR)
     p.add_argument("--runs-dir", type=Path, default=RUNS_DIR)
     a = p.parse_args(argv)
     with keep_awake():
         try:
-            name = f"baseline_f{a.fold}" if a.features == "basic" else f"baseline_{a.features}_f{a.fold}"
-            res = run_baseline(a.data_dir, a.fold, a.runs_dir / name, a.max_train, features=a.features)
+            name = ("baseline" + ("" if a.features == "basic" else f"_{a.features}")
+                    + ("_merged" if a.merge_into_other else "") + f"_f{a.fold}")
+            res = run_baseline(a.data_dir, a.fold, a.runs_dir / name, a.max_train, features=a.features,
+                               merge=a.merge_into_other)
         except D.DataError as e:
             sys.exit(f"error: {e}")
     c = res["class"]

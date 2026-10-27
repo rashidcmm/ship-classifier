@@ -40,3 +40,11 @@ def test_baseline_rich_features_and_distance_bins(mini_data, tmp_path):
     saved = json.loads((tmp_path / "baseline_rich_f1" / "metrics.json").read_text())
     assert "761" in saved["features"]
     assert "within_one_bin" in saved["distance"]
+
+
+def test_baseline_merge_into_other(mini_data, tmp_path):
+    B.main(["--data-dir", str(mini_data), "--runs-dir", str(tmp_path), "--merge-into-other", "pilotvessel", "dredger", "rescue"])
+    saved = json.loads((tmp_path / "baseline_merged_f1" / "metrics.json").read_text())
+    recall = saved["class"]["per_class_recall"]
+    assert len(recall) == 9 and "other" in recall and "pilotvessel" not in recall
+    assert saved["merge_into_other"] == ["pilotvessel", "dredger", "rescue"]

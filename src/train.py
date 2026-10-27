@@ -3,6 +3,7 @@
 Examples
   python src/train.py --task class                         # E2: 12-class model on fold 1
   python src/train.py --task class --holdout A             # E3: fishing/sailing/tanker held out as "unknown"
+  python src/train.py --task class --merge-into-other pilotvessel dredger rescue   # 9 classes
   python src/train.py --task distance --init-from runs/class_f1_efficientnet_b0_vessel/best.pt
   python src/train.py --task class --resume                # continue after Ctrl+C, a crash or --max-hours
 
@@ -26,7 +27,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import data as D
 from device import TemperatureGuard, auto_batch_size, pick_device
 from keepawake import keep_awake
-from labels import known_classes, load_config
+from labels import MERGEABLE, known_classes, load_config
 from metrics import macro_f1
 from models import BACKBONES, PretrainedDownloadError, ShipNet, save_checkpoint
 from paths import DATA_DIR, RUNS_DIR
@@ -43,6 +44,8 @@ def make_parser() -> argparse.ArgumentParser:
     p.add_argument("--backbone", choices=BACKBONES, help="default: configs/default.yaml")
     p.add_argument("--holdout", choices=["A", "B", "C"], help="hold out an open-set group (unknown ships)")
     p.add_argument("--split-mode", default="vessel", choices=["vessel", "leaky"])
+    p.add_argument("--merge-into-other", nargs="+", metavar="CLASS", choices=MERGEABLE,
+                   help="train and test these classes as 'other' (e.g. those with few ships: pilotvessel dredger rescue)")
     p.add_argument("--hydrophone-shift", action="store_true", help="train on 2523, test on 2556")
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--epochs", type=int, help="default: per task in configs/default.yaml")
@@ -71,6 +74,8 @@ def run_name(args, backbone) -> str:
         name += f"_h{args.holdout}"
     if args.hydrophone_shift:
         name += "_hyd"
+    if args.merge_into_other:
+        name += "_merged"
     if args.seed:
         name += f"_s{args.seed}"
     return name
@@ -215,7 +220,9 @@ def run(args) -> Path:
 
     torch.manual_seed(args.seed); random.seed(args.seed); np.random.seed(args.seed)
     mel, table = D.open_features(args.data_dir)
-    known = known_classes(args.holdout)
+    if args.merge_into_other:
+        table = D.merge_into_other(table, args.merge_into_other)
+    known = [c for c in known_classes(args.holdout) if c not in (args.merge_into_other or [])]
     sel = dict(fold=args.fold, task=args.task, holdout=args.holdout, split_mode=args.split_mode,
                hydrophone_shift=args.hydrophone_shift, seed=args.seed)
     train_rows = subsample(D.select_rows(table, split="train", **sel), args.limit_train, args.seed)

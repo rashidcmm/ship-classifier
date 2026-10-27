@@ -74,6 +74,13 @@ def select_rows(table: pd.DataFrame, *, fold: int, split: str, task: str, holdou
     return np.flatnonzero(keep)
 
 
+def merge_into_other(table: pd.DataFrame, classes) -> pd.DataFrame:
+    """A copy of the table with these classes relabelled "other" (classes with too few ships to learn on their own)."""
+    table = table.copy()
+    table["label"] = table.label.where(~table.label.isin(list(classes)), "other")
+    return table
+
+
 def compute_norm(mel, rows, max_clips: int = 2000, seed: int = 0) -> tuple[np.ndarray, np.ndarray]:
     """Per-band mean and std of the training clips (never the test clips), used to normalise every input."""
     rows = np.asarray(rows)
