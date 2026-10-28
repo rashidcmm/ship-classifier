@@ -9,6 +9,7 @@ website for access and for how to cite it.
 - Design and decisions: `docs/2026-10-24-ship-sound-plan.md`
 - Results so far, what we tried and what we learned: `docs/experiment-log.md`
 - Lessons (learn every step): `notebooks/` (start JupyterLab with `jupyter lab notebooks`)
+- Every result in one notebook, including the 5-class models: `notebooks/11_results_and_five_classes.ipynb`
 
 ---
 

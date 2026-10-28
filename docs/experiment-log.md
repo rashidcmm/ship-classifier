@@ -7,7 +7,8 @@ files in `runs/` (`log.csv`, `done.json`, `eval/metrics.json`, `metrics.json`). 
 E2, the **9-class model E2-9** (decided 28 October, section 4.5), E5, distance (E9), speed (E10), unknown ships
 groups A, B and C (E3), the noise test (E8), the hydrophone shift (E7) and the MobileNetV3 trial. Lessons 03–10 were
 executed with these results (section 7). On 28 October two **5-class models** were added (E2-5S, and E2-5U on
-all 5 folds, section 4.7), and the dataset's own paper was read (section 4.8).
+all 5 folds, section 4.7), and the dataset's own paper was read (section 4.8). Lesson 11
+(`notebooks/11_results_and_five_classes.ipynb`) recomputes the main results of this log, with figures, from the saved run files.
 
 **In one paragraph:** on ships it has never heard, every method we tried lands at about the same accuracy: 32 % for
 12 classes and 37 % for 9 classes (CNN and classical baseline alike), against 86 % when the test ships were heard in
