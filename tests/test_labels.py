@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import pytest
 
 import labels
 
@@ -27,6 +28,29 @@ def test_known_classes_holdout_A():
     assert not {"fishing", "sailing", "tanker"} & set(known)
     assert known == [c for c in labels.CLASSES if c in known]
     assert labels.known_classes(None) == labels.CLASSES
+
+
+def test_groupings_valid():
+    groupings = labels.load_groupings()
+    assert sorted(groupings) == ["shipsear5", "uniqueship5"]
+    for groups in groupings.values():
+        members = [c for m in groups.values() for c in m]
+        assert len(groups) == 5 and len(members) == len(set(members)) and set(members) <= set(labels.CLASSES)
+    size = groupings["shipsear5"]
+    assert list(size) == ["working", "small", "passenger", "large", "background"]
+    assert size["large"] == ["cargo", "tanker"] and size["background"] == ["background"]
+    assert "other" not in {c for m in size.values() for c in m}           # fits no size group: left out
+    assert list(groupings["uniqueship5"]) == ["background", "cargo", "passengership", "tanker", "tug"]
+
+
+def test_load_groupings_rejects_bad_files(tmp_path):
+    bad = tmp_path / "groups.yaml"
+    bad.write_text("g: {a: [cargo], b: [cargo, tug]}\n")
+    with pytest.raises(ValueError, match="more than one group"):
+        labels.load_groupings(bad)
+    bad.write_text("g: {a: [boat]}\n")
+    with pytest.raises(ValueError, match="not a class name"):
+        labels.load_groupings(bad)
 
 
 def test_load_config_defaults():

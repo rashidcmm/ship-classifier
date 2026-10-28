@@ -139,6 +139,8 @@ def evaluate_run(run_dir, *, ensemble=(), mc_samples=0, noise_snrs=(), audio_zip
     mel, table = D.open_features(data_dir)
     if cfg.get("merge_into_other"):                     # score the merged classes as "other", as in training
         table = D.merge_into_other(table, cfg["merge_into_other"])
+    if cfg.get("groups"):                               # score the same groups as in training; the rest left out
+        table = D.apply_grouping(table, cfg["groups"])
     dev = pick_device(device)
     bs = auto_batch_size(cfg["backbone"], dev) * 2
     task = cfg["task"]

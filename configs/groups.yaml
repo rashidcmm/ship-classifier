@@ -1,0 +1,14 @@
+# Broader groupings of the 12 classes (python src/train.py --task class --grouping NAME).
+# Each group is trained and tested as one class, in this order; classes in no group are left out of every split.
+shipsear5:      # size groups after the ShipsEar dataset (Santos-Dominguez et al., 2016), its classes A-E
+  working: [fishing, tug, dredger]                      # A: working and fishing vessels
+  small: [pleasurecraft, sailing, pilotvessel, rescue]  # B: small craft (rescue placed by size)
+  passenger: [passengership]                            # C: passenger ships
+  large: [cargo, tanker]                                # D: large ships
+  background: [background]                              # E: no ship; "other" fits no size group
+uniqueship5:    # the 5-class task of the UniqueShip paper (Hashemi et al., OCEANS 2026, arXiv 2609.13659)
+  background: [background]
+  cargo: [cargo]
+  passengership: [passengership]
+  tanker: [tanker]
+  tug: [tug]

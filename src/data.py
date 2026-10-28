@@ -60,6 +60,7 @@ def select_rows(table: pd.DataFrame, *, fold: int, split: str, task: str, holdou
         raise ValueError("split_mode must be 'vessel' or 'leaky'")
 
     label = table.label.to_numpy()
+    keep &= pd.notna(label)                                    # clips left out by a grouping have no label
     if holdout is not None and split != "test":
         keep &= ~np.isin(label, load_groups()[holdout])
     if task in ("distance", "speed"):
@@ -78,6 +79,14 @@ def merge_into_other(table: pd.DataFrame, classes) -> pd.DataFrame:
     """A copy of the table with these classes relabelled "other" (classes with too few ships to learn on their own)."""
     table = table.copy()
     table["label"] = table.label.where(~table.label.isin(list(classes)), "other")
+    return table
+
+
+def apply_grouping(table: pd.DataFrame, groups: dict) -> pd.DataFrame:
+    """A copy of the table with each class relabelled by its group (e.g. cargo -> large). Classes in no group get
+    no label, so no split uses them; their rows stay, so row numbers still match mel.npy."""
+    table = table.copy()
+    table["label"] = table.label.map({c: g for g, members in groups.items() for c in members})
     return table
 
 

@@ -1,4 +1,4 @@
-"""Class names, open-set ("unknown") groups and default settings."""
+"""Class names, open-set ("unknown") groups, broader groupings and default settings."""
 from pathlib import Path
 
 import yaml
@@ -25,6 +25,20 @@ def load_groups(path: Path | None = None) -> dict[str, list[str]]:
         if unknown:
             raise ValueError(f"open_set.yaml group {name}: not a class name: {sorted(unknown)}")
     return groups
+
+
+def load_groupings(path: Path | None = None) -> dict[str, dict[str, list[str]]]:
+    """Broader groupings (configs/groups.yaml): name -> {group: [classes]}; classes in no group are left out."""
+    with open(path or CONFIG_DIR / "groups.yaml", encoding="utf-8") as f:
+        groupings = yaml.safe_load(f)
+    for name, groups in groupings.items():
+        members = [c for m in groups.values() for c in m]
+        unknown = set(members) - set(CLASSES)
+        if unknown:
+            raise ValueError(f"groups.yaml {name}: not a class name: {sorted(unknown)}")
+        if len(members) != len(set(members)):
+            raise ValueError(f"groups.yaml {name}: a class is in more than one group")
+    return groupings
 
 
 def known_classes(holdout: str | None) -> list[str]:

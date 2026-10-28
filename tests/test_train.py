@@ -77,6 +77,22 @@ def test_merge_into_other_known_classes(mini_data, tmp_path):
     assert not {"pilotvessel", "dredger", "rescue"} & set(cfg["known"])
     assert cfg["n_train"] == 96                                        # the merged clips are trained as "other"
 
+
+def test_grouping_trains_groups(mini_data, tmp_path):
+    rd = run_train(mini_data, tmp_path, "--task", "class", "--epochs", "1", "--grouping", "shipsear5")
+    assert rd.name == "class_f1_tiny_cnn_vessel_shipsear5"
+    cfg = json.loads((rd / "config.json").read_text())
+    assert cfg["known"] == ["working", "small", "passenger", "large", "background"]
+    assert cfg["groups"]["large"] == ["cargo", "tanker"]               # saved, so evaluation uses the same groups
+    assert cfg["n_train"] == 88                                        # the 8 "other" training clips are left out
+
+
+def test_grouping_refuses_holdout_and_merge(mini_data, tmp_path):
+    for extra in (["--holdout", "A"], ["--merge-into-other", "rescue"]):
+        with pytest.raises(SystemExit, match="--grouping"):
+            run_train(mini_data, tmp_path, "--task", "class", "--epochs", "1", "--grouping", "shipsear5", *extra)
+
+
 def test_resume_after_kill(mini_data, tmp_path):
     rd = run_train(mini_data, tmp_path, "--task", "class", "--epochs", "3", "--max-hours", "0")
     assert log(rd).epoch.tolist() == [1]

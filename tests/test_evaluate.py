@@ -25,7 +25,8 @@ def runs(tmp_path_factory):
             "cls_s1": tr("--task", "class", "--epochs", "6", "--seed", "1"),
             "hold": tr("--task", "class", "--epochs", "6", "--holdout", "A"),
             "dist": tr("--task", "distance", "--epochs", "2"),
-            "merged": tr("--task", "class", "--epochs", "2", "--merge-into-other", "pilotvessel", "dredger", "rescue")}
+            "merged": tr("--task", "class", "--epochs", "2", "--merge-into-other", "pilotvessel", "dredger", "rescue"),
+            "grouped": tr("--task", "class", "--epochs", "2", "--grouping", "shipsear5")}
 
 
 def test_evaluate_closed_set_outputs(runs):
@@ -91,6 +92,14 @@ def test_evaluate_merged_run_scores_merged_clips_as_other(runs):
     pred = pd.read_parquet(runs["merged"] / "eval" / "predictions.parquet")
     assert (pred["y_class"] >= 0).all()                     # pilot vessel, dredger, rescue clips count as "other"
     assert res["closed_set"]["n_test"] == 12 and "open_set" not in res
+
+
+def test_evaluate_grouped_run_scores_groups_without_other(runs):
+    res = evaluate.evaluate_run(runs["grouped"], device="cpu")
+    pred = pd.read_parquet(runs["grouped"] / "eval" / "predictions.parquet")
+    assert set(pred.label) == {"working", "small", "passenger", "large", "background"}   # "other" left out
+    assert (pred["y_class"] >= 0).all() and res["closed_set"]["n_test"] == 11 and "open_set" not in res
+    assert set(res["closed_set"]["per_class_recall"]) == set(pred.label)
 
 def test_add_noise_snr():
     rng = np.random.default_rng(0)

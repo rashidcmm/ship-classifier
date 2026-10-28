@@ -137,3 +137,21 @@ def test_merge_into_other_relabels_only_listed_classes():
     merged = data.merge_into_other(table, ["pilotvessel", "rescue"])
     assert merged.label.tolist() == ["cargo", "other", "other", "other", "background"]
     assert table.label.tolist()[1] == "pilotvessel"                    # the original table is unchanged
+
+
+def test_apply_grouping_relabels_and_leaves_out_ungrouped_classes():
+    table = pd.DataFrame({"label": ["cargo", "tanker", "tug", "other", "background"]})
+    grouped = data.apply_grouping(table, {"large": ["cargo", "tanker"], "working": ["tug"],
+                                          "background": ["background"]})
+    assert grouped.label.tolist()[:3] == ["large", "large", "working"] and grouped.label.iloc[4] == "background"
+    assert pd.isna(grouped.label.iloc[3])                              # in no group: no label
+    assert len(grouped) == 5 and table.label.tolist()[0] == "cargo"    # rows kept, original unchanged
+
+
+def test_select_rows_skips_clips_without_label(feats):
+    _, _, table = feats
+    table = table.copy()
+    table.loc[table.label == "other", "label"] = None
+    for split, n in (("train", 88), ("validation", 11), ("test", 11)):
+        rows = data.select_rows(table, fold=1, split=split, task="class")
+        assert len(rows) == n and table.label.iloc[rows].notna().all()

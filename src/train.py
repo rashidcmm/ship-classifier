@@ -4,6 +4,7 @@ Examples
   python src/train.py --task class                         # E2: 12-class model on fold 1
   python src/train.py --task class --holdout A             # E3: fishing/sailing/tanker held out as "unknown"
   python src/train.py --task class --merge-into-other pilotvessel dredger rescue   # 9 classes
+  python src/train.py --task class --grouping shipsear5    # 5 size groups (configs/groups.yaml), "other" left out
   python src/train.py --task distance --init-from runs/class_f1_efficientnet_b0_vessel/best.pt
   python src/train.py --task class --resume                # continue after Ctrl+C, a crash or --max-hours
 
@@ -27,7 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import data as D
 from device import TemperatureGuard, auto_batch_size, pick_device
 from keepawake import keep_awake
-from labels import MERGEABLE, known_classes, load_config
+from labels import MERGEABLE, known_classes, load_config, load_groupings
 from metrics import macro_f1
 from models import BACKBONES, PretrainedDownloadError, ShipNet, save_checkpoint
 from paths import DATA_DIR, RUNS_DIR
@@ -46,6 +47,8 @@ def make_parser() -> argparse.ArgumentParser:
     p.add_argument("--split-mode", default="vessel", choices=["vessel", "leaky"])
     p.add_argument("--merge-into-other", nargs="+", metavar="CLASS", choices=MERGEABLE,
                    help="train and test these classes as 'other' (e.g. those with few ships: pilotvessel dredger rescue)")
+    p.add_argument("--grouping", choices=sorted(load_groupings()),
+                   help="train and test broader groups of classes (configs/groups.yaml); classes in no group are left out")
     p.add_argument("--hydrophone-shift", action="store_true", help="train on 2523, test on 2556")
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--epochs", type=int, help="default: per task in configs/default.yaml")
@@ -76,6 +79,8 @@ def run_name(args, backbone) -> str:
         name += "_hyd"
     if args.merge_into_other:
         name += "_merged"
+    if args.grouping:
+        name += f"_{args.grouping}"
     if args.seed:
         name += f"_s{args.seed}"
     return name
@@ -207,6 +212,8 @@ def run(args) -> Path:
     max_temp = args.max_gpu_temp or cfg["max_gpu_temp"]
     run_dir = Path(args.runs_dir) / (args.name or run_name(args, backbone))
 
+    if args.grouping and (args.holdout or args.merge_into_other):
+        sys.exit("--grouping can't be combined with --holdout or --merge-into-other")
     if args.resume and not (run_dir / "last.pt").exists():
         sys.exit(f"--resume: no last.pt in {run_dir}; start without --resume.")
     if args.resume and (run_dir / "done.json").exists():
@@ -222,7 +229,12 @@ def run(args) -> Path:
     mel, table = D.open_features(args.data_dir)
     if args.merge_into_other:
         table = D.merge_into_other(table, args.merge_into_other)
-    known = [c for c in known_classes(args.holdout) if c not in (args.merge_into_other or [])]
+    groups = load_groupings()[args.grouping] if args.grouping else None
+    if groups:
+        table = D.apply_grouping(table, groups)
+        known = list(groups)
+    else:
+        known = [c for c in known_classes(args.holdout) if c not in (args.merge_into_other or [])]
     sel = dict(fold=args.fold, task=args.task, holdout=args.holdout, split_mode=args.split_mode,
                hydrophone_shift=args.hydrophone_shift, seed=args.seed)
     train_rows = subsample(D.select_rows(table, split="train", **sel), args.limit_train, args.seed)
@@ -264,7 +276,8 @@ def run(args) -> Path:
 
     config = {k: (str(v) if isinstance(v, Path) else v) for k, v in vars(args).items()}
     config.update(backbone=backbone, epochs=epochs, lr=lr, weight_decay=weight_decay, batch_size=batch_size,
-                  drop_rate=cfg["drop_rate"], specaugment=cfg["specaugment"], device=str(device), known=known, n_train=int(len(train_rows)),
+                  drop_rate=cfg["drop_rate"], specaugment=cfg["specaugment"], device=str(device), known=known, groups=groups,
+                  n_train=int(len(train_rows)),
                   n_val=int(len(val_rows)), code_version=code_version(), run_dir=str(run_dir))
     if args.resume:
         # load on CPU: load_state_dict moves weights/optimizer state to the device itself, and RNG states must stay on CPU
