@@ -1,0 +1,11 @@
+run,task,accuracy,macro_f1,ece_after_T,auroc_msp,auroc_energy,distance_MAE,distance_baseline_MAE,speed_MAE,speed_baseline_MAE
+class_f1_efficientnet_b0_leaky,class,0.858,0.857,0.016,,,,,,
+class_f1_efficientnet_b0_vessel,class,0.324,0.29,0.093,,,,,,
+class_f1_efficientnet_b0_vessel_hA,class,0.448,0.377,0.084,0.5,0.525,,,,
+class_f1_efficientnet_b0_vessel_hB,class,0.444,0.385,0.043,0.579,0.579,,,,
+class_f1_efficientnet_b0_vessel_hC,class,0.421,0.363,0.115,0.508,0.569,,,,
+class_f1_efficientnet_b0_vessel_hyd,class,0.402,0.304,0.068,,,,,,
+class_f1_efficientnet_b0_vessel_merged,class,0.367,0.37,0.107,,,,,,
+distance_f1_efficientnet_b0_vessel,distance,,,,,,275.379,403.006,,
+speed_f1_efficientnet_b0_vessel,speed,,,,,,,,2.938,3.64
+baseline_f1 (classical),class+distance+speed,0.318,0.277,,,,273.799,,2.955,

@@ -1,0 +1,61 @@
+{
+  "fold": 5,
+  "features": "per-band mean + std + overall mean (257)",
+  "merge_into_other": [
+    "pilotvessel",
+    "dredger",
+    "rescue"
+  ],
+  "class": {
+    "accuracy": 0.3533980582524272,
+    "macro_f1": 0.35605171570123434,
+    "per_class_recall": {
+      "background": 0.7050561797752809,
+      "cargo": 0.5135802469135803,
+      "fishing": 0.34036144578313254,
+      "other": 0.2215568862275449,
+      "passengership": 0.24545454545454545,
+      "pleasurecraft": 0.284037558685446,
+      "sailing": 0.15468409586056645,
+      "tanker": 0.4652777777777778,
+      "tug": 0.32142857142857145
+    },
+    "n_train": 20000,
+    "n_test": 3605
+  },
+  "distance": {
+    "mae": 298.1987317882426,
+    "median_ae": 245.46424278870336,
+    "rmse": 380.1498249874785,
+    "band_accuracy": 0.5938176197836167,
+    "unit": "m",
+    "n_train": 20000,
+    "n_test": 3235,
+    "baseline_mae": 423.82175202432074,
+    "bin_width_m": 250.0,
+    "n_bins": 8,
+    "bin_accuracy": 0.2778979907264297,
+    "within_one_bin": 0.6741885625965996,
+    "near_m": 700.0,
+    "near_far_balanced_accuracy": 0.7197645283448649,
+    "baseline_bins": {
+      "bin_width_m": 250.0,
+      "n_bins": 8,
+      "bin_accuracy": 0.18578052550231838,
+      "within_one_bin": 0.49397217928902626,
+      "near_m": 700.0,
+      "near_far_balanced_accuracy": 0.5
+    }
+  },
+  "speed": {
+    "mae": 2.8655493863239485,
+    "median_ae": 1.7942550550059746,
+    "rmse": 4.506643663029964,
+    "band_accuracy": 0.6429670667897814,
+    "unit": "knots",
+    "n_train": 20000,
+    "n_test": 3249,
+    "baseline_mae": 3.568017913978039
+  },
+  "seconds": 85.5
+}

@@ -1,0 +1,19 @@
+{
+  "run": "distance_f1_efficientnet_b0_vessel",
+  "task": "distance",
+  "split": "test",
+  "n_eval": 4106,
+  "model_fingerprint": "16404967-1793126139839421000",
+  "regression": {
+    "distance": {
+      "mae": 275.3790810596609,
+      "median_ae": 216.0062836921927,
+      "rmse": 359.4597056047866,
+      "band_accuracy": 0.6154408183146615,
+      "unit": "m",
+      "n": 4106,
+      "baseline_median": 1295.0070966800395,
+      "baseline_mae": 403.0056145811456
+    }
+  }
+}

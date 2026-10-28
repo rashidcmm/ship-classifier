@@ -1,0 +1,5 @@
+{
+  "reason": "early stop: no improvement for 3 epochs",
+  "best_metric": 3.1243810057640076,
+  "epochs_run": 5
+}

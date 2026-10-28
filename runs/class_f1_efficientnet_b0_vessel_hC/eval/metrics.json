@@ -1,0 +1,77 @@
+{
+  "run": "class_f1_efficientnet_b0_vessel_hC",
+  "task": "class",
+  "split": "test",
+  "n_eval": 4477,
+  "model_fingerprint": "16389543-1793140175773914700",
+  "closed_set": {
+    "accuracy": 0.42071814426437876,
+    "macro_f1": 0.36326368040983037,
+    "per_class_recall": {
+      "background": 0.7375690607734806,
+      "cargo": 0.7768052516411379,
+      "dredger": null,
+      "fishing": 0.4444444444444444,
+      "pilotvessel": 0.0,
+      "pleasurecraft": 0.2966292134831461,
+      "rescue": 0.06553398058252427,
+      "sailing": 0.31065759637188206,
+      "tanker": 0.376425855513308
+    },
+    "n_test": 3147,
+    "rare_class_warning": [
+      "dredger",
+      "pilotvessel",
+      "rescue"
+    ]
+  },
+  "calibration": {
+    "temperature": 1.8168142803762772,
+    "ece_before": 0.2762295530110783,
+    "ece_after": 0.11543800621351577,
+    "nll_before": 1.9903857975201849,
+    "nll_after": 1.5577714484092895,
+    "brier_before": 0.8137201266601283,
+    "brier_after": 0.7224419789437152
+  },
+  "by_distance": {
+    "near <700 m": {
+      "n": 531,
+      "accuracy": 0.536723163841808
+    },
+    "mid 700-1400 m": {
+      "n": 1011,
+      "accuracy": 0.390702274975272
+    },
+    "far >1400 m": {
+      "n": 1234,
+      "accuracy": 0.3014586709886548
+    }
+  },
+  "mc_dropout": {
+    "samples": 20,
+    "accuracy": 0.42103590721321893,
+    "ece": 0.27269536076000855
+  },
+  "open_set": {
+    "msp": {
+      "auroc": 0.5078152961048952,
+      "fpr95": 0.9345864661654135
+    },
+    "energy": {
+      "auroc": 0.5688642483233823,
+      "fpr95": 0.8984962406015038
+    },
+    "mc_entropy": {
+      "auroc": 0.506786269773576,
+      "fpr95": 0.9360902255639098
+    },
+    "mc_mi": {
+      "auroc": 0.5580225587801726,
+      "fpr95": 0.9045112781954887
+    },
+    "open_set_accuracy_msp": 0.31360285905740454,
+    "open_set_accuracy_energy": 0.3189635916908644,
+    "n_unknown": 1330
+  }
+}

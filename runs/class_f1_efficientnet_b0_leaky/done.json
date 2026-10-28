@@ -1,0 +1,5 @@
+{
+  "reason": "all epochs done",
+  "best_metric": 0.8714963155940813,
+  "epochs_run": 25
+}

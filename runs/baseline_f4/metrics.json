@@ -1,0 +1,45 @@
+{
+  "fold": 4,
+  "features": "per-band mean + std + overall mean (257)",
+  "class": {
+    "accuracy": 0.31355140186915886,
+    "macro_f1": 0.29120840328699243,
+    "per_class_recall": {
+      "background": 0.7928176795580111,
+      "cargo": 0.5185185185185185,
+      "dredger": 0.2141025641025641,
+      "fishing": 0.24285714285714285,
+      "other": 0.14705882352941177,
+      "passengership": 0.3063973063973064,
+      "pilotvessel": null,
+      "pleasurecraft": 0.4032258064516129,
+      "rescue": 0.03214285714285714,
+      "sailing": 0.24188790560471976,
+      "tanker": 0.4639175257731959,
+      "tug": 0.35873015873015873
+    },
+    "n_train": 20000,
+    "n_test": 4280
+  },
+  "distance": {
+    "mae": 378.11098600154133,
+    "median_ae": 339.8118531477435,
+    "rmse": 463.8342731228562,
+    "band_accuracy": 0.45849297573435505,
+    "unit": "m",
+    "n_train": 20000,
+    "n_test": 3915,
+    "baseline_mae": 393.01579776014387
+  },
+  "speed": {
+    "mae": 4.0706163561772755,
+    "median_ae": 3.194732255902394,
+    "rmse": 5.296020142589057,
+    "band_accuracy": 0.4655436447166922,
+    "unit": "knots",
+    "n_train": 20000,
+    "n_test": 3918,
+    "baseline_mae": 4.979170336386831
+  },
+  "seconds": 176.8
+}

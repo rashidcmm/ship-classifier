@@ -51,6 +51,28 @@
       "accuracy": 0.21729490022172948
     }
   },
+  "noise": {
+    "clean": {
+      "accuracy": 0.346,
+      "flagged_unknown": 0.054,
+      "n": 1000
+    },
+    "20.0 dB": {
+      "accuracy": 0.225,
+      "flagged_unknown": 0.035,
+      "n": 1000
+    },
+    "10.0 dB": {
+      "accuracy": 0.158,
+      "flagged_unknown": 0.029,
+      "n": 1000
+    },
+    "0.0 dB": {
+      "accuracy": 0.13,
+      "flagged_unknown": 0.008,
+      "n": 1000
+    }
+  },
   "mc_dropout": {
     "samples": 20,
     "accuracy": 0.32454768818405183,

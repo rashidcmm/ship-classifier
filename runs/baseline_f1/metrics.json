@@ -29,7 +29,21 @@
     "unit": "m",
     "n_train": 20000,
     "n_test": 4106,
-    "baseline_mae": 403.0671200915351
+    "baseline_mae": 403.0671200915351,
+    "bin_width_m": 250.0,
+    "n_bins": 8,
+    "bin_accuracy": 0.28178275694106186,
+    "within_one_bin": 0.7140769605455431,
+    "near_m": 700.0,
+    "near_far_balanced_accuracy": 0.7232750163505559,
+    "baseline_bins": {
+      "bin_width_m": 250.0,
+      "n_bins": 8,
+      "bin_accuracy": 0.19167072576717,
+      "within_one_bin": 0.5411592791037506,
+      "near_m": 700.0,
+      "near_far_balanced_accuracy": 0.5
+    }
   },
   "speed": {
     "mae": 2.9554086787411142,
@@ -41,5 +55,5 @@
     "n_test": 4115,
     "baseline_mae": 3.6386007262306874
   },
-  "seconds": 107.4
+  "seconds": 201.7
 }

@@ -1,0 +1,19 @@
+{
+  "run": "speed_f1_efficientnet_b0_vessel",
+  "task": "speed",
+  "split": "test",
+  "n_eval": 4115,
+  "model_fingerprint": "16404967-1793127252414634900",
+  "regression": {
+    "speed": {
+      "mae": 2.937578035828536,
+      "median_ae": 1.7138688380901623,
+      "rmse": 5.035721102901556,
+      "band_accuracy": 0.6201701093560146,
+      "unit": "knots",
+      "n": 4115,
+      "baseline_median": 9.586767594019571,
+      "baseline_mae": 3.639785087621651
+    }
+  }
+}
