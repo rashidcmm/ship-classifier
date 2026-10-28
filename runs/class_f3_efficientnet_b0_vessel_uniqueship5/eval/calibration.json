@@ -1,0 +1,7 @@
+{
+  "temperature": 2.735661691880739,
+  "msp_threshold": 0.5989134335941724,
+  "energy_threshold": -4.580828310834947,
+  "keep_known_percent": 95,
+  "chosen_on": "validation (class-balanced)"
+}

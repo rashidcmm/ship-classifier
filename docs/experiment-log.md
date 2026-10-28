@@ -1,21 +1,22 @@
 # Experiment log: what we trained, what we found, what we tried
 
 Fold 1 of the UniqueShip 12-class / 5-hour subset, unless a row says otherwise. All numbers below come from the
-files in `runs/` (`log.csv`, `done.json`, `eval/metrics.json`, `metrics.json`). Last updated: 28 October 2026, 12:55.
+files in `runs/` (`log.csv`, `done.json`, `eval/metrics.json`, `metrics.json`). Last updated: 28 October 2026, 14:35.
 
 **Status:** everything planned for the review is finished: E1 (5 folds, basic and rich features, 12 and 9 classes),
 E2, the **9-class model E2-9** (decided 28 October, section 4.5), E5, distance (E9), speed (E10), unknown ships
 groups A, B and C (E3), the noise test (E8), the hydrophone shift (E7) and the MobileNetV3 trial. Lessons 03–10 were
-executed with these results (section 7). On 28 October two **5-class models** were added (E2-5S and E2-5U,
-section 4.7), and the dataset's own paper was read (section 4.8).
+executed with these results (section 7). On 28 October two **5-class models** were added (E2-5S, and E2-5U on
+all 5 folds, section 4.7), and the dataset's own paper was read (section 4.8).
 
 **In one paragraph:** on ships it has never heard, every method we tried lands at about the same accuracy: 32 % for
 12 classes and 37 % for 9 classes (CNN and classical baseline alike), against 86 % when the test ships were heard in
 training (3.7). The models learn individual ships, not ship types, because some classes have very few ships.
 Temperature scaling makes the confidence trustworthy on average, but unknown ship types and added noise are not
 detected (3.9, 3.11). Distance and speed are estimated about as well by the baseline as by the CNN (2.2, 3.10).
-With **5 broader classes** the same CNN reaches **63.5 %** (ShipsEar size groups) and **62.8 %** (the 5-class task of
-the dataset's own paper, whose models reach 61.7–66.5 % with 8.5 times more audio per class) (4.7, 4.8).
+With **5 broader classes** the same CNN reaches **63.5 %** (ShipsEar size groups, fold 1) and, on the 5-class task
+of the dataset's own paper, **66.8 ± 4.4 %** over 5 folds (balanced accuracy 65.5 ± 2.3 %): level with the paper's
+best model (66.5 %), which had 8.5 times more audio per class (4.7, 4.8).
 
 ---
 
@@ -51,6 +52,7 @@ the dataset's own paper, whose models reach 61.7–66.5 % with 8.5 times more au
 | **E2-9** | **E2 with pilot vessel, dredger and rescue trained as "other": 9 classes (section 4.5)** | **36.7 %** | **0.370** | 10 epochs, 42 min |
 | **E2-5S** | **E2 trained on 5 size groups as in ShipsEar; "other" left out (section 4.7)** | **63.5 %** | **0.604** | 5 epochs, 19 min |
 | **E2-5U** | **E2 trained on the 5 classes of the dataset's paper: background, cargo, passenger ship, tanker, tug (4.7)** | **62.8 %** | **0.632** | 9 epochs, 16 min |
+| **E2-5U, 5 folds** | **the same on folds 1–5** | **66.8 ± 4.4 %** | **0.644 ± 0.020** | balanced accuracy 65.5 ± 2.3 % (4.7) |
 | E5 | same network, **leaky split** (clips shuffled without regard to ship) | 85.8 % | 0.857 | 25 epochs, 91 min |
 | reg | E2 with stronger regularisation | not tested | val 0.410 (E2: val 0.425) | judged on validation only |
 | MobileNetV3 | E2's setup with MobileNetV3-Large (section 4.2) | not tested | val 0.381 (E2: val 0.425) | judged on validation only; 25 min |
@@ -467,8 +469,27 @@ What this shows:
 - **Accuracy still falls with distance,** from 70 % to 53 % beyond 1.4 km in E2-5S.
 - **The best epoch is early again** (2 and 6): the models soon start to memorise the training ships (3.2).
 - **Calibration is much better than with 9 classes:** an ECE of 0.03 after temperature scaling.
-- **Fold 1 only.** The baseline's spread across folds was ± 6.6 to 9.5 points (3.8), so a few points' difference is
-  not meaningful. E2-5U on all 5 folds (about 1.5 h) would give a mean ± spread like the paper's.
+- **E2-5S is fold 1 only.** The baseline's spread across folds was ± 6.6 to 9.5 points (3.8), so a few points'
+  difference is not meaningful. E2-5U was run on all 5 folds (below).
+
+**E2-5U on all 5 folds** (13:13–14:22, same settings; ± is the standard deviation over the folds, as for E1):
+
+| Fold | Test clips (background share) | Accuracy | Balanced accuracy | Macro-F1 | Per ship (ships with ≥ 3 clips) | Epochs (best) |
+|---|---|---|---|---|---|---|
+| 1 | 2,250 (16 %) | 62.8 % | 63.5 % | 0.632 | 77.9 % (86) | 9 (6) |
+| 2 | 953 (39 %) | 73.1 % | 67.8 % | 0.660 | 74.1 % (27) | 12 (12) |
+| 3 | 1,661 (22 %) | 67.2 % | 66.4 % | 0.653 | 75.9 % (58) | 11 (8) |
+| 4 | 1,535 (24 %) | 68.3 % | 67.1 % | 0.663 | 63.0 % (54) | 6 (3) |
+| 5 | 1,887 (19 %) | 62.4 % | 62.7 % | 0.615 | 66.2 % (68) | 8 (5) |
+| **Mean ± std** | | **66.8 ± 4.4 %** | **65.5 ± 2.3 %** | **0.644 ± 0.020** | 71.4 ± 6.5 % | |
+
+- **Balanced accuracy** (the mean of the per-class recalls, every class counting equally) is the fairer number here:
+  background, the easiest class (recall 0.87–0.97), makes up 16–39 % of our test sets, which lifts fold 2's
+  accuracy to 73 %. The paper's test sets are balanced by duration.
+- **Mean recall per class:** background 0.92, tug 0.75, cargo 0.67, tanker 0.51, passenger ship 0.44. Tanker and
+  passenger ships are the weak classes on every fold.
+- Fold 2 stopped at the 12-epoch limit of `fast.yaml` while still improving. ECE after temperature scaling:
+  0.026–0.071.
 
 ### 4.8 The dataset's own paper (UniqueShip, read 28 October)
 
@@ -486,9 +507,15 @@ The paper reports results only for 5 classes (background, cargo, passenger ship,
 | Paper: MobileNetV3-Small, Mel spectrogram (CNN) | 42.7 h | 61.7 ± 1.2 % | 0.607 ± 0.018 |
 | Paper: ViT-B/16, Mel (transformer) | 42.7 h | 65.0 ± 2.7 % | 0.640 ± 0.035 |
 | Paper: SwinV2-Tiny, Mel (transformer) | 42.7 h | 66.5 ± 1.2 % | 0.656 ± 0.017 |
-| **Ours: E2-5U, EfficientNet-B0 (CNN)** | **5 h** | **62.8 %** (fold 1) | **0.632** |
+| Ours: E2-5U, EfficientNet-B0 (CNN), fold 1 | 5 h | 62.8 % | 0.632 |
+| **Ours: E2-5U, mean of 5 folds** | **5 h** | **66.8 ± 4.4 %** (balanced 65.5 ± 2.3 %) | **0.644 ± 0.020** |
 
-The paper's numbers are means over its 5 folds; ours is one fold.
+The paper's numbers are means over the 5 folds of its "5 Class – Balanced" set. Ours are over the 5 folds of our
+12-class subset, keeping only these 5 classes, so the test ships are not the same, and our smaller test sets give a
+larger spread. Within these spreads, our CNN is level with the paper's two transformers and above its MobileNet.
+Possible reasons, not tested: our spectrogram keeps more low-frequency detail (32 kHz audio, a 4,096-sample window,
+128 Mel bands from 10 Hz) than theirs (20 kHz audio, a 1,024-sample window, resized images); EfficientNet-B0 is a
+larger CNN than MobileNetV3-Small; our learning rate is much higher (3e-4 against 1e-6).
 
 What it means for us:
 
@@ -496,7 +523,8 @@ What it means for us:
   everything) contain the same ships as ours, only more hours of each. In the paper's tests, doubling the audio of
   the same ships adds 0.8–1.3 points, and doubling the number of different ships adds 2.4–2.6. 8.5 times the audio
   is about 3 doublings, so about +2.5 to +4 points: not worth a 65 GB download on this laptop. By the same rule, the
-  paper's best model would be expected at about 62–64 % with our 5 h per class, the range of E2-5U.
+  paper's best model would be expected at about 62–64 % with our 5 h per class; E2-5U's 5-fold mean (balanced
+  accuracy 65.5 %) is at or above that.
 - **The 12-class task has no published reference:** the paper's 66.5 % is for 5 classes.
 - **The same findings as ours:** leakage inflates accuracy (66.5 → 82.6 % for their Swin; 32 → 86 % for our E2 and
   E5), the models key on the individual ship (in their metadata analysis, knowing the MMSI best predicts which clips
@@ -533,7 +561,8 @@ What it means for us:
 ## 6. Limitations
 
 - **One fold for the CNN, one random seed.** Differences of a few hundredths in macro-F1 are not meaningful. The
-  baseline has 5 folds (3.8). E2 on all 5 folds (about 3.5 h) was left out because of the review deadline.
+  baseline has 5 folds (3.8). E2 on all 5 folds (about 3.5 h) was left out because of the review deadline. The
+  5-class E2-5U has all 5 folds (4.7).
 - **Few ships in rare classes:** pilot vessel 2, dredger 6 and rescue 23 in the whole dataset. Their scores rest on
   one or a handful of ships, and they dominate some folds' test sets (3.8).
 - **Validation and test differ in class mix** (3.3).
@@ -559,7 +588,8 @@ What it means for us:
 
 Left out for time: the 3-model deep ensemble, and the CNN on folds 2–5.
 
-Daytime, 28 October: E2-5S 12:04–12:24 and E2-5U 12:24–12:41, each with its evaluation (section 4.7).
+Daytime, 28 October: E2-5S 12:04–12:24, E2-5U 12:24–12:41 and E2-5U folds 2–5 13:13–14:22, each with its
+evaluation (section 4.7).
 
 ---
 
@@ -580,7 +610,7 @@ These follow from 3.7. None has been tested.
 - **Transformer backbones** (4.8): the paper's best models are SwinV2-Tiny and ViT-B/16 on Mel spectrograms, 3–5
   points above its MobileNet; both are available in timm.
 - **Distance as a bin classifier,** which would also give a confidence for the distance.
-- **5-fold evaluation** of the final model, to report a mean ± standard deviation.
+- **5-fold evaluation** of the final model, to report a mean ± standard deviation (done for E2-5U, 4.7).
 
 ---
 
@@ -602,6 +632,6 @@ python src/train.py --task speed --init-from runs/class_f1_efficientnet_b0_vesse
 python src/train.py --task class --merge-into-other pilotvessel dredger rescue --config configs/fast.yaml                 # 9 classes
 python src/baseline_classical.py --fold 1 --merge-into-other pilotvessel dredger rescue
 python src/train.py --task class --grouping shipsear5 --config configs/fast.yaml                                         # E2-5S
-python src/train.py --task class --grouping uniqueship5 --config configs/fast.yaml                                       # E2-5U
+python src/train.py --task class --grouping uniqueship5 --config configs/fast.yaml                                       # E2-5U (--fold 2..5 too)
 python src/evaluate.py runs/class_f1_efficientnet_b0_vessel_shipsear5                                                    # (also _uniqueship5)
 ```
