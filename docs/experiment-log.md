@@ -1,18 +1,21 @@
 # Experiment log: what we trained, what we found, what we tried
 
 Fold 1 of the UniqueShip 12-class / 5-hour subset, unless a row says otherwise. All numbers below come from the
-files in `runs/` (`log.csv`, `done.json`, `eval/metrics.json`, `metrics.json`). Last updated: 28 October 2026, 09:55.
+files in `runs/` (`log.csv`, `done.json`, `eval/metrics.json`, `metrics.json`). Last updated: 28 October 2026, 12:55.
 
 **Status:** everything planned for the review is finished: E1 (5 folds, basic and rich features, 12 and 9 classes),
 E2, the **9-class model E2-9** (decided 28 October, section 4.5), E5, distance (E9), speed (E10), unknown ships
 groups A, B and C (E3), the noise test (E8), the hydrophone shift (E7) and the MobileNetV3 trial. Lessons 03–10 were
-executed with these results (section 7).
+executed with these results (section 7). On 28 October two **5-class models** were added (E2-5S and E2-5U,
+section 4.7), and the dataset's own paper was read (section 4.8).
 
 **In one paragraph:** on ships it has never heard, every method we tried lands at about the same accuracy: 32 % for
 12 classes and 37 % for 9 classes (CNN and classical baseline alike), against 86 % when the test ships were heard in
 training (3.7). The models learn individual ships, not ship types, because some classes have very few ships.
 Temperature scaling makes the confidence trustworthy on average, but unknown ship types and added noise are not
 detected (3.9, 3.11). Distance and speed are estimated about as well by the baseline as by the CNN (2.2, 3.10).
+With **5 broader classes** the same CNN reaches **63.5 %** (ShipsEar size groups) and **62.8 %** (the 5-class task of
+the dataset's own paper, whose models reach 61.7–66.5 % with 8.5 times more audio per class) (4.7, 4.8).
 
 ---
 
@@ -46,6 +49,8 @@ detected (3.9, 3.11). Distance and speed are estimated about as well by the base
 | E1-9 rich | E1 rich on 9 classes | 36.4 % | 0.371 | as good as the 9-class CNN |
 | **E2** | **EfficientNet-B0, vessel-disjoint** | **32.4 %** | **0.290** | 11 epochs, 45 min |
 | **E2-9** | **E2 with pilot vessel, dredger and rescue trained as "other": 9 classes (section 4.5)** | **36.7 %** | **0.370** | 10 epochs, 42 min |
+| **E2-5S** | **E2 trained on 5 size groups as in ShipsEar; "other" left out (section 4.7)** | **63.5 %** | **0.604** | 5 epochs, 19 min |
+| **E2-5U** | **E2 trained on the 5 classes of the dataset's paper: background, cargo, passenger ship, tanker, tug (4.7)** | **62.8 %** | **0.632** | 9 epochs, 16 min |
 | E5 | same network, **leaky split** (clips shuffled without regard to ship) | 85.8 % | 0.857 | 25 epochs, 91 min |
 | reg | E2 with stronger regularisation | not tested | val 0.410 (E2: val 0.425) | judged on validation only |
 | MobileNetV3 | E2's setup with MobileNetV3-Large (section 4.2) | not tested | val 0.381 (E2: val 0.425) | judged on validation only; 25 min |
@@ -54,7 +59,7 @@ detected (3.9, 3.11). Distance and speed are estimated about as well by the base
 | E3 B | 9 known classes (cargo, pleasure craft, rescue held out) | 44.4 % | 0.385 | known classes only; 16 min |
 | E3 C | 9 known classes (tug, passenger ship, other held out) | 42.1 % | 0.363 | known classes only; crashed once and resumed (section 5) |
 
-Chance level is 8.3 % for 12 classes and 11.1 % for 9. Dredger has no clips in fold 1's test set, so E1 and E2
+Chance level is 8.3 % for 12 classes, 11.1 % for 9 and 20 % for 5. Dredger has no clips in fold 1's test set, so E1 and E2
 macro-F1 average 11 classes. The leaky test set contains dredger, so E5 averages 12. E3 scores higher partly because
 it has fewer classes to choose from.
 
@@ -413,6 +418,96 @@ craft (pleasure craft, sailing, pilot vessel, and rescue, placed by size), C pas
 tanker), E no ship (background). Weak spots remain: passenger ships 27 %, background 42 %. The placement of tugs and
 pilot boats follows the original ShipsEar paper and should be checked there.
 
+Both 5-class groupings were trained on 28 October: section 4.7.
+
+### 4.7 Five classes, trained (28 October)
+
+Two 5-class models with the same network and settings as E2-9 (fold 1, `configs/fast.yaml`); only the labels differ
+(`--grouping`, groupings in `configs/groups.yaml`). Classes in no group are left out of training, validation and test.
+
+- **E2-5S, size groups as in ShipsEar** (4.6): working and fishing (fishing, tug, dredger), small craft (pleasure
+  craft, sailing, pilot vessel, rescue), passenger ships, large ships (cargo, tanker), no ship (background). "Other"
+  is left out: it mixes many kinds of ships, so it fits no size group.
+- **E2-5U, the 5 classes of the dataset's paper** (4.8): background, cargo, passenger ship, tanker, tug; the other 7
+  classes are left out. It is the task the paper reports, so the two can be compared.
+
+| Test set, fold 1 | E2-9 (9 classes) | **E2-5S size groups** | **E2-5U paper's classes** |
+|---|---|---|---|
+| Test clips | 4,477 | 4,052 | 2,250 |
+| Accuracy, every clip | 36.7 % | **63.5 %** | **62.8 %** |
+| Macro-F1 | 0.370 | 0.604 | 0.632 |
+| Estimate before training, from E2's predictions | 34.2 % | 65.1 % (4.6) | 60.9 % |
+| Always answering the largest class | 19.5 % (other) | 32.9 % (small craft) | 23.4 % (tanker) |
+| Random guess | 11.1 % | 20 % | 20 % |
+| Ships < 700 m / 700–1,400 m / > 1,400 m | 48 / 35 / 26 % | 70 / 68 / 53 % | 64 / 60 / 50 % |
+| True class among the 2 most likely | 57.2 % | 86.9 % | 89.2 % |
+| Most confident 20 % / 10 % of clips | 57.8 / 65.1 % | 91.2 / 96.5 % | 89.8 / 97.8 % |
+| Per ship, clips averaged (ships with ≥ 3 clips) | 41.9 % (217) | 70.1 % (197) | 77.9 % (86) |
+| ECE before → after temperature scaling | 0.374 → 0.107 | 0.110 → 0.031 (T = 1.50) | 0.184 → 0.026 (T = 2.25) |
+| Training | 10 epochs (best 7), 42 min | 5 epochs (best 2), 19 min | 9 epochs (best 6), 16 min |
+
+Recall per class: E2-5S large 0.83, background 0.82, small craft 0.64, working 0.48, passenger 0.35; E2-5U background
+0.89, tug 0.67, tanker 0.66, cargo 0.51, passenger ship 0.44.
+
+Main confusions (share of each true class): in E2-5S, passenger ships are taken for small craft (31 %) or working
+vessels (24 %), working vessels for small craft (26 %), and small craft and background for each other (14 % each way:
+a quiet small boat sounds like no ship). In E2-5U, cargo is taken for tanker 43 % of the time and tanker for cargo
+27 %, the same main confusion as in the paper (4.8); passenger ships are taken for tugs 31 %.
+
+What this shows:
+
+- **Both pass the 60 % aimed for,** on ships never heard in training. Going from 9 to 5 classes removes the hardest
+  choices: E2-5S puts cargo and tanker in one group, which removes the largest confusion, and E2-5U drops the classes
+  with few ships.
+- **E2-5S is slightly optimistic:** its grouping was picked after estimates on this test set (4.6). E2-5U's classes
+  were fixed by the dataset's authors before we saw any result, so it is the cleaner number.
+- **The estimates were close** (65.1 → 63.5 %, 60.9 → 62.8 %): a model trained on the 5 classes does about as well as
+  the 12-class model asked the same question.
+- **Passenger ships stay the weakest class** in both: 13 test ships in fold 1, 110 in the whole dataset.
+- **Accuracy still falls with distance,** from 70 % to 53 % beyond 1.4 km in E2-5S.
+- **The best epoch is early again** (2 and 6): the models soon start to memorise the training ships (3.2).
+- **Calibration is much better than with 9 classes:** an ECE of 0.03 after temperature scaling.
+- **Fold 1 only.** The baseline's spread across folds was ± 6.6 to 9.5 points (3.8), so a few points' difference is
+  not meaningful. E2-5U on all 5 folds (about 1.5 h) would give a mean ± spread like the paper's.
+
+### 4.8 The dataset's own paper (UniqueShip, read 28 October)
+
+Our data is the "UniqueShip (12 Class – 5h Each)" subset of UniqueShip (Hashemi, Stout, Hoogs and Parham,
+"UniqueShip: Mitigating Data Leakage in Acoustic Ship Classification Benchmark Datasets", OCEANS 2026,
+arXiv 2609.13659; https://uniqueshipdata.org/). The paper's ship counts match ours exactly (110 passenger ships,
+2,522 cargo, 297 tug, 233 tanker; 4,218 ships), and the fold CSVs in our zip are its leak-free folds: ships grouped
+by MMSI, background grouped by day. The paper's clips are resampled to 20 kHz; our zip holds them at 32 kHz.
+
+The paper reports results only for 5 classes (background, cargo, passenger ship, tanker, tug), on its
+"5 Class – Balanced" set with 42 h 40 min of audio per class, 8.5 times our 5 h:
+
+| Without leakage, 5 classes | Audio per class | Accuracy | Macro-F1 |
+|---|---|---|---|
+| Paper: MobileNetV3-Small, Mel spectrogram (CNN) | 42.7 h | 61.7 ± 1.2 % | 0.607 ± 0.018 |
+| Paper: ViT-B/16, Mel (transformer) | 42.7 h | 65.0 ± 2.7 % | 0.640 ± 0.035 |
+| Paper: SwinV2-Tiny, Mel (transformer) | 42.7 h | 66.5 ± 1.2 % | 0.656 ± 0.017 |
+| **Ours: E2-5U, EfficientNet-B0 (CNN)** | **5 h** | **62.8 %** (fold 1) | **0.632** |
+
+The paper's numbers are means over its 5 folds; ours is one fold.
+
+What it means for us:
+
+- **More hours of the same ships would help little.** The bigger releases (65 GB for the 5 classes, 1.4 TB for
+  everything) contain the same ships as ours, only more hours of each. In the paper's tests, doubling the audio of
+  the same ships adds 0.8–1.3 points, and doubling the number of different ships adds 2.4–2.6. 8.5 times the audio
+  is about 3 doublings, so about +2.5 to +4 points: not worth a 65 GB download on this laptop. By the same rule, the
+  paper's best model would be expected at about 62–64 % with our 5 h per class, the range of E2-5U.
+- **The 12-class task has no published reference:** the paper's 66.5 % is for 5 classes.
+- **The same findings as ours:** leakage inflates accuracy (66.5 → 82.6 % for their Swin; 32 → 86 % for our E2 and
+  E5), the models key on the individual ship (in their metadata analysis, knowing the MMSI best predicts which clips
+  are classified correctly; our 3.7), and cargo against tanker is the main confusion.
+- **One difference:** they find that distance on its own hardly predicts which clips are classified correctly within
+  the 2 km radius, while our accuracy falls clearly beyond about 1.4 km (3.4, 4.7). Their test (predicting
+  correctness from metadata) is different, so the two don't directly conflict.
+- **Their recipe differs from ours:** ImageNet-pretrained backbones with a two-layer head, spectrograms with a 90 dB
+  range resized to 224 × 224 or 256 × 256, and AdamW with a learning rate of 1e-6 (as printed) for 30 epochs. Mel
+  spectrograms always beat plain STFT, and the transformers beat MobileNet by 3–5 points.
+
 ---
 
 ## 5. Engineering notes from the training runs
@@ -443,6 +538,8 @@ pilot boats follows the original ShipsEar paper and should be checked there.
   one or a handful of ships, and they dominate some folds' test sets (3.8).
 - **Validation and test differ in class mix** (3.3).
 - Only two hydrophones at one location, one ship at a time, ships up to about 2 km away.
+- **The 5 size groups were chosen after estimates on the same test set** (4.6), so E2-5S is slightly optimistic;
+  E2-5U's classes were fixed by the dataset's authors.
 
 ---
 
@@ -462,6 +559,8 @@ pilot boats follows the original ShipsEar paper and should be checked there.
 
 Left out for time: the 3-model deep ensemble, and the CNN on folds 2–5.
 
+Daytime, 28 October: E2-5S 12:04–12:24 and E2-5U 12:24–12:41, each with its evaluation (section 4.7).
+
 ---
 
 ## 8. Ideas not yet tried
@@ -474,7 +573,12 @@ These follow from 3.7. None has been tested.
 - **Augmentation that changes ship identity but keeps the class:** mixup between ships of the same class, pitch or
   speed shifts, mixing in recorded background noise.
 - **Class-balanced sampling by ship,** so that ships with many clips don't dominate training.
-- **Broader groups** (4.6), after agreeing a grouping with the professor.
+- **Broader groups** (4.6): two groupings trained on 28 October (4.7); which one to use is to agree with the
+  professor.
+- **Gentler fine-tuning, as in the dataset's paper** (4.8): a learning rate of 1e-6 (as printed) for 30 epochs,
+  against our 3e-4; our runs peak at epochs 2–7 and then memorise the training ships.
+- **Transformer backbones** (4.8): the paper's best models are SwinV2-Tiny and ViT-B/16 on Mel spectrograms, 3–5
+  points above its MobileNet; both are available in timm.
 - **Distance as a bin classifier,** which would also give a confidence for the distance.
 - **5-fold evaluation** of the final model, to report a mean ± standard deviation.
 
@@ -497,4 +601,7 @@ python src/train.py --task distance --init-from runs/class_f1_efficientnet_b0_ve
 python src/train.py --task speed --init-from runs/class_f1_efficientnet_b0_vessel/best.pt --config configs/fast.yaml      # E10
 python src/train.py --task class --merge-into-other pilotvessel dredger rescue --config configs/fast.yaml                 # 9 classes
 python src/baseline_classical.py --fold 1 --merge-into-other pilotvessel dredger rescue
+python src/train.py --task class --grouping shipsear5 --config configs/fast.yaml                                         # E2-5S
+python src/train.py --task class --grouping uniqueship5 --config configs/fast.yaml                                       # E2-5U
+python src/evaluate.py runs/class_f1_efficientnet_b0_vessel_shipsear5                                                    # (also _uniqueship5)
 ```

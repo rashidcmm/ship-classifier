@@ -1,0 +1,43 @@
+{
+  "run": "class_f1_efficientnet_b0_vessel_shipsear5",
+  "task": "class",
+  "split": "test",
+  "n_eval": 4052,
+  "model_fingerprint": "16369319-1793169720376026600",
+  "closed_set": {
+    "accuracy": 0.6349950641658441,
+    "macro_f1": 0.6044401017488232,
+    "per_class_recall": {
+      "working": 0.4824654622741764,
+      "small": 0.6446776611694153,
+      "passenger": 0.35185185185185186,
+      "large": 0.8250254323499492,
+      "background": 0.8176795580110497
+    },
+    "n_test": 4052,
+    "rare_class_warning": []
+  },
+  "calibration": {
+    "temperature": 1.5010057618221828,
+    "ece_before": 0.10975010572331173,
+    "ece_after": 0.031408205710240146,
+    "nll_before": 0.9762357736021381,
+    "nll_after": 0.9146083581621473,
+    "brier_before": 0.5078770415108714,
+    "brier_after": 0.4900361038280211
+  },
+  "by_distance": {
+    "near <700 m": {
+      "n": 673,
+      "accuracy": 0.7028231797919762
+    },
+    "mid 700-1400 m": {
+      "n": 1355,
+      "accuracy": 0.6782287822878229
+    },
+    "far >1400 m": {
+      "n": 1653,
+      "accuracy": 0.5329703569267997
+    }
+  }
+}

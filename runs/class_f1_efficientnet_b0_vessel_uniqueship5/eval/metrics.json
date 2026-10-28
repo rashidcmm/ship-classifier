@@ -1,0 +1,43 @@
+{
+  "run": "class_f1_efficientnet_b0_vessel_uniqueship5",
+  "task": "class",
+  "split": "test",
+  "n_eval": 2250,
+  "model_fingerprint": "16369191-1793171113880583800",
+  "closed_set": {
+    "accuracy": 0.6275555555555555,
+    "macro_f1": 0.6318919048863056,
+    "per_class_recall": {
+      "background": 0.8867403314917127,
+      "cargo": 0.5120350109409191,
+      "passengership": 0.4398148148148148,
+      "tanker": 0.6634980988593155,
+      "tug": 0.6723044397463002
+    },
+    "n_test": 2250,
+    "rare_class_warning": []
+  },
+  "calibration": {
+    "temperature": 2.251559191995234,
+    "ece_before": 0.1843742323949729,
+    "ece_after": 0.026192666429206198,
+    "nll_before": 1.1091809380426048,
+    "nll_after": 0.8660169194877203,
+    "brier_before": 0.5466155017306447,
+    "brier_after": 0.483641349625929
+  },
+  "by_distance": {
+    "near <700 m": {
+      "n": 464,
+      "accuracy": 0.6443965517241379
+    },
+    "mid 700-1400 m": {
+      "n": 781,
+      "accuracy": 0.5992317541613317
+    },
+    "far >1400 m": {
+      "n": 642,
+      "accuracy": 0.5031152647975078
+    }
+  }
+}
