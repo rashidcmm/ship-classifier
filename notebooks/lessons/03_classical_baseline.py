@@ -44,6 +44,33 @@ plt.figure(figsize=(9, 2.5)); plt.plot(example[0, :128], label="mean per band");
 plt.xlabel("mel band"); plt.legend(); plt.show()
 
 # %% [markdown]
+# ### A richer set: 761 numbers
+#
+# `python src/baseline_classical.py --features rich` summarises the same spectrogram in more ways (ideas from a
+# related project on the same kind of data). Experiment **E1 rich** feeds these 761 numbers to gradient boosting;
+# the models in this lesson use the 257.
+#
+# | part | numbers |
+# |---|---|
+# | the 257 above: average and spread of each mel band, plus overall loudness | 128 + 128 + 1 = 257 |
+# | 20 **MFCCs** (the shape of the spectrum at each moment in 20 numbers: a cosine transform of the 128 log-mel bands), average and spread over the 5 seconds | 20 + 20 = 40 |
+# | 10th / 50th / 90th percentile of every mel band (quiet background, typical level, loudest moments) | 3 × 128 = 384 |
+# | the same three percentiles of every MFCC | 3 × 20 = 60 |
+# | how fast each MFCC changes (spread of its change from one frame to the next) | 20 |
+# | **total** | **761** |
+
+# %%
+from baseline_classical import N_MFCC, rich_stats
+
+rich = rich_stats(mel[:1])
+parts = {"the 257 above": 257, "MFCC average and spread": 2 * N_MFCC, "mel band percentiles": 3 * 128,
+         "MFCC percentiles": 3 * N_MFCC, "MFCC change": N_MFCC}
+for name, n in parts.items():
+    print(f"{name:<25} {n:>4}")
+print(f"{'total':<25} {sum(parts.values()):>4}   (rich_stats gives {rich.shape[1]} per clip)")
+assert np.allclose(rich[:, :257], example)   # the first 257 are exactly the basic features
+
+# %% [markdown]
 # ## 2. Train / validation / test, in practice
 #
 # To keep this lesson quick we train on a random 6,000 of the ~34,000 training clips
@@ -127,3 +154,5 @@ print("always predicting class 0: accuracy", M.accuracy(y_toy, always_zero), "| 
 # 2. Drop the std features (`Xtr[:, :128]` etc.). Does variation over time carry information?
 # 3. Run the full baseline from a terminal: `python src/baseline_classical.py --fold 1`. It also predicts
 #    distance and speed. This is experiment **E1**, the number your CNN must beat.
+# 4. Train the three models on the 761 rich numbers: `features_for(mel, tr, stats=rich_stats)` (and the same for
+#    `va`). Which model gains most? (Gradient boosting on 20,000 clips gains about 2 points on fold 1.)
