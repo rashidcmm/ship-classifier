@@ -10,7 +10,7 @@ import build_notebooks  # noqa: E402
 EXPECTED = ["00_setup_check", "01_explore_data", "02_sound_to_spectrogram", "03_classical_baseline",
             "04_tiny_cnn_from_scratch", "05_training_the_real_model", "06_tuning_and_model_selection",
             "07_unknown_ship_detection", "08_trustworthy_confidence", "09_distance_and_speed",
-            "10_stress_tests_and_report", "11_results_and_five_classes"]
+            "10_stress_tests_and_report", "11_results_and_five_classes", "12_distance_classes_and_clusters"]
 
 
 def test_parse_percent_cells():
