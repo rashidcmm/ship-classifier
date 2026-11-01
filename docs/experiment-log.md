@@ -1,7 +1,7 @@
 # Experiment log: what we trained, what we found, what we tried
 
 Fold 1 of the UniqueShip 12-class / 5-hour subset, unless a row says otherwise. All numbers below come from the
-files in `runs/` (`log.csv`, `done.json`, `eval/metrics.json`, `metrics.json`). Last updated: 28 October 2026, 14:35.
+files in `runs/` (`log.csv`, `done.json`, `eval/metrics.json`, `metrics.json`). Last updated: 1 November 2026.
 
 **Status:** everything planned for the review is finished: E1 (5 folds, basic and rich features, 12 and 9 classes),
 E2, the **9-class model E2-9** (decided 28 October, section 4.5), E5, distance (E9), speed (E10), unknown ships
@@ -9,6 +9,8 @@ groups A, B and C (E3), the noise test (E8), the hydrophone shift (E7) and the M
 executed with these results (section 7). On 28 October two **5-class models** were added (E2-5S, and E2-5U on
 all 5 folds, section 4.7), and the dataset's own paper was read (section 4.8). Lesson 11
 (`notebooks/11_results_and_five_classes.ipynb`) recomputes the main results of this log, with figures, from the saved run files.
+On 1 November the project was **simplified to 6 classes with classical models only** (section 4.9, lesson 13):
+background, cargo, fishing, pleasure craft, tanker, tug, on new balanced folds, with interpretable sound features.
 
 **In one paragraph:** on ships it has never heard, every method we tried lands at about the same accuracy: 32 % for
 12 classes and 37 % for 9 classes (CNN and classical baseline alike), against 86 % when the test ships were heard in
@@ -537,6 +539,65 @@ What it means for us:
   range resized to 224 × 224 or 256 × 256, and AdamW with a learning rate of 1e-6 (as printed) for 30 epochs. Mel
   spectrograms always beat plain STFT, and the transformers beat MobileNet by 3–5 points.
 
+### 4.9 Six classes, interpretable features, two classical models (1 November)
+
+Decided on 1 November: the earlier work had grown into many models and variants, and the ship counts per class were
+very unequal. The new, smaller question (`src/six_classes.py`, `notebooks/13_six_classes_and_features.ipynb`):
+
+- **Classes:** background, cargo, fishing, pleasure craft, tanker, tug. Passenger ship is dropped (110 ships); every
+  class kept has at least 233 ships (background: recording days). Each class has the same 5 h (about 3,600 clips).
+- **Balancing:** hours are already equal; ship counts are not (cargo 2,522 ships with 1–2 clips each, tanker 233 with
+  about 15). No clip is deleted: training weights give every class the same total and every ship the same share
+  within its class. Inside each class the clips per ship hardly vary, so this is close to plain class weights.
+- **Folds:** 5 new folds (`StratifiedGroupKFold`, grouped by MMSI, background by day): every test fold holds a fifth
+  of every class's ships (tanker 46–47 per fold, against 10–34 in the official folds), and every ship is tested once.
+  Per run: one fold test, the next validation (to choose C or the number of trees), three training; then refit on
+  training + validation.
+- **Not downloaded:** the 64 GB `main5_balanced_audio` set: the same ships as ours, more hours of each, and no
+  fishing or pleasure craft.
+- **Models:** logistic regression (standardised, C from 0.01 / 0.1 / 1) and gradient boosting (early stopping on the
+  validation ships). No CNN, no leaky-split or hydrophone tests.
+- **Simple features ("normal model"):** mean and spread of each mel band + overall mean (257, as E1), no MFCC.
+- **Engineered features (144), from the raw audio:** MFCC 1–19 (mean, spread, change; 57), 1/3-octave band levels
+  20 Hz–12.5 kHz (29), level variation per octave (9), spectral shape per frame: centroid, bandwidth, roll-off,
+  flatness, flux, energy, zero-crossing rate, each as mean / std / 10th / 90th percentile (28), loudness and
+  impulsiveness: broadband level, spectral slope, low minus high level, kurtosis, crest factor (5), tonal lines below
+  1 kHz (LOFAR, 5) and propeller modulation of the 2–10 kHz noise (DEMON, 11). They replace the 761 "rich" numbers of
+  section 4.4. Extraction: 10 min for 21,604 clips (4 processes); the 5-fold run: 19 min, CPU.
+
+| 6 classes, 5 new folds (± over folds) | Accuracy | Balanced accuracy | Macro-F1 | Per ship (balanced) |
+|---|---|---|---|---|
+| simple + logistic regression | 56.9 ± 1.3 % | 56.9 ± 1.3 % | 0.564 ± 0.013 | 64.9 ± 2.5 % |
+| simple + gradient boosting | 58.4 ± 1.2 % | 58.4 ± 1.1 % | 0.579 ± 0.012 | 66.6 ± 2.8 % |
+| engineered + logistic regression | 60.8 ± 1.3 % | 60.8 ± 1.3 % | 0.604 ± 0.014 | 67.3 ± 1.8 % |
+| **engineered + gradient boosting** | **61.9 ± 1.1 %** | **61.9 ± 1.1 %** | **0.614 ± 0.012** | **70.5 ± 2.2 %** |
+
+Chance is 16.7 %. Accuracy equals balanced accuracy because the new test folds hold about the same number of clips
+per class. Recall per class (engineered + gradient boosting): background 85 %, cargo 65 %, pleasure craft 64 %, tug
+62 %, tanker 52 %, fishing 43 %.
+
+What we found:
+
+- **Engineered features beat the simple ones by 3.5–3.9 points with 144 numbers instead of 257**, on every fold for
+  gradient boosting. They help most for tug (+7 points), cargo (+5), pleasure craft (+5) and fishing (+3.5).
+- **The higher MFCCs help** (MFCC group alone, validation): 4 → 8 → 12 → 16 → 19 coefficients give 44.5, 46.8, 48.2,
+  48.7 and 49.3 % (mean of both models), so all 19 are kept. The expectation that they add nothing did not hold.
+- **The folds agree within ± 1.1–1.3 points**, against ± 4.4 (E2-5U) and ± 9.1 (E1) on the official folds.
+- **Main confusion: cargo against tanker** (30 % of cargo called tanker, 43 % of tanker called cargo): their median
+  spectra lie on top of each other. Fishing is confused with tug (25 %) and pleasure craft (19 %).
+- **Feature groups** (alone, gradient boosting / drop when shuffled in the full model): 1/3-octave levels 54.5 % / 24
+  points, spectral shape 53.8 % / 5, MFCC 52.4 % / 7, loudness and impulsiveness (5 numbers) 49.3 % / 2, DEMON
+  40.8 % / 4, tonal lines 39.1 % / 1.5, level variation 37.7 % / 3.
+- **No hydrophone shortcut** (every ship class is 79–82 % hydrophone 2523). Cargo and tankers pass closer (median
+  about 900 m against 1,350–1,500 m), worth about 4 dB of their 20–30 dB higher level at 50 Hz. Balanced accuracy on
+  ship clips: 61 % within 1,400 m, 52 % beyond.
+- For comparison only (different folds): E2's 12-class predictions limited to these 6 classes give about 57 %
+  balanced accuracy on fold 1.
+
+Limits: one seed; levels uncalibrated; the number of MFCCs was chosen on the validation folds of all five runs (each is
+another run's test fold), a small look at test data for that one choice; new folds, so not comparable number for number
+with the paper or with sections 2–4.8.
+
 ---
 
 ## 5. Engineering notes from the training runs
@@ -635,4 +696,6 @@ python src/baseline_classical.py --fold 1 --merge-into-other pilotvessel dredger
 python src/train.py --task class --grouping shipsear5 --config configs/fast.yaml                                         # E2-5S
 python src/train.py --task class --grouping uniqueship5 --config configs/fast.yaml                                       # E2-5U (--fold 2..5 too)
 python src/evaluate.py runs/class_f1_efficientnet_b0_vessel_shipsear5                                                    # (also _uniqueship5)
+python src/six_classes.py features                                                                                       # 6 classes (4.9): features from the raw audio
+python src/six_classes.py run                                                                                            # 6 classes: 5 folds, both feature sets, both models
 ```

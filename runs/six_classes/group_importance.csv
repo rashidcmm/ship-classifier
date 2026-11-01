@@ -1,0 +1,71 @@
+fold,model,group,drop
+1,logistic regression,MFCC,0.12024330923937543
+1,logistic regression,1/3-octave levels,0.3329314094961627
+1,logistic regression,level changes over time,0.038852333423335085
+1,logistic regression,spectral shape,0.1399893241046416
+1,logistic regression,loudness and impulsiveness,0.05297462023640883
+1,logistic regression,tonal lines,0.029122855400436465
+1,logistic regression,propeller modulation (DEMON),0.055223869478513245
+1,gradient boosting,MFCC,0.07066284340036548
+1,gradient boosting,1/3-octave levels,0.24881639560487753
+1,gradient boosting,level changes over time,0.026078233567394582
+1,gradient boosting,spectral shape,0.052374498186439356
+1,gradient boosting,loudness and impulsiveness,0.020918750726215334
+1,gradient boosting,tonal lines,0.010712969877447853
+1,gradient boosting,propeller modulation (DEMON),0.03862653718461081
+2,logistic regression,MFCC,0.12160171408047471
+2,logistic regression,1/3-octave levels,0.3034060483540162
+2,logistic regression,level changes over time,0.02025600431605464
+2,logistic regression,spectral shape,0.10967544561167719
+2,logistic regression,loudness and impulsiveness,0.028386144315217538
+2,logistic regression,tonal lines,0.01908821773499192
+2,logistic regression,propeller modulation (DEMON),0.055385772657044585
+2,gradient boosting,MFCC,0.06925327057026509
+2,gradient boosting,1/3-octave levels,0.23780447820330317
+2,gradient boosting,level changes over time,0.023179884448080796
+2,gradient boosting,spectral shape,0.05139577682691865
+2,gradient boosting,loudness and impulsiveness,0.023077890710428428
+2,gradient boosting,tonal lines,0.014306110789391036
+2,gradient boosting,propeller modulation (DEMON),0.03417038228107627
+3,logistic regression,MFCC,0.1075642736960986
+3,logistic regression,1/3-octave levels,0.33651858588051337
+3,logistic regression,level changes over time,0.03495525564534555
+3,logistic regression,spectral shape,0.11910489359086927
+3,logistic regression,loudness and impulsiveness,0.0315490908760749
+3,logistic regression,tonal lines,0.015444022393822329
+3,logistic regression,propeller modulation (DEMON),0.04237105388328092
+3,gradient boosting,MFCC,0.061189215194377033
+3,gradient boosting,1/3-octave levels,0.236215478963022
+3,gradient boosting,level changes over time,0.023207542098764484
+3,gradient boosting,spectral shape,0.04801458432914015
+3,gradient boosting,loudness and impulsiveness,0.015580652980511664
+3,gradient boosting,tonal lines,0.012865284561379772
+3,gradient boosting,propeller modulation (DEMON),0.04431534573839069
+4,logistic regression,MFCC,0.08803393104684532
+4,logistic regression,1/3-octave levels,0.23996948945578825
+4,logistic regression,level changes over time,0.025290568459137797
+4,logistic regression,spectral shape,0.05290896926403269
+4,logistic regression,loudness and impulsiveness,0.01391269977473967
+4,logistic regression,tonal lines,0.015214981772416722
+4,logistic regression,propeller modulation (DEMON),0.04345398568997986
+4,gradient boosting,MFCC,0.0824538599103164
+4,gradient boosting,1/3-octave levels,0.2579196940009127
+4,gradient boosting,level changes over time,0.033353398539687405
+4,gradient boosting,spectral shape,0.060927320948917695
+4,gradient boosting,loudness and impulsiveness,0.027246954964505132
+4,gradient boosting,tonal lines,0.017055546054720667
+4,gradient boosting,propeller modulation (DEMON),0.04144861141467585
+5,logistic regression,MFCC,0.09793214762728823
+5,logistic regression,1/3-octave levels,0.22591963490715639
+5,logistic regression,level changes over time,0.01935374701911045
+5,logistic regression,spectral shape,0.06109862173801391
+5,logistic regression,loudness and impulsiveness,0.006429845870383828
+5,logistic regression,tonal lines,0.015702161480745287
+5,logistic regression,propeller modulation (DEMON),0.032883070590353704
+5,gradient boosting,MFCC,0.07848467292020518
+5,gradient boosting,1/3-octave levels,0.24113538717673233
+5,gradient boosting,level changes over time,0.027452889808414687
+5,gradient boosting,spectral shape,0.04544906767689102
+5,gradient boosting,loudness and impulsiveness,0.013724144541609973
+5,gradient boosting,tonal lines,0.020376708958528573
+5,gradient boosting,propeller modulation (DEMON),0.033226790907115035

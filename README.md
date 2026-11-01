@@ -11,6 +11,9 @@ website for access and for how to cite it.
 - Lessons (learn every step): `notebooks/` (start JupyterLab with `jupyter lab notebooks`)
 - Every result in one notebook, including the 5-class models: `notebooks/11_results_and_five_classes.ipynb`
 - Distance as near / mid / far classes and k-means clustering, without a CNN: `notebooks/12_distance_classes_and_clusters.ipynb`
+- **Six classes** (background, cargo, fishing, pleasure craft, tanker, tug) with balanced folds, ship weights and
+  interpretable sound features, logistic regression and gradient boosting only: `notebooks/13_six_classes_and_features.ipynb`
+  (`python src/six_classes.py features`, then `python src/six_classes.py run`; CPU only, needs the audio zip)
 
 ---
 
