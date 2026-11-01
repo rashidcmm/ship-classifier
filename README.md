@@ -14,6 +14,8 @@ website for access and for how to cite it.
 - **Six classes** (background, cargo, fishing, pleasure craft, tanker, tug) with balanced folds, ship weights and
   interpretable sound features, logistic regression and gradient boosting only: `notebooks/13_six_classes_and_features.ipynb`
   (`python src/six_classes.py features`, then `python src/six_classes.py run`; CPU only, needs the audio zip)
+- The same six classes balanced by **removing data** (equal ships and clips per class) instead of weights:
+  `notebooks/14_six_classes_equal_ships.ipynb` (`python src/six_classes_equal.py`, after lesson 13's two steps)
 
 ---
 

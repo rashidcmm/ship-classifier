@@ -11,6 +11,7 @@ all 5 folds, section 4.7), and the dataset's own paper was read (section 4.8). L
 (`notebooks/11_results_and_five_classes.ipynb`) recomputes the main results of this log, with figures, from the saved run files.
 On 1 November the project was **simplified to 6 classes with classical models only** (section 4.9, lesson 13):
 background, cargo, fishing, pleasure craft, tanker, tug, on new balanced folds, with interpretable sound features.
+The same day, balancing by **removing data** (equal ships and clips per class) was compared with weights (4.10, lesson 14).
 
 **In one paragraph:** on ships it has never heard, every method we tried lands at about the same accuracy: 32 % for
 12 classes and 37 % for 9 classes (CNN and classical baseline alike), against 86 % when the test ships were heard in
@@ -598,6 +599,36 @@ Limits: one seed; levels uncalibrated; the number of MFCCs was chosen on the val
 another run's test fold), a small look at test data for that one choice; new folds, so not comparable number for number
 with the paper or with sections 2–4.8.
 
+### 4.10 Six classes balanced by removing data instead of weights (1 November)
+
+Asked for after 4.9: instead of weights, make the classes equal by removing data (`src/six_classes_equal.py`,
+`notebooks/14_six_classes_equal_ships.ipynb`). In every run, the training, validation and training + validation sets
+are each cut to **the same number of ships per class** (the smallest class's, tanker: 186–187 in training +
+validation; ships chosen at random) and then **the same number of clips per class** (the smallest total among the kept
+ships, cargo: 261–267), one clip from every kept ship first. No weights. The folds, the **test sets (never cut)**, the
+features (MFCC 1–19) and the models are those of 4.9, so both ways of balancing are scored on the same test clips. The
+training set shrinks from about 17,280 to about 1,590 clips (9 %). Each run is repeated with 5 random draws; 5 min, CPU.
+
+| 6 classes, same 5 test folds | Weights (4.9) | Removal: equal ships and clips |
+|---|---|---|
+| simple + logistic regression | 56.9 ± 1.3 % | 52.7 ± 0.8 % |
+| simple + gradient boosting | 58.4 ± 1.1 % | 53.5 ± 0.8 % |
+| engineered + logistic regression | 60.8 ± 1.3 % | 56.9 ± 1.3 % |
+| **engineered + gradient boosting** | **61.9 ± 1.1 %** | **57.0 ± 1.0 %** |
+| engineered + gradient boosting, per ship | 70.5 ± 2.2 % | 66.2 ± 0.9 % |
+
+Balanced accuracy; for removal each fold is averaged over the 5 draws, ± is the spread over folds.
+
+- **Removal costs 4–5 points** for every model and feature set, on every fold. The random draws differ by only
+  0.2–0.6 points, so the loss comes from how much is removed, not from which ships.
+- **What is lost is ship diversity.** Recall change per class (engineered + gradient boosting) against the share of
+  the class's ships removed: cargo −13.4 points (91 % of ships removed), pleasure craft −5.9 (43 %), tug −5.6 (22 %),
+  background −4.6 (71 %), fishing −2.8 (3 %), tanker +2.9 (0 %). Every class lost 91 % of its clips, so the order
+  follows the ships, roughly (background, the easiest class, loses less than its share of ships suggests).
+- **The engineered features still win by about 4 points.**
+- Conclusion: weights are the better way to balance on this data; they give every class and ship equal weight
+  without throwing away different ships. Not tried: an ensemble of models trained on different equal-ships subsets.
+
 ---
 
 ## 5. Engineering notes from the training runs
@@ -698,4 +729,5 @@ python src/train.py --task class --grouping uniqueship5 --config configs/fast.ya
 python src/evaluate.py runs/class_f1_efficientnet_b0_vessel_shipsear5                                                    # (also _uniqueship5)
 python src/six_classes.py features                                                                                       # 6 classes (4.9): features from the raw audio
 python src/six_classes.py run                                                                                            # 6 classes: 5 folds, both feature sets, both models
+python src/six_classes_equal.py                                                                                          # 6 classes balanced by removal (4.10)
 ```
