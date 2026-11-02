@@ -1,7 +1,7 @@
 # Experiment log: what we trained, what we found, what we tried
 
 Fold 1 of the UniqueShip 12-class / 5-hour subset, unless a row says otherwise. All numbers below come from the
-files in `runs/` (`log.csv`, `done.json`, `eval/metrics.json`, `metrics.json`). Last updated: 1 November 2026.
+files in `runs/` (`log.csv`, `done.json`, `eval/metrics.json`, `metrics.json`). Last updated: 2 November 2026.
 
 **Status:** everything planned for the review is finished: E1 (5 folds, basic and rich features, 12 and 9 classes),
 E2, the **9-class model E2-9** (decided 28 October, section 4.5), E5, distance (E9), speed (E10), unknown ships
@@ -11,7 +11,8 @@ all 5 folds, section 4.7), and the dataset's own paper was read (section 4.8). L
 (`notebooks/11_results_and_five_classes.ipynb`) recomputes the main results of this log, with figures, from the saved run files.
 On 1 November the project was **simplified to 6 classes with classical models only** (section 4.9, lesson 13):
 background, cargo, fishing, pleasure craft, tanker, tug, on new balanced folds, with interpretable sound features.
-The same day, balancing by **removing data** (equal ships and clips per class) was compared with weights (4.10, lesson 14).
+The same day, balancing by **removing data** (equal ships and clips per class) was compared with weights (4.10, lesson 14),
+and a **team of 25 balanced models** on different equal-ships subsets was tried (4.11, lesson 14 section 4).
 
 **In one paragraph:** on ships it has never heard, every method we tried lands at about the same accuracy: 32 % for
 12 classes and 37 % for 9 classes (CNN and classical baseline alike), against 86 % when the test ships were heard in
@@ -627,7 +628,37 @@ Balanced accuracy; for removal each fold is averaged over the 5 draws, ± is the
   follows the ships, roughly (background, the easiest class, loses less than its share of ships suggests).
 - **The engineered features still win by about 4 points.**
 - Conclusion: weights are the better way to balance on this data; they give every class and ship equal weight
-  without throwing away different ships. Not tried: an ensemble of models trained on different equal-ships subsets.
+  without throwing away different ships. A team of removal models on different subsets is in 4.11.
+
+### 4.11 A team of balanced models (1–2 November)
+
+Asked for after 4.10: train many balanced models, each on a different random equal-ships subset, and average their
+probabilities (`python src/six_classes_equal.py --ensemble`, lesson 14 section 4). In every run (same folds and test
+sets as 4.9 and 4.10), 25 models are trained, each on its own cut of the **same** training + validation folds (the cut
+of 4.10, seeds 100·fold + member, so members 1–5 are 4.10's five draws). Models of different folds are never mixed.
+The scores are recorded for teams of 1, 2, 3, 5, 10, 15, 20 and 25 members. 67 min, CPU.
+
+| 6 classes, same 5 test folds | Weights (4.9) | Removal, one model (4.10) | Team of 5 | Team of 25 |
+|---|---|---|---|---|
+| simple + logistic regression | 56.9 ± 1.3 % | 52.7 ± 0.8 % | 54.5 ± 1.1 % | 55.8 ± 1.5 % |
+| simple + gradient boosting | 58.4 ± 1.1 % | 53.5 ± 0.8 % | 56.2 ± 1.3 % | 57.5 ± 1.7 % |
+| engineered + logistic regression | 60.8 ± 1.3 % | 56.9 ± 1.3 % | 58.8 ± 1.5 % | 59.9 ± 1.4 % |
+| **engineered + gradient boosting** | **61.9 ± 1.1 %** | **57.0 ± 1.0 %** | **59.9 ± 0.8 %** | **61.2 ± 1.4 %** |
+| engineered + gradient boosting, per ship | 70.5 ± 2.2 % | 66.2 ± 0.9 % | 68.9 ± 1.4 % | 70.2 ± 1.8 % |
+
+Balanced accuracy, ± is the spread over the 5 folds.
+
+- **Coverage:** one member sees 9 % of the training clips (9 % of cargo ships, 29 % of background days); 25 members
+  together see 91 % of the clips and cargo ships and every ship of the other classes.
+- **The team wins back 74–86 % of what removal lost** (engineered + gradient boosting: 4.2 of 4.9 points). Almost all
+  of it comes with the first 10 members; 10 → 25 adds 0.2–0.5 points.
+- **Still slightly below weights in all 20 runs** (5 folds × 4 combinations), by 0.1–2.2 points. Per ship the two
+  are level (70.2 against 70.5 %, the sign changes from fold to fold).
+- **The cargo/tanker borderline moves:** against weights, cargo recall is 10 points lower (54.7 against 64.7 %),
+  tanker 8 points higher (60.2 against 52.3 %); the other four classes are within 1.3 points. The weighted model calls
+  19 % of the test clips cargo and 15 % tanker, the team 16 % and 18 %.
+- Conclusion: it confirms that 4.10 lost ship diversity, not the balance. Weights remain the recommendation: one
+  model, slightly better and 25 times cheaper to train.
 
 ---
 
@@ -730,4 +761,5 @@ python src/evaluate.py runs/class_f1_efficientnet_b0_vessel_shipsear5           
 python src/six_classes.py features                                                                                       # 6 classes (4.9): features from the raw audio
 python src/six_classes.py run                                                                                            # 6 classes: 5 folds, both feature sets, both models
 python src/six_classes_equal.py                                                                                          # 6 classes balanced by removal (4.10)
+python src/six_classes_equal.py --ensemble                                                                               # team of 25 balanced models (4.11)
 ```

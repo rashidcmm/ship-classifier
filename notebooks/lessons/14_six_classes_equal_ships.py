@@ -14,10 +14,12 @@
 # | 1. How the data are cut | how many ships and clips are left |
 # | 2. Results | removal against weights |
 # | 3. Which classes change | per-class accuracy and confusions |
-# | 4. What it means | |
+# | 4. A team of balanced models | many balanced models, each on different ships, averaged |
+# | 5. What it means | |
 #
 # ```
-# python src/six_classes_equal.py      # -> runs/six_classes_equal/ (about 7 minutes, CPU; needs lesson 13's features)
+# python src/six_classes_equal.py              # -> runs/six_classes_equal/ (about 7 minutes, CPU; needs lesson 13's features)
+# python src/six_classes_equal.py --ensemble   # section 4 (about 70 minutes, CPU)
 # ```
 
 # %%
@@ -173,14 +175,116 @@ print(lost.sort_values("recall change (points)"))
 # lesson 07 and the dataset's paper.
 
 # %% [markdown]
-# ## 4. What it means
+# ## 4. A team of balanced models
 #
-# | Balanced accuracy, same test ships | Weights (lesson 13, ~17,300 training clips) | Removal (lesson 14, ~1,590 training clips) |
-# |---|---|---|
-# | simple + logistic regression | 56.9 ± 1.3 % | 52.7 ± 0.8 % |
-# | simple + gradient boosting | 58.4 ± 1.1 % | 53.5 ± 0.8 % |
-# | engineered + logistic regression | 60.8 ± 1.3 % | 56.9 ± 1.3 % |
-# | **engineered + gradient boosting** | **61.9 ± 1.1 %** | **57.0 ± 1.0 %** |
+# One balanced model sees only 186 of the 2,017 cargo ships. A **team** gets the ships back without giving up the
+# balance. In every run, 25 models are trained, each on its **own** random equal-ships subset of the **same**
+# training folds (the cut of section 1, with a different random draw each time). For a test clip, the team's answer
+# is the average of the 25 models' probabilities.
+#
+# The folds don't change: the test fold is the same as everywhere in lessons 13 and 14, and models from different
+# folds are never mixed (a model from another fold could have heard this fold's test ships). Members 1-5 are the
+# five draws of section 2, so a team of one is exactly one model of section 2.
+#
+# First: how much of the training data does the team see?
+
+# %%
+COLORS = dict(zip(S.CLASSES6, ["#7f7f7f", "#2a78d6", "#1baf7a", "#eb6834", "#9b59b6", "#c0392b"]))
+cov = pd.read_csv(OUT / "ensemble_coverage.csv")
+seen = cov.groupby(["members", "label"])[["ships_seen", "clips_seen"]].mean().unstack("label")
+print("share of the training ships (%) seen by at least one member, mean over the 5 runs:")
+print((100 * seen["ships_seen"]).round(0).astype(int))
+print("\nshare of the training clips (%) seen by at least one member:")
+print((100 * seen["clips_seen"]).round(0).astype(int))
+
+fig, ax = plt.subplots(1, 2, figsize=(13, 3.6))
+for j, (key, title) in enumerate([("ships_seen", "ships"), ("clips_seen", "clips")]):
+    for c in S.CLASSES6:
+        ax[j].plot(seen.index, 100 * seen[key][c], "o-", ms=3, color=COLORS[c], label=c)
+    ax[j].set_xlabel("members in the team"); ax[j].set_ylabel(f"training {title} seen (%)")
+    ax[j].set_ylim(0, 105); ax[j].set_title(f"Share of the training {title} that at least one member saw")
+ax[1].legend(fontsize=8, ncol=2); plt.tight_layout(); plt.show()
+
+# %% [markdown]
+# Now the test scores as the team grows, against lesson 13's weighted models (dashed lines, same colours):
+
+# %%
+team = pd.DataFrame(json.loads((OUT / "ensemble_results.json").read_text())["results"])
+curve = team.groupby(["features", "model", "members"])[cols].agg(["mean", "std"])
+w = weights.groupby(["features", "model"])[cols].agg(["mean", "std"])
+
+fig, ax = plt.subplots(figsize=(9, 4))
+for (f, m), color in zip(combos, ["#9ab8de", "#2a78d6", "#f2b48f", "#eb6834"]):
+    c = curve.loc[(f, m), "balanced_accuracy"]
+    ax.errorbar(c.index, 100 * c["mean"], yerr=100 * c["std"], marker="o", ms=4, capsize=2, color=color,
+                label=f"{m}, {f}")
+    ax.axhline(100 * w.loc[(f, m), ("balanced_accuracy", "mean")], color=color, ls="--", lw=1)
+ax.set_xlabel("members in the team"); ax.set_ylabel("balanced accuracy (%)")
+ax.set_title("A team of balanced models (solid) against weights (dashed)"); ax.legend(fontsize=8); plt.show()
+
+rows = {}
+for f, m in combos:
+    for n in (1, 5, 25):
+        rows[(f, m, f"team of {n}")] = curve.loc[(f, m, n)]
+    rows[(f, m, "weights (lesson 13)")] = w.loc[(f, m)]
+show = pd.DataFrame(rows).T
+print(((100 * show.xs("mean", axis=1, level=1)).round(1).astype(str) + " ± "
+       + (100 * show.xs("std", axis=1, level=1)).round(1).astype(str)).to_string())
+
+# %% [markdown]
+# Per class, for gradient boosting with the engineered features: one balanced model (section 2), the team of 25, and
+# lesson 13's weighted model.
+
+# %%
+team25 = team[team.members == team.members.max()]
+rec3 = pd.DataFrame({"one balanced model": recall_table(removal)[best],
+                     "team of 25": recall_table(team25)[best],
+                     "weights": recall_table(weights)[best]})
+print((100 * rec3).round(1))
+
+tp = pd.read_parquet(OUT / "ensemble_predictions.parquet")
+tp = tp[(tp.features == best[0]) & (tp.model == best[1])]
+cm = confusion_matrix(tp.y, tp[[f"p_{c}" for c in S.CLASSES6]].to_numpy().argmax(1), normalize="true")
+fig, ax = plt.subplots(figsize=(6, 5))
+ax.imshow(cm, cmap="Blues", vmin=0, vmax=1)
+for i in range(6):
+    for j in range(6):
+        ax.text(j, i, f"{cm[i, j]:.0%}", ha="center", va="center", color="white" if cm[i, j] > 0.5 else "black")
+ax.set_xticks(range(6), S.CLASSES6, rotation=30); ax.set_yticks(range(6), S.CLASSES6)
+ax.set_xlabel("predicted"); ax.set_ylabel("true")
+ax.set_title("Team of 25: gradient boosting, engineered features\n(all 5 test folds; rows add up to 100 %)")
+plt.tight_layout(); plt.show()
+
+# %% [markdown]
+# **The team wins back most of what removal lost, but not quite all of it.**
+#
+# - **Coverage:** one balanced model sees 9 % of the training clips, and only 9 % of the cargo ships and 29 % of the
+#   background days. A team of 25 sees 91 % of the clips and of the cargo ships, and every ship of the other
+#   classes. Each member is still trained on balanced data.
+# - **Accuracy:** for engineered + gradient boosting, one balanced model scores 57.0 %, a team of 5 59.9 % and a team
+#   of 25 **61.2 ± 1.4 %**, against 61.9 ± 1.1 % with weights. That wins back 4.2 of the 4.9 points that removal
+#   lost. The other three combinations win back 74-82 % of their loss.
+# - **Diminishing returns:** almost all of the gain comes with the first 10 members. Going from 10 to 25 members
+#   adds only 0.2-0.5 points.
+# - **Still slightly below weights:** in all 20 runs (5 folds × 4 combinations), the team scores 0.1-2.2 points
+#   below the weighted model. Per ship (probabilities averaged over a ship's clips), the two are level: 70.2 against
+#   70.5 % for engineered + gradient boosting, and the sign of the difference changes from fold to fold.
+# - **Per class:** compared with one balanced model, the team gains 3-5 points in every class. Compared with weights,
+#   four classes are about the same, but the cargo/tanker borderline moves. Cargo is 10 points lower (54.7 against
+#   64.7 %) and tanker 8 points higher (60.2 against 52.3 %). The weighted model calls 19 % of all test clips cargo and
+#   15 % tanker; the team 16 % and 18 %. The likely reason: every member sees as many tanker ships as cargo ships,
+#   while the weighted model learned from all 2,017 different cargo ships at once and so gives cargo a wider region.
+# - **Cost:** 25 models per run instead of one (67 minutes on this laptop, against 7 for section 2's five draws).
+
+# %% [markdown]
+# ## 5. What it means
+#
+# | Balanced accuracy, same test ships | Weights (lesson 13, ~17,300 training clips) | Removal (one model, ~1,590 training clips) | Team of 25 removal models |
+# |---|---|---|---|
+# | simple + logistic regression | 56.9 ± 1.3 % | 52.7 ± 0.8 % | 55.8 ± 1.5 % |
+# | simple + gradient boosting | 58.4 ± 1.1 % | 53.5 ± 0.8 % | 57.5 ± 1.7 % |
+# | engineered + logistic regression | 60.8 ± 1.3 % | 56.9 ± 1.3 % | 59.9 ± 1.4 % |
+# | **engineered + gradient boosting** | **61.9 ± 1.1 %** | **57.0 ± 1.0 %** | **61.2 ± 1.4 %** |
 #
 # - **Removing data to equalise the classes costs 4-5 points**, for every model and feature set, on every one of
 #   the five folds. Per ship: 66.2 % against 70.5 % (engineered + gradient boosting).
@@ -190,10 +294,11 @@ print(lost.sort_values("recall change (points)"))
 #   the big classes lose most of their different ships (cargo 91 %), and equal clips then keeps only 1-2 clips per
 #   ship. Cargo, which lost the most ships, lost the most accuracy (13 points).
 # - **The engineered features still win by about 4 points**, so that conclusion of lesson 13 holds either way.
-# - **Weights are the better way to balance here:** they make every class and every ship count the same, as removal
-#   does, but keep all the different ships. Removal would only be preferable if the extra data were harmful (for
-#   example many near-identical clips of a few ships), which is not the case in this dataset.
-#
-# **A middle way, not tried here:** train several models, each on a different random equal-ships subset, and
-# average their predictions. Together they see far more of the ships, while each model is still trained on
-# balanced data.
+# - **A team of balanced models wins back most of the loss** (section 4). With 25 models, each on a different
+#   equal-ships subset, together they see 91-100 % of the ships while each model trains on balanced data:
+#   61.2 % against one model's 57.0 %. That confirms what removal had lost: different ships.
+# - **Weights are still the better way to balance here.** They make every class and every ship count the same, as
+#   removal does, but keep all the different ships in **one** model. The team comes close (0.1-2.2 points below in
+#   every run, level per ship) but needs 25 models and shifts errors from tanker to cargo. Removal would only be
+#   preferable if the extra data were harmful (for example many near-identical clips of a few ships), which is not
+#   the case in this dataset.

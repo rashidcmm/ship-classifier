@@ -10,7 +10,12 @@ The folds, test sets, features and models are those of lesson 13, so the two way
 the same test clips. The test folds are never cut. Which ships are removed is random, so every run is repeated with
 several random draws.
 
-  python src/six_classes_equal.py          # -> runs/six_classes_equal/ (a few minutes, CPU)
+A team of balanced models (--ensemble): in every run, many models are trained, each on its own random equal-ships
+subset of the same training folds, and their probabilities are averaged on the (same) test fold. Every model is
+balanced, but together they see most of the training ships.
+
+  python src/six_classes_equal.py              # -> runs/six_classes_equal/ (a few minutes, CPU)
+  python src/six_classes_equal.py --ensemble   # -> runs/six_classes_equal/ensemble_* (about 30 minutes, CPU)
 """
 import argparse
 import json
@@ -28,6 +33,8 @@ from paths import DATA_DIR, RUNS_DIR
 
 OUT_DIR = RUNS_DIR / "six_classes_equal"
 N_DRAWS = 5
+N_MEMBERS = 25
+CHECKPOINTS = (1, 2, 3, 5, 10, 15, 20, 25)           # team sizes that are scored
 
 
 def balance_by_removal(labels, ships, seed=0) -> np.ndarray:
@@ -63,10 +70,8 @@ class EqualFold:
         return df.groupby("label").agg(ships=("ship", "nunique"), clips=("ship", "size"))
 
 
-def run_equal(data_dir=DATA_DIR, out_dir=OUT_DIR, draws=N_DRAWS, n_mfcc=None):
-    t0 = time.time()
-    out_dir = Path(out_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
+def _setup(data_dir, n_mfcc):
+    """Clip table, feature sets (as in lesson 13), the tables they come from, and lesson 13's folds."""
     table, simple, eng = S.load_features(data_dir)
     if n_mfcc is None:                                   # the number of MFCCs chosen in lesson 13
         lesson13 = S.OUT_DIR / "results.json"
@@ -75,7 +80,14 @@ def run_equal(data_dir=DATA_DIR, out_dir=OUT_DIR, draws=N_DRAWS, n_mfcc=None):
     groups["MFCC"] = S.mfcc_columns(eng.columns, n_mfcc)
     sets = {"simple (no MFCC)": list(simple.columns), "engineered": [c for g in groups.values() for c in g]}
     feats = {"simple (no MFCC)": simple, "engineered": eng}
-    folds = S.make_folds(table)                          # the same folds as lesson 13
+    return table, sets, feats, S.make_folds(table), n_mfcc
+
+
+def run_equal(data_dir=DATA_DIR, out_dir=OUT_DIR, draws=N_DRAWS, n_mfcc=None):
+    t0 = time.time()
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    table, sets, feats, folds, n_mfcc = _setup(data_dir, n_mfcc)
 
     results, preds, counts = [], [], []
     for k in range(1, S.N_FOLDS + 1):
@@ -108,17 +120,66 @@ def run_equal(data_dir=DATA_DIR, out_dir=OUT_DIR, draws=N_DRAWS, n_mfcc=None):
     return summary
 
 
+def run_ensemble(data_dir=DATA_DIR, out_dir=OUT_DIR, members=N_MEMBERS, checkpoints=CHECKPOINTS, n_mfcc=None):
+    """In every run, train `members` models, each on its own equal-ships subset (member i uses the same random draw
+    as draw i of run_equal), and average their test probabilities. Scores and the share of training ships and clips
+    seen by at least one member are recorded after 1, 2, 3, 5, ... members."""
+    t0 = time.time()
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    table, sets, feats, folds, n_mfcc = _setup(data_dir, n_mfcc)
+    checkpoints = [m for m in checkpoints if m <= members]
+
+    results, coverage, preds = [], [], []
+    for k in range(1, S.N_FOLDS + 1):
+        full = S.Fold(table, folds, k)
+        tv = pd.DataFrame({"label": np.array(S.CLASSES6)[full.y["train+validation"]],
+                           "ship": full.ships["train+validation"], "row": full.rows["train+validation"]})
+        total = {(f, m): 0.0 for f in sets for m in S.MODELS}
+        seen = np.zeros(len(tv), dtype=bool)
+        for i in range(members):
+            f = EqualFold(full, seed=100 * k + i)
+            seen |= np.isin(tv.row.to_numpy(), f.rows["train+validation"])
+            for set_name, cols in sets.items():
+                for model in S.MODELS:
+                    total[(set_name, model)] = total[(set_name, model)] + S.fit_and_test(f, feats[set_name], cols,
+                                                                                       model)[0]
+            if i + 1 in checkpoints:
+                for (set_name, model), summed in total.items():
+                    res = S.scores(full.y["test"], summed / (i + 1), full.ships["test"])
+                    results.append({"fold": k, "members": i + 1, "features": set_name, "model": model, **res})
+                marked = tv.assign(seen=seen)
+                ships_seen = marked.groupby(["label", "ship"]).seen.any().groupby("label").mean()
+                clips_seen = marked.groupby("label").seen.mean()
+                coverage += [{"fold": k, "members": i + 1, "label": lab, "ships_seen": ships_seen[lab],
+                              "clips_seen": clips_seen[lab]} for lab in S.CLASSES6]
+            print(f"[{(time.time() - t0) / 60:5.1f} min] fold {k}: {i + 1} members", flush=True)
+        for (set_name, model), summed in total.items():
+            preds.append(pd.DataFrame(summed / members, columns=[f"p_{c}" for c in S.CLASSES6]).assign(
+                row=full.rows["test"], fold=k, features=set_name, model=model, y=full.y["test"]))
+
+    pd.concat(preds, ignore_index=True).to_parquet(out_dir / "ensemble_predictions.parquet")
+    pd.DataFrame(coverage).to_csv(out_dir / "ensemble_coverage.csv", index=False)
+    summary = {"classes": S.CLASSES6, "n_mfcc": n_mfcc, "members": members, "checkpoints": checkpoints,
+               "minutes": round((time.time() - t0) / 60, 1), "results": results}
+    (out_dir / "ensemble_results.json").write_text(json.dumps(summary, indent=2))
+    return summary
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--draws", type=int, default=N_DRAWS, help="random choices of the ships and clips to keep")
+    p.add_argument("--ensemble", action="store_true", help="a team of balanced models instead of single ones")
+    p.add_argument("--members", type=int, default=N_MEMBERS, help="models in the team (--ensemble)")
     p.add_argument("--data-dir", type=Path, default=DATA_DIR)
     p.add_argument("--out-dir", type=Path, default=OUT_DIR)
     a = p.parse_args(argv)
     with keep_awake():
-        summary = run_equal(a.data_dir, a.out_dir, a.draws)
+        summary = (run_ensemble(a.data_dir, a.out_dir, a.members) if a.ensemble
+                   else run_equal(a.data_dir, a.out_dir, a.draws))
     df = pd.DataFrame(summary["results"])
-    print(df.groupby(["features", "model"])[["balanced_accuracy", "per_ship_balanced_accuracy"]]
-          .agg(["mean", "std"]).round(3))
+    keys = ["features", "model"] + (["members"] if a.ensemble else [])
+    print(df.groupby(keys)[["balanced_accuracy", "per_ship_balanced_accuracy"]].agg(["mean", "std"]).round(3))
 
 
 if __name__ == "__main__":

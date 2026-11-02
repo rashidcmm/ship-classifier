@@ -52,3 +52,23 @@ def test_run_equal_on_synthetic_features(tmp_path):
     assert np.mean([r["balanced_accuracy"] for r in summary["results"] if r["model"] == "logistic regression"]) > 0.5
     counts = pd.read_csv(tmp_path / "out" / "counts.csv")
     assert (counts.groupby(["fold", "draw", "split"]).clips.nunique() == 1).all()
+
+
+def test_ensemble_on_synthetic_features(tmp_path):
+    rng = np.random.default_rng(1)
+    table = pd.DataFrame([{"label": c, "MMSI": float(1000 * i + s), "date": 20220101 + s}
+                          for i, c in enumerate(S.CLASSES6) for s in range(10 + 4 * i) for _ in range(2)])
+    table.to_parquet(tmp_path / "clips.parquet")
+    rows = np.arange(len(table))
+    y = table.label.map({c: i for i, c in enumerate(S.CLASSES6)}).to_numpy()
+    eng_names = list(S.engineered_features(rng.normal(size=S.SR * 5).astype(np.float32)))
+    for name, cols in [(S.SIMPLE_FILE, [f"m{i}" for i in range(20)]), (S.ENGINEERED_FILE, eng_names)]:
+        X = rng.normal(size=(len(rows), len(cols)))
+        X[:, :6] += 3 * np.eye(6)[y]
+        pd.DataFrame(X, columns=cols).assign(row=rows).to_parquet(tmp_path / name)
+    summary = E.run_ensemble(data_dir=tmp_path, out_dir=tmp_path / "out", members=3, checkpoints=(1, 3), n_mfcc=4)
+    assert len(summary["results"]) == S.N_FOLDS * 2 * 4                     # 5 folds x 2 team sizes x 4 combinations
+    cov = pd.read_csv(tmp_path / "out" / "ensemble_coverage.csv")
+    by_size = cov.groupby("members")[["ships_seen", "clips_seen"]].mean()
+    assert (by_size.loc[3] >= by_size.loc[1]).all() and (by_size.loc[3] <= 1).all()   # more members see more ships
+    assert (tmp_path / "out" / "ensemble_predictions.parquet").exists()
