@@ -17,6 +17,9 @@ website for access and for how to cite it.
 - The same six classes balanced by **removing data** (equal ships and clips per class) instead of weights:
   `notebooks/14_six_classes_equal_ships.ipynb` (`python src/six_classes_equal.py`, after lesson 13's two steps;
   `python src/six_classes_equal.py --ensemble` for its team of 25 balanced models, about 70 minutes)
+- **Fewer features:** mel bands without the high frequencies or merged into fewer bands, and whole groups of
+  engineered features left out or added one at a time: `notebooks/15_fewer_features.ipynb`
+  (`python src/six_classes_fewer.py all`, about 3 hours on the CPU; needs `data/mel.npy` and lesson 13's features)
 
 ---
 

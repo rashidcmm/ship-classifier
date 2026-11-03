@@ -1,0 +1,4473 @@
+{
+  "classes": [
+    "background",
+    "cargo",
+    "fishing",
+    "pleasurecraft",
+    "tanker",
+    "tug"
+  ],
+  "seed": 0,
+  "groups": {
+    "MFCC": 57,
+    "1/3-octave levels": 29,
+    "level changes over time": 9,
+    "spectral shape": 28,
+    "loudness and impulsiveness": 5,
+    "tonal lines": 5,
+    "propeller modulation (DEMON)": 11
+  },
+  "minutes": 98.0,
+  "results": [
+    {
+      "kind": "leave one out",
+      "left_out": "(none)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 7,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 144,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5929709970551997,
+      "accuracy": 0.6232386232386232,
+      "balanced_accuracy": 0.623177507495786,
+      "macro_f1": 0.6211285360957189,
+      "per_ship_balanced_accuracy": 0.6898638485410554,
+      "per_class_recall": {
+        "background": 0.8495821727019499,
+        "cargo": 0.5972222222222222,
+        "fishing": 0.4845505617977528,
+        "pleasurecraft": 0.640495867768595,
+        "tanker": 0.5647382920110193,
+        "tug": 0.6024759284731774
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "(none)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 7,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 144,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5974771377259797,
+      "accuracy": 0.6027745664739884,
+      "balanced_accuracy": 0.6030072102436966,
+      "macro_f1": 0.5982645875670444,
+      "per_ship_balanced_accuracy": 0.6698427076144468,
+      "per_class_recall": {
+        "background": 0.8601108033240997,
+        "cargo": 0.5666666666666667,
+        "fishing": 0.39807162534435264,
+        "pleasurecraft": 0.5863509749303621,
+        "tanker": 0.625,
+        "tug": 0.5818431911966988
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "(none)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 7,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 144,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6183688634157418,
+      "accuracy": 0.6015715276172868,
+      "balanced_accuracy": 0.6017903950216533,
+      "macro_f1": 0.5973678834970754,
+      "per_ship_balanced_accuracy": 0.6628675312220249,
+      "per_class_recall": {
+        "background": 0.8545706371191135,
+        "cargo": 0.5791666666666667,
+        "fishing": 0.4380165289256198,
+        "pleasurecraft": 0.6016713091922006,
+        "tanker": 0.5289256198347108,
+        "tug": 0.6083916083916084
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "(none)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 7,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 144,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.5920404103134972,
+      "accuracy": 0.6192022263450835,
+      "balanced_accuracy": 0.6190400345347068,
+      "macro_f1": 0.6165471443121793,
+      "per_ship_balanced_accuracy": 0.6927298914529029,
+      "per_class_recall": {
+        "background": 0.8233657858136301,
+        "cargo": 0.6019417475728155,
+        "fishing": 0.48241912798874825,
+        "pleasurecraft": 0.588317107093185,
+        "tanker": 0.5771349862258953,
+        "tug": 0.6410614525139665
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "(none)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 7,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 144,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.6134762782234752,
+      "accuracy": 0.592205984690327,
+      "balanced_accuracy": 0.5925163792168676,
+      "macro_f1": 0.5883062049587989,
+      "per_ship_balanced_accuracy": 0.6496119569333051,
+      "per_class_recall": {
+        "background": 0.7955493741307371,
+        "cargo": 0.6180555555555556,
+        "fishing": 0.37052341597796146,
+        "pleasurecraft": 0.6369958275382476,
+        "tanker": 0.5850914205344585,
+        "tug": 0.5488826815642458
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 87,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.5908811325699722,
+      "accuracy": 0.604989604989605,
+      "balanced_accuracy": 0.6049395577919262,
+      "macro_f1": 0.6017326065525134,
+      "per_ship_balanced_accuracy": 0.6783161045087384,
+      "per_class_recall": {
+        "background": 0.8607242339832869,
+        "cargo": 0.5902777777777778,
+        "fishing": 0.44803370786516855,
+        "pleasurecraft": 0.6253443526170799,
+        "tanker": 0.522038567493113,
+        "tug": 0.5832187070151307
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 87,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.5934502355612814,
+      "accuracy": 0.5914450867052023,
+      "balanced_accuracy": 0.5917011988232358,
+      "macro_f1": 0.586512155841803,
+      "per_ship_balanced_accuracy": 0.6502504920379316,
+      "per_class_recall": {
+        "background": 0.8407202216066482,
+        "cargo": 0.5347222222222222,
+        "fishing": 0.38980716253443526,
+        "pleasurecraft": 0.5947075208913649,
+        "tanker": 0.6207865168539326,
+        "tug": 0.5694635488308115
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 87,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6068248764992853,
+      "accuracy": 0.5939449965333949,
+      "balanced_accuracy": 0.5941841790558882,
+      "macro_f1": 0.5887401914968661,
+      "per_ship_balanced_accuracy": 0.6593812968035871,
+      "per_class_recall": {
+        "background": 0.8559556786703602,
+        "cargo": 0.5722222222222222,
+        "fishing": 0.40082644628099173,
+        "pleasurecraft": 0.6030640668523677,
+        "tanker": 0.5344352617079889,
+        "tug": 0.5986013986013986
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 87,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.5711381209381572,
+      "accuracy": 0.6113172541743971,
+      "balanced_accuracy": 0.6112254586828642,
+      "macro_f1": 0.6092228389464361,
+      "per_ship_balanced_accuracy": 0.6857939779541457,
+      "per_class_recall": {
+        "background": 0.803894297635605,
+        "cargo": 0.6130374479889042,
+        "fishing": 0.4936708860759494,
+        "pleasurecraft": 0.5799721835883171,
+        "tanker": 0.5426997245179064,
+        "tug": 0.6340782122905028
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 87,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6059366755163229,
+      "accuracy": 0.578056135467409,
+      "balanced_accuracy": 0.5783643962381076,
+      "macro_f1": 0.573692188458319,
+      "per_ship_balanced_accuracy": 0.6368619563376176,
+      "per_class_recall": {
+        "background": 0.799721835883171,
+        "cargo": 0.6,
+        "fishing": 0.3512396694214876,
+        "pleasurecraft": 0.6300417246175244,
+        "tanker": 0.5710267229254571,
+        "tug": 0.5181564245810056
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "1/3-octave levels",
+      "groups": [
+        "MFCC",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 115,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.581146473891062,
+      "accuracy": 0.6038346038346039,
+      "balanced_accuracy": 0.6038088899756542,
+      "macro_f1": 0.6011630924596606,
+      "per_ship_balanced_accuracy": 0.6670602685592898,
+      "per_class_recall": {
+        "background": 0.8342618384401114,
+        "cargo": 0.6125,
+        "fishing": 0.4592696629213483,
+        "pleasurecraft": 0.6267217630853994,
+        "tanker": 0.5027548209366391,
+        "tug": 0.5873452544704264
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "1/3-octave levels",
+      "groups": [
+        "MFCC",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 115,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.5918958337549092,
+      "accuracy": 0.5845086705202313,
+      "balanced_accuracy": 0.5846793982473897,
+      "macro_f1": 0.5806362549709164,
+      "per_ship_balanced_accuracy": 0.6655138920839404,
+      "per_class_recall": {
+        "background": 0.8296398891966759,
+        "cargo": 0.5416666666666666,
+        "fishing": 0.3939393939393939,
+        "pleasurecraft": 0.5766016713091922,
+        "tanker": 0.5898876404494382,
+        "tug": 0.5763411279229711
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "1/3-octave levels",
+      "groups": [
+        "MFCC",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 115,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.6093606194764162,
+      "accuracy": 0.5987982435867807,
+      "balanced_accuracy": 0.5990125733251338,
+      "macro_f1": 0.5938808375550986,
+      "per_ship_balanced_accuracy": 0.6925620250636015,
+      "per_class_recall": {
+        "background": 0.8601108033240997,
+        "cargo": 0.5819444444444445,
+        "fishing": 0.4366391184573003,
+        "pleasurecraft": 0.5766016713091922,
+        "tanker": 0.5247933884297521,
+        "tug": 0.6139860139860139
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "1/3-octave levels",
+      "groups": [
+        "MFCC",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 115,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.5876181583281855,
+      "accuracy": 0.6152597402597403,
+      "balanced_accuracy": 0.61518678368722,
+      "macro_f1": 0.6133891868972793,
+      "per_ship_balanced_accuracy": 0.699618408890648,
+      "per_class_recall": {
+        "background": 0.803894297635605,
+        "cargo": 0.6130374479889042,
+        "fishing": 0.5049226441631505,
+        "pleasurecraft": 0.5744089012517385,
+        "tanker": 0.5482093663911846,
+        "tug": 0.6466480446927374
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "1/3-octave levels",
+      "groups": [
+        "MFCC",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 115,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.6056209096875418,
+      "accuracy": 0.5894224077940153,
+      "balanced_accuracy": 0.5897631436579784,
+      "macro_f1": 0.5851706011123963,
+      "per_ship_balanced_accuracy": 0.648593807741079,
+      "per_class_recall": {
+        "background": 0.7913769123783032,
+        "cargo": 0.5972222222222222,
+        "fishing": 0.36639118457300274,
+        "pleasurecraft": 0.6300417246175244,
+        "tanker": 0.5879043600562588,
+        "tug": 0.5656424581005587
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "level changes over time",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 135,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5887922257273482,
+      "accuracy": 0.6158466158466158,
+      "balanced_accuracy": 0.6157616983724,
+      "macro_f1": 0.6133088159406282,
+      "per_ship_balanced_accuracy": 0.6779621065051497,
+      "per_class_recall": {
+        "background": 0.8537604456824512,
+        "cargo": 0.5888888888888889,
+        "fishing": 0.46348314606741575,
+        "pleasurecraft": 0.6363636363636364,
+        "tanker": 0.5578512396694215,
+        "tug": 0.594222833562586
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "level changes over time",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 135,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5933357220739007,
+      "accuracy": 0.5967630057803468,
+      "balanced_accuracy": 0.5969741959704454,
+      "macro_f1": 0.5918840979020322,
+      "per_ship_balanced_accuracy": 0.6722944303862177,
+      "per_class_recall": {
+        "background": 0.8601108033240997,
+        "cargo": 0.5555555555555556,
+        "fishing": 0.38705234159779617,
+        "pleasurecraft": 0.5821727019498607,
+        "tanker": 0.6123595505617978,
+        "tug": 0.5845942228335625
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "level changes over time",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 135,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6134367269857028,
+      "accuracy": 0.597873815576612,
+      "balanced_accuracy": 0.5981077214437295,
+      "macro_f1": 0.5936778074081905,
+      "per_ship_balanced_accuracy": 0.6635249384174274,
+      "per_class_recall": {
+        "background": 0.8462603878116344,
+        "cargo": 0.5791666666666667,
+        "fishing": 0.4297520661157025,
+        "pleasurecraft": 0.6044568245125348,
+        "tanker": 0.5234159779614325,
+        "tug": 0.6055944055944056
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "level changes over time",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 135,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5924939804304205,
+      "accuracy": 0.6159554730983302,
+      "balanced_accuracy": 0.6157676438919361,
+      "macro_f1": 0.6134197282087096,
+      "per_ship_balanced_accuracy": 0.6977836491434868,
+      "per_class_recall": {
+        "background": 0.8164116828929068,
+        "cargo": 0.608876560332871,
+        "fishing": 0.4669479606188467,
+        "pleasurecraft": 0.5910987482614742,
+        "tanker": 0.5730027548209367,
+        "tug": 0.638268156424581
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "level changes over time",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 135,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6118902299613699,
+      "accuracy": 0.5947575968452795,
+      "balanced_accuracy": 0.5950919694373878,
+      "macro_f1": 0.5910726834676893,
+      "per_ship_balanced_accuracy": 0.6605401635303174,
+      "per_class_recall": {
+        "background": 0.8136300417246175,
+        "cargo": 0.6125,
+        "fishing": 0.3760330578512397,
+        "pleasurecraft": 0.6356050069541029,
+        "tanker": 0.6146272855133614,
+        "tug": 0.5181564245810056
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "spectral shape",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 116,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.584469038570756,
+      "accuracy": 0.6172326172326172,
+      "balanced_accuracy": 0.6171902771148149,
+      "macro_f1": 0.6155761636490176,
+      "per_ship_balanced_accuracy": 0.6843472100193932,
+      "per_class_recall": {
+        "background": 0.8286908077994429,
+        "cargo": 0.5833333333333334,
+        "fishing": 0.49719101123595505,
+        "pleasurecraft": 0.6239669421487604,
+        "tanker": 0.5606060606060606,
+        "tug": 0.609353507565337
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "spectral shape",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 116,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.595839796552217,
+      "accuracy": 0.584971098265896,
+      "balanced_accuracy": 0.5851528872654117,
+      "macro_f1": 0.5805177907253426,
+      "per_ship_balanced_accuracy": 0.6529747527030135,
+      "per_class_recall": {
+        "background": 0.8240997229916898,
+        "cargo": 0.5708333333333333,
+        "fishing": 0.38016528925619836,
+        "pleasurecraft": 0.5821727019498607,
+        "tanker": 0.5800561797752809,
+        "tug": 0.5735900962861072
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "spectral shape",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 116,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6159824529677751,
+      "accuracy": 0.5969493875664432,
+      "balanced_accuracy": 0.5971536903879519,
+      "macro_f1": 0.5927187799910906,
+      "per_ship_balanced_accuracy": 0.6545882609715119,
+      "per_class_recall": {
+        "background": 0.853185595567867,
+        "cargo": 0.5638888888888889,
+        "fishing": 0.4366391184573003,
+        "pleasurecraft": 0.5891364902506964,
+        "tanker": 0.5316804407713499,
+        "tug": 0.6083916083916084
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "spectral shape",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 116,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.5841249811263243,
+      "accuracy": 0.614100185528757,
+      "balanced_accuracy": 0.6139164446708991,
+      "macro_f1": 0.611193836225087,
+      "per_ship_balanced_accuracy": 0.702743408890648,
+      "per_class_recall": {
+        "background": 0.8122392211404729,
+        "cargo": 0.608876560332871,
+        "fishing": 0.45569620253164556,
+        "pleasurecraft": 0.588317107093185,
+        "tanker": 0.5647382920110193,
+        "tug": 0.6536312849162011
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "spectral shape",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 116,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.6123986515173688,
+      "accuracy": 0.5894224077940153,
+      "balanced_accuracy": 0.5897198606005946,
+      "macro_f1": 0.5844278255201442,
+      "per_ship_balanced_accuracy": 0.6517331854728481,
+      "per_class_recall": {
+        "background": 0.8108484005563282,
+        "cargo": 0.6166666666666667,
+        "fishing": 0.3650137741046832,
+        "pleasurecraft": 0.6230876216968011,
+        "tanker": 0.5710267229254571,
+        "tug": 0.5516759776536313
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "loudness and impulsiveness",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 139,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.5961898138466261,
+      "accuracy": 0.626010626010626,
+      "balanced_accuracy": 0.6259760145676071,
+      "macro_f1": 0.6239614276520437,
+      "per_ship_balanced_accuracy": 0.69474877836123,
+      "per_class_recall": {
+        "background": 0.8551532033426184,
+        "cargo": 0.6013888888888889,
+        "fishing": 0.49297752808988765,
+        "pleasurecraft": 0.6460055096418733,
+        "tanker": 0.5606060606060606,
+        "tug": 0.5997248968363136
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "loudness and impulsiveness",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 139,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.6016372554846389,
+      "accuracy": 0.6027745664739884,
+      "balanced_accuracy": 0.6029996105684176,
+      "macro_f1": 0.5986499898394935,
+      "per_ship_balanced_accuracy": 0.6799850791094753,
+      "per_class_recall": {
+        "background": 0.850415512465374,
+        "cargo": 0.5722222222222222,
+        "fishing": 0.4035812672176309,
+        "pleasurecraft": 0.5807799442896936,
+        "tanker": 0.6264044943820225,
+        "tug": 0.5845942228335625
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "loudness and impulsiveness",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 139,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6195090743061082,
+      "accuracy": 0.6041137046452507,
+      "balanced_accuracy": 0.6043361907535286,
+      "macro_f1": 0.5999825322475271,
+      "per_ship_balanced_accuracy": 0.673776652052711,
+      "per_class_recall": {
+        "background": 0.850415512465374,
+        "cargo": 0.5791666666666667,
+        "fishing": 0.4393939393939394,
+        "pleasurecraft": 0.6072423398328691,
+        "tanker": 0.5358126721763086,
+        "tug": 0.6139860139860139
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "loudness and impulsiveness",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 139,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.5936801557556876,
+      "accuracy": 0.6212894248608535,
+      "balanced_accuracy": 0.6211211074282071,
+      "macro_f1": 0.6185741372824517,
+      "per_ship_balanced_accuracy": 0.6969360567502837,
+      "per_class_recall": {
+        "background": 0.8233657858136301,
+        "cargo": 0.6047156726768377,
+        "fishing": 0.4810126582278481,
+        "pleasurecraft": 0.5966620305980529,
+        "tanker": 0.5785123966942148,
+        "tug": 0.6424581005586593
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "loudness and impulsiveness",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 139,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.6165222505501572,
+      "accuracy": 0.5931338436557643,
+      "balanced_accuracy": 0.5934693161567003,
+      "macro_f1": 0.5889406266208589,
+      "per_ship_balanced_accuracy": 0.6686590168469109,
+      "per_class_recall": {
+        "background": 0.8164116828929068,
+        "cargo": 0.6111111111111112,
+        "fishing": 0.3677685950413223,
+        "pleasurecraft": 0.631432545201669,
+        "tanker": 0.6019690576652602,
+        "tug": 0.5321229050279329
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "tonal lines",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 139,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.5892844798757364,
+      "accuracy": 0.6128436128436129,
+      "balanced_accuracy": 0.6127787081670056,
+      "macro_f1": 0.6107548239866353,
+      "per_ship_balanced_accuracy": 0.6880427190357853,
+      "per_class_recall": {
+        "background": 0.8440111420612814,
+        "cargo": 0.5694444444444444,
+        "fishing": 0.47752808988764045,
+        "pleasurecraft": 0.6225895316804407,
+        "tanker": 0.5730027548209367,
+        "tug": 0.5900962861072903
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "tonal lines",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 139,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5923427299504048,
+      "accuracy": 0.6004624277456647,
+      "balanced_accuracy": 0.6007366266483517,
+      "macro_f1": 0.5959298566366572,
+      "per_ship_balanced_accuracy": 0.6744308015745214,
+      "per_class_recall": {
+        "background": 0.8476454293628809,
+        "cargo": 0.5458333333333333,
+        "fishing": 0.3939393939393939,
+        "pleasurecraft": 0.5807799442896936,
+        "tanker": 0.648876404494382,
+        "tug": 0.5873452544704264
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "tonal lines",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 139,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6169419422211465,
+      "accuracy": 0.5967182805639011,
+      "balanced_accuracy": 0.5969054576411474,
+      "macro_f1": 0.5926338395783551,
+      "per_ship_balanced_accuracy": 0.6638179490094022,
+      "per_class_recall": {
+        "background": 0.8545706371191135,
+        "cargo": 0.5625,
+        "fishing": 0.44214876033057854,
+        "pleasurecraft": 0.5947075208913649,
+        "tanker": 0.5303030303030303,
+        "tug": 0.5972027972027972
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "tonal lines",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 139,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5829830800811969,
+      "accuracy": 0.6219851576994434,
+      "balanced_accuracy": 0.6218390247527036,
+      "macro_f1": 0.6199384487327241,
+      "per_ship_balanced_accuracy": 0.7064265795235278,
+      "per_class_recall": {
+        "background": 0.8205841446453408,
+        "cargo": 0.608876560332871,
+        "fishing": 0.5035161744022504,
+        "pleasurecraft": 0.5744089012517385,
+        "tanker": 0.5867768595041323,
+        "tug": 0.6368715083798883
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "tonal lines",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 139,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.6090796692144819,
+      "accuracy": 0.5905822315008119,
+      "balanced_accuracy": 0.5908789919335644,
+      "macro_f1": 0.5874593184672955,
+      "per_ship_balanced_accuracy": 0.6560701483846902,
+      "per_class_recall": {
+        "background": 0.803894297635605,
+        "cargo": 0.6041666666666666,
+        "fishing": 0.3856749311294766,
+        "pleasurecraft": 0.6244784422809457,
+        "tanker": 0.5949367088607594,
+        "tug": 0.5321229050279329
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "propeller modulation (DEMON)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 133,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5823687084463952,
+      "accuracy": 0.6061446061446062,
+      "balanced_accuracy": 0.6060983047320372,
+      "macro_f1": 0.6035900130781052,
+      "per_ship_balanced_accuracy": 0.6783535122453604,
+      "per_class_recall": {
+        "background": 0.8565459610027855,
+        "cargo": 0.5777777777777777,
+        "fishing": 0.4592696629213483,
+        "pleasurecraft": 0.6088154269972452,
+        "tanker": 0.5495867768595041,
+        "tug": 0.5845942228335625
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "propeller modulation (DEMON)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 133,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.590056768301151,
+      "accuracy": 0.5852023121387283,
+      "balanced_accuracy": 0.5854627077725982,
+      "macro_f1": 0.580319159172795,
+      "per_ship_balanced_accuracy": 0.6595658244510901,
+      "per_class_recall": {
+        "background": 0.8393351800554016,
+        "cargo": 0.5486111111111112,
+        "fishing": 0.359504132231405,
+        "pleasurecraft": 0.5738161559888579,
+        "tanker": 0.6151685393258427,
+        "tug": 0.5763411279229711
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "propeller modulation (DEMON)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 133,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.6030057310786648,
+      "accuracy": 0.5941761035359371,
+      "balanced_accuracy": 0.5944247619250241,
+      "macro_f1": 0.5878842188409655,
+      "per_ship_balanced_accuracy": 0.6789494150896523,
+      "per_class_recall": {
+        "background": 0.8698060941828255,
+        "cargo": 0.5625,
+        "fishing": 0.4090909090909091,
+        "pleasurecraft": 0.5863509749303621,
+        "tanker": 0.5234159779614325,
+        "tug": 0.6153846153846154
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "propeller modulation (DEMON)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 133,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5933934098066492,
+      "accuracy": 0.6020408163265306,
+      "balanced_accuracy": 0.6018723191653427,
+      "macro_f1": 0.5994127225552544,
+      "per_ship_balanced_accuracy": 0.6902810707537611,
+      "per_class_recall": {
+        "background": 0.8108484005563282,
+        "cargo": 0.6033287101248266,
+        "fishing": 0.4669479606188467,
+        "pleasurecraft": 0.5591098748261474,
+        "tanker": 0.5564738292011019,
+        "tug": 0.6145251396648045
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "propeller modulation (DEMON)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 133,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.6006485746648812,
+      "accuracy": 0.5924379494316864,
+      "balanced_accuracy": 0.5927724283691341,
+      "macro_f1": 0.5884747565710302,
+      "per_ship_balanced_accuracy": 0.6803858482287718,
+      "per_class_recall": {
+        "background": 0.8191933240611962,
+        "cargo": 0.6027777777777777,
+        "fishing": 0.3650137741046832,
+        "pleasurecraft": 0.6328233657858137,
+        "tanker": 0.5935302390998594,
+        "tug": 0.5432960893854749
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 1,
+      "added": "1/3-octave levels",
+      "groups": [
+        "1/3-octave levels"
+      ],
+      "n_groups": 1,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 29,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5328810794415765,
+      "accuracy": 0.5497805497805498,
+      "balanced_accuracy": 0.5495482521901441,
+      "macro_f1": 0.5447338002635153,
+      "per_ship_balanced_accuracy": 0.6060865552369976,
+      "per_class_recall": {
+        "background": 0.7841225626740947,
+        "cargo": 0.5402777777777777,
+        "fishing": 0.34691011235955055,
+        "pleasurecraft": 0.5537190082644629,
+        "tanker": 0.5330578512396694,
+        "tug": 0.5392022008253095
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 1,
+      "added": "1/3-octave levels",
+      "groups": [
+        "1/3-octave levels"
+      ],
+      "n_groups": 1,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 29,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5414885141901178,
+      "accuracy": 0.5308670520231213,
+      "balanced_accuracy": 0.5313305263623805,
+      "macro_f1": 0.5251435264603413,
+      "per_ship_balanced_accuracy": 0.5975652110012013,
+      "per_class_recall": {
+        "background": 0.7590027700831025,
+        "cargo": 0.5194444444444445,
+        "fishing": 0.29201101928374656,
+        "pleasurecraft": 0.5236768802228412,
+        "tanker": 0.6151685393258427,
+        "tug": 0.4786795048143054
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 1,
+      "added": "1/3-octave levels",
+      "groups": [
+        "1/3-octave levels"
+      ],
+      "n_groups": 1,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 29,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5601023137405988,
+      "accuracy": 0.5380171019181881,
+      "balanced_accuracy": 0.5382501231372601,
+      "macro_f1": 0.5301709655905292,
+      "per_ship_balanced_accuracy": 0.6082534546837169,
+      "per_class_recall": {
+        "background": 0.7714681440443213,
+        "cargo": 0.5375,
+        "fishing": 0.2892561983471074,
+        "pleasurecraft": 0.5306406685236769,
+        "tanker": 0.5495867768595041,
+        "tug": 0.551048951048951
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 1,
+      "added": "1/3-octave levels",
+      "groups": [
+        "1/3-octave levels"
+      ],
+      "n_groups": 1,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 29,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5315256194907043,
+      "accuracy": 0.5598330241187384,
+      "balanced_accuracy": 0.5594071461394773,
+      "macro_f1": 0.5551845813408461,
+      "per_ship_balanced_accuracy": 0.6538602081774271,
+      "per_class_recall": {
+        "background": 0.7566063977746871,
+        "cargo": 0.5589459084604715,
+        "fishing": 0.36146272855133615,
+        "pleasurecraft": 0.5493741307371349,
+        "tanker": 0.5881542699724518,
+        "tug": 0.5418994413407822
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 1,
+      "added": "1/3-octave levels",
+      "groups": [
+        "1/3-octave levels"
+      ],
+      "n_groups": 1,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 29,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.5504235777809182,
+      "accuracy": 0.5311992577128276,
+      "balanced_accuracy": 0.5313493457024681,
+      "macro_f1": 0.527174130617937,
+      "per_ship_balanced_accuracy": 0.607205352891814,
+      "per_class_recall": {
+        "background": 0.7663421418636995,
+        "cargo": 0.5694444444444444,
+        "fishing": 0.3512396694214876,
+        "pleasurecraft": 0.5674547983310153,
+        "tanker": 0.4936708860759494,
+        "tug": 0.4399441340782123
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 2,
+      "added": "propeller modulation (DEMON)",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 2,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 40,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5625558372579221,
+      "accuracy": 0.5809655809655809,
+      "balanced_accuracy": 0.5808288287783859,
+      "macro_f1": 0.5772148998866553,
+      "per_ship_balanced_accuracy": 0.6598972382643039,
+      "per_class_recall": {
+        "background": 0.8022284122562674,
+        "cargo": 0.5402777777777777,
+        "fishing": 0.4297752808988764,
+        "pleasurecraft": 0.5991735537190083,
+        "tanker": 0.5275482093663911,
+        "tug": 0.5859697386519945
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 2,
+      "added": "propeller modulation (DEMON)",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 2,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 40,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.5632622825481356,
+      "accuracy": 0.5650867052023122,
+      "balanced_accuracy": 0.5653911566337504,
+      "macro_f1": 0.5595413988382552,
+      "per_ship_balanced_accuracy": 0.620212215320911,
+      "per_class_recall": {
+        "background": 0.7853185595567868,
+        "cargo": 0.5166666666666667,
+        "fishing": 0.3677685950413223,
+        "pleasurecraft": 0.564066852367688,
+        "tanker": 0.6165730337078652,
+        "tug": 0.5419532324621733
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 2,
+      "added": "propeller modulation (DEMON)",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 2,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 40,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.5879499761726644,
+      "accuracy": 0.5611278021724059,
+      "balanced_accuracy": 0.5614221476847118,
+      "macro_f1": 0.5533385601519187,
+      "per_ship_balanced_accuracy": 0.6427984445876307,
+      "per_class_recall": {
+        "background": 0.7991689750692521,
+        "cargo": 0.5805555555555556,
+        "fishing": 0.31267217630853994,
+        "pleasurecraft": 0.5612813370473537,
+        "tanker": 0.5344352617079889,
+        "tug": 0.5804195804195804
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 2,
+      "added": "propeller modulation (DEMON)",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 2,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 40,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5369549008908258,
+      "accuracy": 0.586038961038961,
+      "balanced_accuracy": 0.5857272319615795,
+      "macro_f1": 0.5827922499303476,
+      "per_ship_balanced_accuracy": 0.6698401671667346,
+      "per_class_recall": {
+        "background": 0.7746870653685675,
+        "cargo": 0.59500693481276,
+        "fishing": 0.4149085794655415,
+        "pleasurecraft": 0.5549374130737135,
+        "tanker": 0.5826446280991735,
+        "tug": 0.5921787709497207
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 2,
+      "added": "propeller modulation (DEMON)",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 2,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 40,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5788547115162921,
+      "accuracy": 0.5439573184875899,
+      "balanced_accuracy": 0.5442051572148103,
+      "macro_f1": 0.5390676919563352,
+      "per_ship_balanced_accuracy": 0.6099374197717152,
+      "per_class_recall": {
+        "background": 0.7844228094575799,
+        "cargo": 0.5847222222222223,
+        "fishing": 0.34297520661157027,
+        "pleasurecraft": 0.5577190542420027,
+        "tanker": 0.540084388185654,
+        "tug": 0.4553072625698324
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 3,
+      "added": "spectral shape",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape"
+      ],
+      "n_groups": 3,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 68,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.5893341617188966,
+      "accuracy": 0.5952875952875953,
+      "balanced_accuracy": 0.5952367571524894,
+      "macro_f1": 0.5923191825110427,
+      "per_ship_balanced_accuracy": 0.6550353457439673,
+      "per_class_recall": {
+        "background": 0.8565459610027855,
+        "cargo": 0.5694444444444444,
+        "fishing": 0.4396067415730337,
+        "pleasurecraft": 0.6074380165289256,
+        "tanker": 0.5261707988980716,
+        "tug": 0.5722145804676754
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 3,
+      "added": "spectral shape",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape"
+      ],
+      "n_groups": 3,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 68,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.5821450704288736,
+      "accuracy": 0.5815028901734104,
+      "balanced_accuracy": 0.5817906625823904,
+      "macro_f1": 0.5765570097355299,
+      "per_ship_balanced_accuracy": 0.6276557268103161,
+      "per_class_recall": {
+        "background": 0.8282548476454293,
+        "cargo": 0.5125,
+        "fishing": 0.3939393939393939,
+        "pleasurecraft": 0.5835654596100278,
+        "tanker": 0.6264044943820225,
+        "tug": 0.546079779917469
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 3,
+      "added": "spectral shape",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape"
+      ],
+      "n_groups": 3,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 68,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5978857838634193,
+      "accuracy": 0.5805407903859487,
+      "balanced_accuracy": 0.5807484174688186,
+      "macro_f1": 0.5751833273568878,
+      "per_ship_balanced_accuracy": 0.6551118668876974,
+      "per_class_recall": {
+        "background": 0.8434903047091413,
+        "cargo": 0.5666666666666667,
+        "fishing": 0.38292011019283745,
+        "pleasurecraft": 0.5919220055710307,
+        "tanker": 0.5330578512396694,
+        "tug": 0.5664335664335665
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 3,
+      "added": "spectral shape",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape"
+      ],
+      "n_groups": 3,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 68,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.566387336021544,
+      "accuracy": 0.6071428571428571,
+      "balanced_accuracy": 0.6069459108642873,
+      "macro_f1": 0.6052537852018203,
+      "per_ship_balanced_accuracy": 0.7040486675494023,
+      "per_class_recall": {
+        "background": 0.7844228094575799,
+        "cargo": 0.59500693481276,
+        "fishing": 0.4767932489451477,
+        "pleasurecraft": 0.5827538247566064,
+        "tanker": 0.5867768595041323,
+        "tug": 0.6159217877094972
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 3,
+      "added": "spectral shape",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape"
+      ],
+      "n_groups": 3,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 68,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5966687571978009,
+      "accuracy": 0.5720250521920668,
+      "balanced_accuracy": 0.5722407772377319,
+      "macro_f1": 0.5687865119756929,
+      "per_ship_balanced_accuracy": 0.6358907865870221,
+      "per_class_recall": {
+        "background": 0.7927677329624478,
+        "cargo": 0.6013888888888889,
+        "fishing": 0.3774104683195592,
+        "pleasurecraft": 0.6244784422809457,
+        "tanker": 0.5555555555555556,
+        "tug": 0.4818435754189944
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 4,
+      "added": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC"
+      ],
+      "n_groups": 4,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 125,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.5851383591879381,
+      "accuracy": 0.611919611919612,
+      "balanced_accuracy": 0.6118237007542096,
+      "macro_f1": 0.6093293451020433,
+      "per_ship_balanced_accuracy": 0.679436941488648,
+      "per_class_recall": {
+        "background": 0.8454038997214485,
+        "cargo": 0.5861111111111111,
+        "fishing": 0.45786516853932585,
+        "pleasurecraft": 0.6377410468319559,
+        "tanker": 0.5578512396694215,
+        "tug": 0.5859697386519945
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 4,
+      "added": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC"
+      ],
+      "n_groups": 4,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 125,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.590039220221451,
+      "accuracy": 0.5870520231213873,
+      "balanced_accuracy": 0.587299406176219,
+      "macro_f1": 0.5820918652910708,
+      "per_ship_balanced_accuracy": 0.6371491833448355,
+      "per_class_recall": {
+        "background": 0.8296398891966759,
+        "cargo": 0.5361111111111111,
+        "fishing": 0.37327823691460055,
+        "pleasurecraft": 0.5863509749303621,
+        "tanker": 0.6165730337078652,
+        "tug": 0.5818431911966988
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 4,
+      "added": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC"
+      ],
+      "n_groups": 4,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 125,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6120022961660342,
+      "accuracy": 0.5923272475155997,
+      "balanced_accuracy": 0.5925388328403897,
+      "macro_f1": 0.5874411611418876,
+      "per_ship_balanced_accuracy": 0.6661636430810062,
+      "per_class_recall": {
+        "background": 0.853185595567867,
+        "cargo": 0.5680555555555555,
+        "fishing": 0.41460055096418735,
+        "pleasurecraft": 0.5905292479108635,
+        "tanker": 0.5330578512396694,
+        "tug": 0.5958041958041959
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 4,
+      "added": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC"
+      ],
+      "n_groups": 4,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 125,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.5822273981831968,
+      "accuracy": 0.6110853432282004,
+      "balanced_accuracy": 0.6108426335428137,
+      "macro_f1": 0.6081148665631219,
+      "per_ship_balanced_accuracy": 0.6981501217940108,
+      "per_class_recall": {
+        "background": 0.8122392211404729,
+        "cargo": 0.5991678224687933,
+        "fishing": 0.4613220815752461,
+        "pleasurecraft": 0.5674547983310153,
+        "tanker": 0.5991735537190083,
+        "tug": 0.6256983240223464
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 4,
+      "added": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC"
+      ],
+      "n_groups": 4,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 125,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.6063075703547977,
+      "accuracy": 0.5901183020180932,
+      "balanced_accuracy": 0.5904177936027534,
+      "macro_f1": 0.5869387191397015,
+      "per_ship_balanced_accuracy": 0.6618228169566907,
+      "per_class_recall": {
+        "background": 0.808066759388039,
+        "cargo": 0.6055555555555555,
+        "fishing": 0.38705234159779617,
+        "pleasurecraft": 0.6216968011126565,
+        "tanker": 0.6033755274261603,
+        "tug": 0.5167597765363129
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 5,
+      "added": "tonal lines",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines"
+      ],
+      "n_groups": 5,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 130,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5929834956342933,
+      "accuracy": 0.6176946176946176,
+      "balanced_accuracy": 0.6176140135700834,
+      "macro_f1": 0.6151521585050167,
+      "per_ship_balanced_accuracy": 0.674793069278386,
+      "per_class_recall": {
+        "background": 0.8495821727019499,
+        "cargo": 0.5972222222222222,
+        "fishing": 0.46769662921348315,
+        "pleasurecraft": 0.6363636363636364,
+        "tanker": 0.5537190082644629,
+        "tug": 0.6011004126547456
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 5,
+      "added": "tonal lines",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines"
+      ],
+      "n_groups": 5,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 130,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.5912552230629881,
+      "accuracy": 0.6018497109826589,
+      "balanced_accuracy": 0.6020637914553437,
+      "macro_f1": 0.5976364232440919,
+      "per_ship_balanced_accuracy": 0.67554379776602,
+      "per_class_recall": {
+        "background": 0.8490304709141274,
+        "cargo": 0.5569444444444445,
+        "fishing": 0.40633608815426997,
+        "pleasurecraft": 0.5863509749303621,
+        "tanker": 0.625,
+        "tug": 0.5887207702888583
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 5,
+      "added": "tonal lines",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines"
+      ],
+      "n_groups": 5,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 130,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6136702123078476,
+      "accuracy": 0.5955627455511902,
+      "balanced_accuracy": 0.595808869512059,
+      "macro_f1": 0.5909113319150923,
+      "per_ship_balanced_accuracy": 0.667119762243647,
+      "per_class_recall": {
+        "background": 0.8462603878116344,
+        "cargo": 0.5791666666666667,
+        "fishing": 0.418732782369146,
+        "pleasurecraft": 0.5988857938718662,
+        "tanker": 0.5234159779614325,
+        "tug": 0.6083916083916084
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 5,
+      "added": "tonal lines",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines"
+      ],
+      "n_groups": 5,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 130,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5940954155728687,
+      "accuracy": 0.6152597402597403,
+      "balanced_accuracy": 0.6150943941396493,
+      "macro_f1": 0.612656076735086,
+      "per_ship_balanced_accuracy": 0.6989421022622423,
+      "per_class_recall": {
+        "background": 0.8122392211404729,
+        "cargo": 0.6061026352288488,
+        "fishing": 0.46835443037974683,
+        "pleasurecraft": 0.5938803894297635,
+        "tanker": 0.5647382920110193,
+        "tug": 0.6452513966480447
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 5,
+      "added": "tonal lines",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines"
+      ],
+      "n_groups": 5,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 130,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6096107133498848,
+      "accuracy": 0.5940617026212016,
+      "balanced_accuracy": 0.5943916919089277,
+      "macro_f1": 0.590483077122038,
+      "per_ship_balanced_accuracy": 0.6593475306800759,
+      "per_class_recall": {
+        "background": 0.8094575799721836,
+        "cargo": 0.6180555555555556,
+        "fishing": 0.3760330578512397,
+        "pleasurecraft": 0.6328233657858137,
+        "tanker": 0.6132208157524613,
+        "tug": 0.5167597765363129
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 6,
+      "added": "level changes over time",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines",
+        "level changes over time"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 139,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.5961898138466261,
+      "accuracy": 0.626010626010626,
+      "balanced_accuracy": 0.6259760145676071,
+      "macro_f1": 0.6239614276520437,
+      "per_ship_balanced_accuracy": 0.69474877836123,
+      "per_class_recall": {
+        "background": 0.8551532033426184,
+        "cargo": 0.6013888888888889,
+        "fishing": 0.49297752808988765,
+        "pleasurecraft": 0.6460055096418733,
+        "tanker": 0.5606060606060606,
+        "tug": 0.5997248968363136
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 6,
+      "added": "level changes over time",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines",
+        "level changes over time"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 139,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.6016372554846389,
+      "accuracy": 0.6027745664739884,
+      "balanced_accuracy": 0.6029996105684176,
+      "macro_f1": 0.5986499898394935,
+      "per_ship_balanced_accuracy": 0.6799850791094753,
+      "per_class_recall": {
+        "background": 0.850415512465374,
+        "cargo": 0.5722222222222222,
+        "fishing": 0.4035812672176309,
+        "pleasurecraft": 0.5807799442896936,
+        "tanker": 0.6264044943820225,
+        "tug": 0.5845942228335625
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 6,
+      "added": "level changes over time",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines",
+        "level changes over time"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 139,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6195090743061082,
+      "accuracy": 0.6041137046452507,
+      "balanced_accuracy": 0.6043361907535286,
+      "macro_f1": 0.5999825322475271,
+      "per_ship_balanced_accuracy": 0.673776652052711,
+      "per_class_recall": {
+        "background": 0.850415512465374,
+        "cargo": 0.5791666666666667,
+        "fishing": 0.4393939393939394,
+        "pleasurecraft": 0.6072423398328691,
+        "tanker": 0.5358126721763086,
+        "tug": 0.6139860139860139
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 6,
+      "added": "level changes over time",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines",
+        "level changes over time"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 139,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.5936801557556876,
+      "accuracy": 0.6212894248608535,
+      "balanced_accuracy": 0.6211211074282071,
+      "macro_f1": 0.6185741372824517,
+      "per_ship_balanced_accuracy": 0.6969360567502837,
+      "per_class_recall": {
+        "background": 0.8233657858136301,
+        "cargo": 0.6047156726768377,
+        "fishing": 0.4810126582278481,
+        "pleasurecraft": 0.5966620305980529,
+        "tanker": 0.5785123966942148,
+        "tug": 0.6424581005586593
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 6,
+      "added": "level changes over time",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines",
+        "level changes over time"
+      ],
+      "n_groups": 6,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 139,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.6165222505501572,
+      "accuracy": 0.5931338436557643,
+      "balanced_accuracy": 0.5934693161567003,
+      "macro_f1": 0.5889406266208589,
+      "per_ship_balanced_accuracy": 0.6686590168469109,
+      "per_class_recall": {
+        "background": 0.8164116828929068,
+        "cargo": 0.6111111111111112,
+        "fishing": 0.3677685950413223,
+        "pleasurecraft": 0.631432545201669,
+        "tanker": 0.6019690576652602,
+        "tug": 0.5321229050279329
+      }
+    },
+    {
+      "kind": "forward",
+      "left_out": "(none)",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines",
+        "level changes over time",
+        "loudness and impulsiveness"
+      ],
+      "n_groups": 7,
+      "model": "logistic regression",
+      "fold": 1,
+      "n_features": 144,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5929709970551997,
+      "accuracy": 0.6232386232386232,
+      "balanced_accuracy": 0.623177507495786,
+      "macro_f1": 0.6211285360957189,
+      "per_ship_balanced_accuracy": 0.6898638485410554,
+      "per_class_recall": {
+        "background": 0.8495821727019499,
+        "cargo": 0.5972222222222222,
+        "fishing": 0.4845505617977528,
+        "pleasurecraft": 0.640495867768595,
+        "tanker": 0.5647382920110193,
+        "tug": 0.6024759284731774
+      },
+      "step": 7,
+      "added": "loudness and impulsiveness"
+    },
+    {
+      "kind": "forward",
+      "left_out": "(none)",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines",
+        "level changes over time",
+        "loudness and impulsiveness"
+      ],
+      "n_groups": 7,
+      "model": "logistic regression",
+      "fold": 2,
+      "n_features": 144,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.5974771377259797,
+      "accuracy": 0.6027745664739884,
+      "balanced_accuracy": 0.6030072102436966,
+      "macro_f1": 0.5982645875670444,
+      "per_ship_balanced_accuracy": 0.6698427076144468,
+      "per_class_recall": {
+        "background": 0.8601108033240997,
+        "cargo": 0.5666666666666667,
+        "fishing": 0.39807162534435264,
+        "pleasurecraft": 0.5863509749303621,
+        "tanker": 0.625,
+        "tug": 0.5818431911966988
+      },
+      "step": 7,
+      "added": "loudness and impulsiveness"
+    },
+    {
+      "kind": "forward",
+      "left_out": "(none)",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines",
+        "level changes over time",
+        "loudness and impulsiveness"
+      ],
+      "n_groups": 7,
+      "model": "logistic regression",
+      "fold": 3,
+      "n_features": 144,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6183688634157418,
+      "accuracy": 0.6015715276172868,
+      "balanced_accuracy": 0.6017903950216533,
+      "macro_f1": 0.5973678834970754,
+      "per_ship_balanced_accuracy": 0.6628675312220249,
+      "per_class_recall": {
+        "background": 0.8545706371191135,
+        "cargo": 0.5791666666666667,
+        "fishing": 0.4380165289256198,
+        "pleasurecraft": 0.6016713091922006,
+        "tanker": 0.5289256198347108,
+        "tug": 0.6083916083916084
+      },
+      "step": 7,
+      "added": "loudness and impulsiveness"
+    },
+    {
+      "kind": "forward",
+      "left_out": "(none)",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines",
+        "level changes over time",
+        "loudness and impulsiveness"
+      ],
+      "n_groups": 7,
+      "model": "logistic regression",
+      "fold": 4,
+      "n_features": 144,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.5920404103134972,
+      "accuracy": 0.6192022263450835,
+      "balanced_accuracy": 0.6190400345347068,
+      "macro_f1": 0.6165471443121793,
+      "per_ship_balanced_accuracy": 0.6927298914529029,
+      "per_class_recall": {
+        "background": 0.8233657858136301,
+        "cargo": 0.6019417475728155,
+        "fishing": 0.48241912798874825,
+        "pleasurecraft": 0.588317107093185,
+        "tanker": 0.5771349862258953,
+        "tug": 0.6410614525139665
+      },
+      "step": 7,
+      "added": "loudness and impulsiveness"
+    },
+    {
+      "kind": "forward",
+      "left_out": "(none)",
+      "groups": [
+        "1/3-octave levels",
+        "propeller modulation (DEMON)",
+        "spectral shape",
+        "MFCC",
+        "tonal lines",
+        "level changes over time",
+        "loudness and impulsiveness"
+      ],
+      "n_groups": 7,
+      "model": "logistic regression",
+      "fold": 5,
+      "n_features": 144,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.6134762782234752,
+      "accuracy": 0.592205984690327,
+      "balanced_accuracy": 0.5925163792168676,
+      "macro_f1": 0.5883062049587989,
+      "per_ship_balanced_accuracy": 0.6496119569333051,
+      "per_class_recall": {
+        "background": 0.7955493741307371,
+        "cargo": 0.6180555555555556,
+        "fishing": 0.37052341597796146,
+        "pleasurecraft": 0.6369958275382476,
+        "tanker": 0.5850914205344585,
+        "tug": 0.5488826815642458
+      },
+      "step": 7,
+      "added": "loudness and impulsiveness"
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "(none)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 7,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 144,
+      "setting": 149,
+      "val_balanced_accuracy": 0.5951964887025553,
+      "accuracy": 0.6253176253176254,
+      "balanced_accuracy": 0.6253486156142475,
+      "macro_f1": 0.6215983506648025,
+      "per_ship_balanced_accuracy": 0.7080870038872077,
+      "per_class_recall": {
+        "background": 0.8788300835654597,
+        "cargo": 0.6555555555555556,
+        "fishing": 0.4747191011235955,
+        "pleasurecraft": 0.628099173553719,
+        "tanker": 0.5234159779614325,
+        "tug": 0.5914718019257221
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "(none)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 7,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 144,
+      "setting": 172,
+      "val_balanced_accuracy": 0.6096103878007971,
+      "accuracy": 0.6115606936416185,
+      "balanced_accuracy": 0.6117925819559734,
+      "macro_f1": 0.6054589784948119,
+      "per_ship_balanced_accuracy": 0.6915220905861003,
+      "per_class_recall": {
+        "background": 0.8628808864265928,
+        "cargo": 0.6194444444444445,
+        "fishing": 0.36639118457300274,
+        "pleasurecraft": 0.6462395543175488,
+        "tanker": 0.5870786516853933,
+        "tug": 0.5887207702888583
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "(none)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 7,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 144,
+      "setting": 168,
+      "val_balanced_accuracy": 0.6239454130719105,
+      "accuracy": 0.6105847007164317,
+      "balanced_accuracy": 0.6109985687097587,
+      "macro_f1": 0.6043475022165731,
+      "per_ship_balanced_accuracy": 0.6789009022710228,
+      "per_class_recall": {
+        "background": 0.8545706371191135,
+        "cargo": 0.6416666666666667,
+        "fishing": 0.42699724517906334,
+        "pleasurecraft": 0.5974930362116991,
+        "tanker": 0.4669421487603306,
+        "tug": 0.6783216783216783
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "(none)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 7,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 144,
+      "setting": 179,
+      "val_balanced_accuracy": 0.6026682326226563,
+      "accuracy": 0.6356679035250464,
+      "balanced_accuracy": 0.6355523952103387,
+      "macro_f1": 0.6318234956199529,
+      "per_ship_balanced_accuracy": 0.7362418623141448,
+      "per_class_recall": {
+        "background": 0.8358831710709318,
+        "cargo": 0.6712898751733704,
+        "fishing": 0.46554149085794655,
+        "pleasurecraft": 0.655076495132128,
+        "tanker": 0.5165289256198347,
+        "tug": 0.6689944134078212
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "(none)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 7,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 144,
+      "setting": 153,
+      "val_balanced_accuracy": 0.6047447863864172,
+      "accuracy": 0.6100672697749941,
+      "balanced_accuracy": 0.6101446476157877,
+      "macro_f1": 0.6057861526096,
+      "per_ship_balanced_accuracy": 0.7115378156548426,
+      "per_class_recall": {
+        "background": 0.8317107093184979,
+        "cargo": 0.6472222222222223,
+        "fishing": 0.4297520661157025,
+        "pleasurecraft": 0.6773296244784422,
+        "tanker": 0.5189873417721519,
+        "tug": 0.5558659217877095
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 87,
+      "setting": 153,
+      "val_balanced_accuracy": 0.5922033876079974,
+      "accuracy": 0.6121506121506122,
+      "balanced_accuracy": 0.6122128473052312,
+      "macro_f1": 0.6072616078798805,
+      "per_ship_balanced_accuracy": 0.6889032272129652,
+      "per_class_recall": {
+        "background": 0.8802228412256268,
+        "cargo": 0.6722222222222223,
+        "fishing": 0.449438202247191,
+        "pleasurecraft": 0.6212121212121212,
+        "tanker": 0.4820936639118457,
+        "tug": 0.5680880330123796
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 87,
+      "setting": 151,
+      "val_balanced_accuracy": 0.6069810067912607,
+      "accuracy": 0.6076300578034682,
+      "balanced_accuracy": 0.6078805763085781,
+      "macro_f1": 0.6014360045097554,
+      "per_ship_balanced_accuracy": 0.6756147279094139,
+      "per_class_recall": {
+        "background": 0.8573407202216067,
+        "cargo": 0.6208333333333333,
+        "fishing": 0.35674931129476584,
+        "pleasurecraft": 0.628133704735376,
+        "tanker": 0.5955056179775281,
+        "tug": 0.5887207702888583
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 87,
+      "setting": 165,
+      "val_balanced_accuracy": 0.6139481677806758,
+      "accuracy": 0.6182112318003236,
+      "balanced_accuracy": 0.6185332210139413,
+      "macro_f1": 0.6131351765680763,
+      "per_ship_balanced_accuracy": 0.6891645210161754,
+      "per_class_recall": {
+        "background": 0.8434903047091413,
+        "cargo": 0.6416666666666667,
+        "fishing": 0.4049586776859504,
+        "pleasurecraft": 0.6114206128133705,
+        "tanker": 0.5537190082644629,
+        "tug": 0.6559440559440559
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 87,
+      "setting": 166,
+      "val_balanced_accuracy": 0.5837381113620453,
+      "accuracy": 0.6303339517625232,
+      "balanced_accuracy": 0.6301978062869832,
+      "macro_f1": 0.6264881507242651,
+      "per_ship_balanced_accuracy": 0.721807693087997,
+      "per_class_recall": {
+        "background": 0.8372739916550765,
+        "cargo": 0.6671289875173371,
+        "fishing": 0.46272855133614627,
+        "pleasurecraft": 0.6203059805285118,
+        "tanker": 0.5275482093663911,
+        "tug": 0.6662011173184358
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 87,
+      "setting": 118,
+      "val_balanced_accuracy": 0.594191679504714,
+      "accuracy": 0.6035722570169334,
+      "balanced_accuracy": 0.6037326991604162,
+      "macro_f1": 0.5996782865909535,
+      "per_ship_balanced_accuracy": 0.6793430971399631,
+      "per_class_recall": {
+        "background": 0.8205841446453408,
+        "cargo": 0.6333333333333333,
+        "fishing": 0.4201101928374656,
+        "pleasurecraft": 0.6439499304589708,
+        "tanker": 0.5527426160337553,
+        "tug": 0.5516759776536313
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "1/3-octave levels",
+      "groups": [
+        "MFCC",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 115,
+      "setting": 155,
+      "val_balanced_accuracy": 0.596388701131902,
+      "accuracy": 0.6105336105336105,
+      "balanced_accuracy": 0.6105167313381802,
+      "macro_f1": 0.6062068513183492,
+      "per_ship_balanced_accuracy": 0.6968789516471107,
+      "per_class_recall": {
+        "background": 0.8607242339832869,
+        "cargo": 0.6486111111111111,
+        "fishing": 0.4452247191011236,
+        "pleasurecraft": 0.6143250688705234,
+        "tanker": 0.49449035812672176,
+        "tug": 0.5997248968363136
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "1/3-octave levels",
+      "groups": [
+        "MFCC",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 115,
+      "setting": 147,
+      "val_balanced_accuracy": 0.5947633863381889,
+      "accuracy": 0.5988439306358382,
+      "balanced_accuracy": 0.5989663057436625,
+      "macro_f1": 0.5939185541472161,
+      "per_ship_balanced_accuracy": 0.6647180047542366,
+      "per_class_recall": {
+        "background": 0.8448753462603878,
+        "cargo": 0.6,
+        "fishing": 0.3856749311294766,
+        "pleasurecraft": 0.6434540389972145,
+        "tanker": 0.5393258426966292,
+        "tug": 0.5804676753782668
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "1/3-octave levels",
+      "groups": [
+        "MFCC",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 115,
+      "setting": 191,
+      "val_balanced_accuracy": 0.6170311990628821,
+      "accuracy": 0.6045759186503351,
+      "balanced_accuracy": 0.6049531796631152,
+      "macro_f1": 0.5986679658152844,
+      "per_ship_balanced_accuracy": 0.6619722704164575,
+      "per_class_recall": {
+        "background": 0.8476454293628809,
+        "cargo": 0.6361111111111111,
+        "fishing": 0.4049586776859504,
+        "pleasurecraft": 0.596100278551532,
+        "tanker": 0.4903581267217631,
+        "tug": 0.6545454545454545
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "1/3-octave levels",
+      "groups": [
+        "MFCC",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 115,
+      "setting": 210,
+      "val_balanced_accuracy": 0.6017452524011977,
+      "accuracy": 0.6291743970315399,
+      "balanced_accuracy": 0.6290114651621329,
+      "macro_f1": 0.6252449272241954,
+      "per_ship_balanced_accuracy": 0.7346013041679949,
+      "per_class_recall": {
+        "background": 0.8428372739916551,
+        "cargo": 0.6601941747572816,
+        "fishing": 0.4472573839662447,
+        "pleasurecraft": 0.6189151599443672,
+        "tanker": 0.5316804407713499,
+        "tug": 0.6731843575418994
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "1/3-octave levels",
+      "groups": [
+        "MFCC",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 115,
+      "setting": 158,
+      "val_balanced_accuracy": 0.6049989113334261,
+      "accuracy": 0.6019485038274183,
+      "balanced_accuracy": 0.6020870609760062,
+      "macro_f1": 0.5981767862583053,
+      "per_ship_balanced_accuracy": 0.7133166727643413,
+      "per_class_recall": {
+        "background": 0.8164116828929068,
+        "cargo": 0.6208333333333333,
+        "fishing": 0.41735537190082644,
+        "pleasurecraft": 0.6620305980528511,
+        "tanker": 0.5316455696202531,
+        "tug": 0.5642458100558659
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "level changes over time",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 135,
+      "setting": 118,
+      "val_balanced_accuracy": 0.5955299345197571,
+      "accuracy": 0.6075306075306075,
+      "balanced_accuracy": 0.6074624975315434,
+      "macro_f1": 0.6029732763647268,
+      "per_ship_balanced_accuracy": 0.7028922488771969,
+      "per_class_recall": {
+        "background": 0.8607242339832869,
+        "cargo": 0.6402777777777777,
+        "fishing": 0.42696629213483145,
+        "pleasurecraft": 0.6198347107438017,
+        "tanker": 0.4986225895316804,
+        "tug": 0.5983493810178817
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "level changes over time",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 135,
+      "setting": 133,
+      "val_balanced_accuracy": 0.604043847244548,
+      "accuracy": 0.6099421965317919,
+      "balanced_accuracy": 0.6101847565599686,
+      "macro_f1": 0.6032792430537655,
+      "per_ship_balanced_accuracy": 0.6820530761955883,
+      "per_class_recall": {
+        "background": 0.868421052631579,
+        "cargo": 0.6152777777777778,
+        "fishing": 0.35399449035812675,
+        "pleasurecraft": 0.6392757660167131,
+        "tanker": 0.5912921348314607,
+        "tug": 0.5928473177441541
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "level changes over time",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 135,
+      "setting": 168,
+      "val_balanced_accuracy": 0.6219793760148492,
+      "accuracy": 0.6103535937138895,
+      "balanced_accuracy": 0.6107727341499313,
+      "macro_f1": 0.6035659180813948,
+      "per_ship_balanced_accuracy": 0.6843304590751395,
+      "per_class_recall": {
+        "background": 0.8601108033240997,
+        "cargo": 0.6611111111111111,
+        "fishing": 0.4090909090909091,
+        "pleasurecraft": 0.5821727019498607,
+        "tanker": 0.4738292011019284,
+        "tug": 0.6783216783216783
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "level changes over time",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 135,
+      "setting": 164,
+      "val_balanced_accuracy": 0.5951978647375941,
+      "accuracy": 0.62847866419295,
+      "balanced_accuracy": 0.6283366399858172,
+      "macro_f1": 0.6244500559345746,
+      "per_ship_balanced_accuracy": 0.7241136649977457,
+      "per_class_recall": {
+        "background": 0.8358831710709318,
+        "cargo": 0.6338418862690708,
+        "fishing": 0.44585091420534456,
+        "pleasurecraft": 0.6383866481223922,
+        "tanker": 0.5303030303030303,
+        "tug": 0.6857541899441341
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "level changes over time",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 135,
+      "setting": 157,
+      "val_balanced_accuracy": 0.601549349369274,
+      "accuracy": 0.6079795871027603,
+      "balanced_accuracy": 0.608081433119245,
+      "macro_f1": 0.6043460312772903,
+      "per_ship_balanced_accuracy": 0.6985015844747791,
+      "per_class_recall": {
+        "background": 0.8219749652294854,
+        "cargo": 0.6513888888888889,
+        "fishing": 0.43388429752066116,
+        "pleasurecraft": 0.655076495132128,
+        "tanker": 0.5386779184247539,
+        "tug": 0.547486033519553
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "spectral shape",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 116,
+      "setting": 155,
+      "val_balanced_accuracy": 0.6077528610703687,
+      "accuracy": 0.6301686301686301,
+      "balanced_accuracy": 0.6301657007240644,
+      "macro_f1": 0.6265610698915701,
+      "per_ship_balanced_accuracy": 0.7138373426405952,
+      "per_class_recall": {
+        "background": 0.862116991643454,
+        "cargo": 0.6541666666666667,
+        "fishing": 0.4845505617977528,
+        "pleasurecraft": 0.6639118457300276,
+        "tanker": 0.512396694214876,
+        "tug": 0.6038514442916093
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "spectral shape",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 116,
+      "setting": 156,
+      "val_balanced_accuracy": 0.6063681932109474,
+      "accuracy": 0.610635838150289,
+      "balanced_accuracy": 0.6108386604123343,
+      "macro_f1": 0.604810476760452,
+      "per_ship_balanced_accuracy": 0.6966682002913888,
+      "per_class_recall": {
+        "background": 0.8545706371191135,
+        "cargo": 0.6291666666666667,
+        "fishing": 0.3650137741046832,
+        "pleasurecraft": 0.6559888579387186,
+        "tanker": 0.5688202247191011,
+        "tug": 0.5914718019257221
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "spectral shape",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 116,
+      "setting": 172,
+      "val_balanced_accuracy": 0.6211691682469016,
+      "accuracy": 0.6135890917494801,
+      "balanced_accuracy": 0.6139894259197141,
+      "macro_f1": 0.6079141783962715,
+      "per_ship_balanced_accuracy": 0.6840253146615307,
+      "per_class_recall": {
+        "background": 0.8518005540166205,
+        "cargo": 0.6416666666666667,
+        "fishing": 0.4325068870523416,
+        "pleasurecraft": 0.5947075208913649,
+        "tanker": 0.4793388429752066,
+        "tug": 0.6839160839160839
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "spectral shape",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 116,
+      "setting": 204,
+      "val_balanced_accuracy": 0.6116318941371581,
+      "accuracy": 0.62569573283859,
+      "balanced_accuracy": 0.6255297913344963,
+      "macro_f1": 0.6217006421678201,
+      "per_ship_balanced_accuracy": 0.7426442304562895,
+      "per_class_recall": {
+        "background": 0.8191933240611962,
+        "cargo": 0.6601941747572816,
+        "fishing": 0.4345991561181435,
+        "pleasurecraft": 0.6439499304589708,
+        "tanker": 0.5206611570247934,
+        "tug": 0.6745810055865922
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "spectral shape",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "loudness and impulsiveness",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 116,
+      "setting": 143,
+      "val_balanced_accuracy": 0.609209972733733,
+      "accuracy": 0.6068197633959638,
+      "balanced_accuracy": 0.6069324268577653,
+      "macro_f1": 0.6025665564358715,
+      "per_ship_balanced_accuracy": 0.7097172414618477,
+      "per_class_recall": {
+        "background": 0.8191933240611962,
+        "cargo": 0.6361111111111111,
+        "fishing": 0.418732782369146,
+        "pleasurecraft": 0.6675938803894298,
+        "tanker": 0.5147679324894515,
+        "tug": 0.585195530726257
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "loudness and impulsiveness",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 139,
+      "setting": 131,
+      "val_balanced_accuracy": 0.5938880028985748,
+      "accuracy": 0.6243936243936244,
+      "balanced_accuracy": 0.6244041244544699,
+      "macro_f1": 0.6201323709865936,
+      "per_ship_balanced_accuracy": 0.7002503025017085,
+      "per_class_recall": {
+        "background": 0.8802228412256268,
+        "cargo": 0.6611111111111111,
+        "fishing": 0.46348314606741575,
+        "pleasurecraft": 0.6336088154269972,
+        "tanker": 0.5151515151515151,
+        "tug": 0.5928473177441541
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "loudness and impulsiveness",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 139,
+      "setting": 150,
+      "val_balanced_accuracy": 0.6058882714490633,
+      "accuracy": 0.608092485549133,
+      "balanced_accuracy": 0.6083137407643217,
+      "macro_f1": 0.6013173216438821,
+      "per_ship_balanced_accuracy": 0.6939033624722031,
+      "per_class_recall": {
+        "background": 0.8614958448753463,
+        "cargo": 0.6138888888888889,
+        "fishing": 0.35537190082644626,
+        "pleasurecraft": 0.6448467966573816,
+        "tanker": 0.5800561797752809,
+        "tug": 0.594222833562586
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "loudness and impulsiveness",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 139,
+      "setting": 172,
+      "val_balanced_accuracy": 0.6237040665175952,
+      "accuracy": 0.6124335567367691,
+      "balanced_accuracy": 0.6128114227196957,
+      "macro_f1": 0.6064594524277394,
+      "per_ship_balanced_accuracy": 0.6961709374193085,
+      "per_class_recall": {
+        "background": 0.8573407202216067,
+        "cargo": 0.6388888888888888,
+        "fishing": 0.41597796143250687,
+        "pleasurecraft": 0.5891364902506964,
+        "tanker": 0.5,
+        "tug": 0.6755244755244755
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "loudness and impulsiveness",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 139,
+      "setting": 181,
+      "val_balanced_accuracy": 0.6036160339655066,
+      "accuracy": 0.6426252319109462,
+      "balanced_accuracy": 0.6425326770378471,
+      "macro_f1": 0.6389869384670847,
+      "per_ship_balanced_accuracy": 0.753577106969422,
+      "per_class_recall": {
+        "background": 0.8386648122392212,
+        "cargo": 0.6699029126213593,
+        "fishing": 0.47538677918424754,
+        "pleasurecraft": 0.6522948539638387,
+        "tanker": 0.5234159779614325,
+        "tug": 0.6955307262569832
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "loudness and impulsiveness",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "tonal lines",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 139,
+      "setting": 136,
+      "val_balanced_accuracy": 0.6121685561105876,
+      "accuracy": 0.6140106703781025,
+      "balanced_accuracy": 0.6141127257199716,
+      "macro_f1": 0.6102505494664606,
+      "per_ship_balanced_accuracy": 0.7187566811776159,
+      "per_class_recall": {
+        "background": 0.8344923504867872,
+        "cargo": 0.6361111111111111,
+        "fishing": 0.43388429752066116,
+        "pleasurecraft": 0.6787204450625869,
+        "tanker": 0.530239099859353,
+        "tug": 0.5712290502793296
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "tonal lines",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 139,
+      "setting": 134,
+      "val_balanced_accuracy": 0.5964618711575845,
+      "accuracy": 0.6216216216216216,
+      "balanced_accuracy": 0.6217347902434438,
+      "macro_f1": 0.6172796242989902,
+      "per_ship_balanced_accuracy": 0.7024516964215882,
+      "per_class_recall": {
+        "background": 0.8941504178272981,
+        "cargo": 0.6583333333333333,
+        "fishing": 0.48174157303370785,
+        "pleasurecraft": 0.6115702479338843,
+        "tanker": 0.5137741046831956,
+        "tug": 0.5708390646492435
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "tonal lines",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 139,
+      "setting": 154,
+      "val_balanced_accuracy": 0.595013584859168,
+      "accuracy": 0.6083236994219653,
+      "balanced_accuracy": 0.6086352946286531,
+      "macro_f1": 0.6018728954219793,
+      "per_ship_balanced_accuracy": 0.6755701569409299,
+      "per_class_recall": {
+        "background": 0.8628808864265928,
+        "cargo": 0.6152777777777778,
+        "fishing": 0.3581267217630854,
+        "pleasurecraft": 0.6476323119777159,
+        "tanker": 0.6039325842696629,
+        "tug": 0.5639614855570839
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "tonal lines",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 139,
+      "setting": 180,
+      "val_balanced_accuracy": 0.6197486888804649,
+      "accuracy": 0.6080425236884678,
+      "balanced_accuracy": 0.6083860322511417,
+      "macro_f1": 0.6025567877384299,
+      "per_ship_balanced_accuracy": 0.6815639183614818,
+      "per_class_recall": {
+        "background": 0.850415512465374,
+        "cargo": 0.6527777777777778,
+        "fishing": 0.4297520661157025,
+        "pleasurecraft": 0.5821727019498607,
+        "tanker": 0.48484848484848486,
+        "tug": 0.6503496503496503
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "tonal lines",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 139,
+      "setting": 201,
+      "val_balanced_accuracy": 0.6039810906677405,
+      "accuracy": 0.6328849721706865,
+      "balanced_accuracy": 0.6327023741324355,
+      "macro_f1": 0.628708932247506,
+      "per_ship_balanced_accuracy": 0.723585195248699,
+      "per_class_recall": {
+        "background": 0.8400556328233658,
+        "cargo": 0.6768377253814147,
+        "fishing": 0.450070323488045,
+        "pleasurecraft": 0.6328233657858137,
+        "tanker": 0.5358126721763086,
+        "tug": 0.6606145251396648
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "tonal lines",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 139,
+      "setting": 130,
+      "val_balanced_accuracy": 0.6032449303564549,
+      "accuracy": 0.6049640454650893,
+      "balanced_accuracy": 0.6050518124838504,
+      "macro_f1": 0.6007452603073917,
+      "per_ship_balanced_accuracy": 0.7050067770291609,
+      "per_class_recall": {
+        "background": 0.8358831710709318,
+        "cargo": 0.6472222222222223,
+        "fishing": 0.4283746556473829,
+        "pleasurecraft": 0.6467315716272601,
+        "tanker": 0.5246132208157525,
+        "tug": 0.547486033519553
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "propeller modulation (DEMON)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 133,
+      "setting": 132,
+      "val_balanced_accuracy": 0.5825649657899139,
+      "accuracy": 0.6174636174636174,
+      "balanced_accuracy": 0.6174905517695347,
+      "macro_f1": 0.6136849724132459,
+      "per_ship_balanced_accuracy": 0.7067385413294832,
+      "per_class_recall": {
+        "background": 0.8899721448467967,
+        "cargo": 0.6166666666666667,
+        "fishing": 0.4691011235955056,
+        "pleasurecraft": 0.6170798898071626,
+        "tanker": 0.5137741046831956,
+        "tug": 0.5983493810178817
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "propeller modulation (DEMON)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 133,
+      "setting": 147,
+      "val_balanced_accuracy": 0.5922439234426814,
+      "accuracy": 0.6027745664739884,
+      "balanced_accuracy": 0.6030925762362774,
+      "macro_f1": 0.5957274190388903,
+      "per_ship_balanced_accuracy": 0.6612077614191141,
+      "per_class_recall": {
+        "background": 0.8739612188365651,
+        "cargo": 0.5805555555555556,
+        "fishing": 0.33884297520661155,
+        "pleasurecraft": 0.6462395543175488,
+        "tanker": 0.6067415730337079,
+        "tug": 0.5722145804676754
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "propeller modulation (DEMON)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 133,
+      "setting": 161,
+      "val_balanced_accuracy": 0.6026079050254927,
+      "accuracy": 0.5951005315461059,
+      "balanced_accuracy": 0.5954446958392826,
+      "macro_f1": 0.5890859075277365,
+      "per_ship_balanced_accuracy": 0.6927713432804907,
+      "per_class_recall": {
+        "background": 0.8421052631578947,
+        "cargo": 0.6263888888888889,
+        "fishing": 0.3939393939393939,
+        "pleasurecraft": 0.596100278551532,
+        "tanker": 0.4903581267217631,
+        "tug": 0.6237762237762238
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "propeller modulation (DEMON)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 133,
+      "setting": 189,
+      "val_balanced_accuracy": 0.5953269641323852,
+      "accuracy": 0.614100185528757,
+      "balanced_accuracy": 0.6139517936589897,
+      "macro_f1": 0.6102083664074485,
+      "per_ship_balanced_accuracy": 0.6943120379373755,
+      "per_class_recall": {
+        "background": 0.8428372739916551,
+        "cargo": 0.6269070735090153,
+        "fishing": 0.44022503516174405,
+        "pleasurecraft": 0.6119610570236439,
+        "tanker": 0.5165289256198347,
+        "tug": 0.6452513966480447
+      }
+    },
+    {
+      "kind": "leave one out",
+      "left_out": "propeller modulation (DEMON)",
+      "groups": [
+        "MFCC",
+        "1/3-octave levels",
+        "level changes over time",
+        "spectral shape",
+        "loudness and impulsiveness",
+        "tonal lines"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 133,
+      "setting": 140,
+      "val_balanced_accuracy": 0.5917620803880926,
+      "accuracy": 0.6063558339132452,
+      "balanced_accuracy": 0.6065183380718667,
+      "macro_f1": 0.6023478049851476,
+      "per_ship_balanced_accuracy": 0.6945234596927464,
+      "per_class_recall": {
+        "background": 0.827538247566064,
+        "cargo": 0.6402777777777777,
+        "fishing": 0.4049586776859504,
+        "pleasurecraft": 0.6634214186369958,
+        "tanker": 0.5372714486638537,
+        "tug": 0.5656424581005587
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 1,
+      "added": "1/3-octave levels",
+      "groups": [
+        "1/3-octave levels"
+      ],
+      "n_groups": 1,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 29,
+      "setting": 157,
+      "val_balanced_accuracy": 0.5431725276514854,
+      "accuracy": 0.5437745437745438,
+      "balanced_accuracy": 0.5436976440633651,
+      "macro_f1": 0.5378052691111976,
+      "per_ship_balanced_accuracy": 0.6032844966839704,
+      "per_class_recall": {
+        "background": 0.8356545961002786,
+        "cargo": 0.5708333333333333,
+        "fishing": 0.33848314606741575,
+        "pleasurecraft": 0.5041322314049587,
+        "tanker": 0.5110192837465565,
+        "tug": 0.5020632737276479
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 1,
+      "added": "1/3-octave levels",
+      "groups": [
+        "1/3-octave levels"
+      ],
+      "n_groups": 1,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 29,
+      "setting": 148,
+      "val_balanced_accuracy": 0.5376046843065168,
+      "accuracy": 0.551907514450867,
+      "balanced_accuracy": 0.5522621012809323,
+      "macro_f1": 0.5432060024845916,
+      "per_ship_balanced_accuracy": 0.611393553664085,
+      "per_class_recall": {
+        "background": 0.8199445983379502,
+        "cargo": 0.5402777777777777,
+        "fishing": 0.2809917355371901,
+        "pleasurecraft": 0.5389972144846796,
+        "tanker": 0.5969101123595506,
+        "tug": 0.5364511691884457
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 1,
+      "added": "1/3-octave levels",
+      "groups": [
+        "1/3-octave levels"
+      ],
+      "n_groups": 1,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 29,
+      "setting": 184,
+      "val_balanced_accuracy": 0.55766149990686,
+      "accuracy": 0.543101455974116,
+      "balanced_accuracy": 0.543478655444008,
+      "macro_f1": 0.5313677956961755,
+      "per_ship_balanced_accuracy": 0.6185361916008302,
+      "per_class_recall": {
+        "background": 0.8268698060941828,
+        "cargo": 0.5611111111111111,
+        "fishing": 0.2396694214876033,
+        "pleasurecraft": 0.541782729805014,
+        "tanker": 0.5110192837465565,
+        "tug": 0.5804195804195804
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 1,
+      "added": "1/3-octave levels",
+      "groups": [
+        "1/3-octave levels"
+      ],
+      "n_groups": 1,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 29,
+      "setting": 198,
+      "val_balanced_accuracy": 0.5308361132280525,
+      "accuracy": 0.5570500927643784,
+      "balanced_accuracy": 0.5566943884050777,
+      "macro_f1": 0.5514027210540361,
+      "per_ship_balanced_accuracy": 0.6442031774758931,
+      "per_class_recall": {
+        "background": 0.7872044506258693,
+        "cargo": 0.5714285714285714,
+        "fishing": 0.3206751054852321,
+        "pleasurecraft": 0.5396383866481224,
+        "tanker": 0.5206611570247934,
+        "tug": 0.6005586592178771
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 1,
+      "added": "1/3-octave levels",
+      "groups": [
+        "1/3-octave levels"
+      ],
+      "n_groups": 1,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 29,
+      "setting": 159,
+      "val_balanced_accuracy": 0.5450822663022921,
+      "accuracy": 0.5293435397819531,
+      "balanced_accuracy": 0.5294589131427477,
+      "macro_f1": 0.5245166859196095,
+      "per_ship_balanced_accuracy": 0.5688939357164301,
+      "per_class_recall": {
+        "background": 0.7691237830319889,
+        "cargo": 0.6319444444444444,
+        "fishing": 0.325068870523416,
+        "pleasurecraft": 0.541029207232267,
+        "tanker": 0.45288326300984527,
+        "tug": 0.45670391061452514
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 2,
+      "added": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC"
+      ],
+      "n_groups": 2,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 86,
+      "setting": 133,
+      "val_balanced_accuracy": 0.5745653904874618,
+      "accuracy": 0.5971355971355972,
+      "balanced_accuracy": 0.5970381296770626,
+      "macro_f1": 0.5929089331759404,
+      "per_ship_balanced_accuracy": 0.6769319005071238,
+      "per_class_recall": {
+        "background": 0.8676880222841226,
+        "cargo": 0.5819444444444445,
+        "fishing": 0.41713483146067415,
+        "pleasurecraft": 0.6088154269972452,
+        "tanker": 0.5316804407713499,
+        "tug": 0.5749656121045392
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 2,
+      "added": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC"
+      ],
+      "n_groups": 2,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 86,
+      "setting": 126,
+      "val_balanced_accuracy": 0.5630882454659373,
+      "accuracy": 0.5778034682080925,
+      "balanced_accuracy": 0.5780775997513403,
+      "macro_f1": 0.5703400727483104,
+      "per_ship_balanced_accuracy": 0.6293507016333103,
+      "per_class_recall": {
+        "background": 0.8518005540166205,
+        "cargo": 0.5680555555555555,
+        "fishing": 0.3085399449035813,
+        "pleasurecraft": 0.6155988857938719,
+        "tanker": 0.5660112359550562,
+        "tug": 0.5584594222833562
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 2,
+      "added": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC"
+      ],
+      "n_groups": 2,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 86,
+      "setting": 145,
+      "val_balanced_accuracy": 0.5834282609982184,
+      "accuracy": 0.5805407903859487,
+      "balanced_accuracy": 0.5809028070117083,
+      "macro_f1": 0.5726233587041932,
+      "per_ship_balanced_accuracy": 0.6768144066086744,
+      "per_class_recall": {
+        "background": 0.8601108033240997,
+        "cargo": 0.6027777777777777,
+        "fishing": 0.35537190082644626,
+        "pleasurecraft": 0.575208913649025,
+        "tanker": 0.47796143250688705,
+        "tug": 0.6139860139860139
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 2,
+      "added": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC"
+      ],
+      "n_groups": 2,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 86,
+      "setting": 194,
+      "val_balanced_accuracy": 0.5776507500250071,
+      "accuracy": 0.5969387755102041,
+      "balanced_accuracy": 0.596687269380005,
+      "macro_f1": 0.5932319465468993,
+      "per_ship_balanced_accuracy": 0.6863246775194075,
+      "per_class_recall": {
+        "background": 0.8052851182197497,
+        "cargo": 0.5991678224687933,
+        "fishing": 0.39943741209563993,
+        "pleasurecraft": 0.5966620305980529,
+        "tanker": 0.5426997245179064,
+        "tug": 0.6368715083798883
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 2,
+      "added": "MFCC",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC"
+      ],
+      "n_groups": 2,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 86,
+      "setting": 134,
+      "val_balanced_accuracy": 0.5744206066859529,
+      "accuracy": 0.5775922059846903,
+      "balanced_accuracy": 0.5777829591459892,
+      "macro_f1": 0.5732418212996445,
+      "per_ship_balanced_accuracy": 0.673653748802668,
+      "per_class_recall": {
+        "background": 0.799721835883171,
+        "cargo": 0.6361111111111111,
+        "fishing": 0.36363636363636365,
+        "pleasurecraft": 0.6244784422809457,
+        "tanker": 0.5218002812939522,
+        "tug": 0.520949720670391
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 3,
+      "added": "propeller modulation (DEMON)",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 3,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 97,
+      "setting": 135,
+      "val_balanced_accuracy": 0.587243903428905,
+      "accuracy": 0.6112266112266113,
+      "balanced_accuracy": 0.6111545151379328,
+      "macro_f1": 0.6065305531968103,
+      "per_ship_balanced_accuracy": 0.6973988207071874,
+      "per_class_recall": {
+        "background": 0.8579387186629527,
+        "cargo": 0.6347222222222222,
+        "fishing": 0.43820224719101125,
+        "pleasurecraft": 0.6212121212121212,
+        "tanker": 0.4972451790633609,
+        "tug": 0.6176066024759285
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 3,
+      "added": "propeller modulation (DEMON)",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 3,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 97,
+      "setting": 140,
+      "val_balanced_accuracy": 0.587858179654759,
+      "accuracy": 0.593757225433526,
+      "balanced_accuracy": 0.5940007330037892,
+      "macro_f1": 0.586841865623036,
+      "per_ship_balanced_accuracy": 0.6398903777828898,
+      "per_class_recall": {
+        "background": 0.8587257617728532,
+        "cargo": 0.6041666666666666,
+        "fishing": 0.3319559228650138,
+        "pleasurecraft": 0.6364902506963789,
+        "tanker": 0.5632022471910112,
+        "tug": 0.5694635488308115
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 3,
+      "added": "propeller modulation (DEMON)",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 3,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 97,
+      "setting": 164,
+      "val_balanced_accuracy": 0.6108645422002703,
+      "accuracy": 0.6011093136122024,
+      "balanced_accuracy": 0.6015049317484005,
+      "macro_f1": 0.594055887718297,
+      "per_ship_balanced_accuracy": 0.6837868754455502,
+      "per_class_recall": {
+        "background": 0.8518005540166205,
+        "cargo": 0.6458333333333334,
+        "fishing": 0.3939393939393939,
+        "pleasurecraft": 0.5668523676880223,
+        "tanker": 0.4834710743801653,
+        "tug": 0.6671328671328671
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 3,
+      "added": "propeller modulation (DEMON)",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 3,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 97,
+      "setting": 167,
+      "val_balanced_accuracy": 0.5933737816731445,
+      "accuracy": 0.6219851576994434,
+      "balanced_accuracy": 0.621794196675832,
+      "macro_f1": 0.6183515405547748,
+      "per_ship_balanced_accuracy": 0.7282927605870803,
+      "per_class_recall": {
+        "background": 0.8108484005563282,
+        "cargo": 0.6352288488210819,
+        "fishing": 0.43741209563994377,
+        "pleasurecraft": 0.6411682892906815,
+        "tanker": 0.5426997245179064,
+        "tug": 0.6634078212290503
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 3,
+      "added": "propeller modulation (DEMON)",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)"
+      ],
+      "n_groups": 3,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 97,
+      "setting": 154,
+      "val_balanced_accuracy": 0.6063912839536352,
+      "accuracy": 0.5935977731384829,
+      "balanced_accuracy": 0.5937090929284996,
+      "macro_f1": 0.5899072423628607,
+      "per_ship_balanced_accuracy": 0.6897642707246203,
+      "per_class_recall": {
+        "background": 0.808066759388039,
+        "cargo": 0.6458333333333334,
+        "fishing": 0.41735537190082644,
+        "pleasurecraft": 0.627260083449235,
+        "tanker": 0.5274261603375527,
+        "tug": 0.5363128491620112
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 4,
+      "added": "level changes over time",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time"
+      ],
+      "n_groups": 4,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 106,
+      "setting": 155,
+      "val_balanced_accuracy": 0.5988267338771139,
+      "accuracy": 0.6216216216216216,
+      "balanced_accuracy": 0.6216385721334907,
+      "macro_f1": 0.6171252652191873,
+      "per_ship_balanced_accuracy": 0.7036839537936669,
+      "per_class_recall": {
+        "background": 0.8844011142061281,
+        "cargo": 0.6402777777777777,
+        "fishing": 0.46629213483146065,
+        "pleasurecraft": 0.6473829201101928,
+        "tanker": 0.5041322314049587,
+        "tug": 0.5873452544704264
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 4,
+      "added": "level changes over time",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time"
+      ],
+      "n_groups": 4,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 106,
+      "setting": 165,
+      "val_balanced_accuracy": 0.6012695244585055,
+      "accuracy": 0.6034682080924856,
+      "balanced_accuracy": 0.6036753287154601,
+      "macro_f1": 0.5978364579980374,
+      "per_ship_balanced_accuracy": 0.6466066955499322,
+      "per_class_recall": {
+        "background": 0.8614958448753463,
+        "cargo": 0.6013888888888889,
+        "fishing": 0.3746556473829201,
+        "pleasurecraft": 0.6476323119777159,
+        "tanker": 0.5674157303370787,
+        "tug": 0.5694635488308115
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 4,
+      "added": "level changes over time",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time"
+      ],
+      "n_groups": 4,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 106,
+      "setting": 182,
+      "val_balanced_accuracy": 0.6169444676495477,
+      "accuracy": 0.6050381326554195,
+      "balanced_accuracy": 0.6054204096001556,
+      "macro_f1": 0.5987873962602525,
+      "per_ship_balanced_accuracy": 0.6760456141913989,
+      "per_class_recall": {
+        "background": 0.850415512465374,
+        "cargo": 0.6333333333333333,
+        "fishing": 0.4090909090909091,
+        "pleasurecraft": 0.5877437325905293,
+        "tanker": 0.48760330578512395,
+        "tug": 0.6643356643356644
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 4,
+      "added": "level changes over time",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time"
+      ],
+      "n_groups": 4,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 106,
+      "setting": 203,
+      "val_balanced_accuracy": 0.601632406880064,
+      "accuracy": 0.6289424860853432,
+      "balanced_accuracy": 0.6287603569814847,
+      "macro_f1": 0.6252474965966601,
+      "per_ship_balanced_accuracy": 0.7372482434088062,
+      "per_class_recall": {
+        "background": 0.8094575799721836,
+        "cargo": 0.6643550624133149,
+        "fishing": 0.44585091420534456,
+        "pleasurecraft": 0.650904033379694,
+        "tanker": 0.5371900826446281,
+        "tug": 0.664804469273743
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 4,
+      "added": "level changes over time",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time"
+      ],
+      "n_groups": 4,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 106,
+      "setting": 167,
+      "val_balanced_accuracy": 0.6168220803584,
+      "accuracy": 0.6033402922755741,
+      "balanced_accuracy": 0.603447312766649,
+      "macro_f1": 0.5993010954080736,
+      "per_ship_balanced_accuracy": 0.7215896751314953,
+      "per_class_recall": {
+        "background": 0.8219749652294854,
+        "cargo": 0.6388888888888888,
+        "fishing": 0.42699724517906334,
+        "pleasurecraft": 0.6453407510431154,
+        "tanker": 0.5274261603375527,
+        "tug": 0.5600558659217877
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 5,
+      "added": "tonal lines",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines"
+      ],
+      "n_groups": 5,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 111,
+      "setting": 154,
+      "val_balanced_accuracy": 0.6031340167281605,
+      "accuracy": 0.6257796257796258,
+      "balanced_accuracy": 0.6257855630688006,
+      "macro_f1": 0.6219887277003134,
+      "per_ship_balanced_accuracy": 0.7156794453122012,
+      "per_class_recall": {
+        "background": 0.871866295264624,
+        "cargo": 0.6583333333333333,
+        "fishing": 0.4705056179775281,
+        "pleasurecraft": 0.640495867768595,
+        "tanker": 0.5234159779614325,
+        "tug": 0.5900962861072903
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 5,
+      "added": "tonal lines",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines"
+      ],
+      "n_groups": 5,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 111,
+      "setting": 149,
+      "val_balanced_accuracy": 0.6047805760478601,
+      "accuracy": 0.6046242774566474,
+      "balanced_accuracy": 0.6047817493916257,
+      "macro_f1": 0.5987006652884715,
+      "per_ship_balanced_accuracy": 0.6910969889834625,
+      "per_class_recall": {
+        "background": 0.8656509695290858,
+        "cargo": 0.6152777777777778,
+        "fishing": 0.37327823691460055,
+        "pleasurecraft": 0.6434540389972145,
+        "tanker": 0.550561797752809,
+        "tug": 0.5804676753782668
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 5,
+      "added": "tonal lines",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines"
+      ],
+      "n_groups": 5,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 111,
+      "setting": 175,
+      "val_balanced_accuracy": 0.6246223808485607,
+      "accuracy": 0.6094291657037209,
+      "balanced_accuracy": 0.6098398474679348,
+      "macro_f1": 0.6036852378140395,
+      "per_ship_balanced_accuracy": 0.6934934419154016,
+      "per_class_recall": {
+        "background": 0.850415512465374,
+        "cargo": 0.6416666666666667,
+        "fishing": 0.4201101928374656,
+        "pleasurecraft": 0.5974930362116991,
+        "tanker": 0.4738292011019284,
+        "tug": 0.6755244755244755
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 5,
+      "added": "tonal lines",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines"
+      ],
+      "n_groups": 5,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 111,
+      "setting": 205,
+      "val_balanced_accuracy": 0.6091093443867891,
+      "accuracy": 0.62639146567718,
+      "balanced_accuracy": 0.6262779238684494,
+      "macro_f1": 0.6226896691628475,
+      "per_ship_balanced_accuracy": 0.7401792964628902,
+      "per_class_recall": {
+        "background": 0.8191933240611962,
+        "cargo": 0.6588072122052705,
+        "fishing": 0.45288326300984527,
+        "pleasurecraft": 0.6467315716272601,
+        "tanker": 0.5082644628099173,
+        "tug": 0.6717877094972067
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 5,
+      "added": "tonal lines",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines"
+      ],
+      "n_groups": 5,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 111,
+      "setting": 147,
+      "val_balanced_accuracy": 0.614681214686196,
+      "accuracy": 0.6063558339132452,
+      "balanced_accuracy": 0.6064906690313482,
+      "macro_f1": 0.6025806503500734,
+      "per_ship_balanced_accuracy": 0.7077422542203923,
+      "per_class_recall": {
+        "background": 0.8094575799721836,
+        "cargo": 0.6375,
+        "fishing": 0.41597796143250687,
+        "pleasurecraft": 0.6787204450625869,
+        "tanker": 0.5316455696202531,
+        "tug": 0.5656424581005587
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 6,
+      "added": "loudness and impulsiveness",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines",
+        "loudness and impulsiveness"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 116,
+      "setting": 155,
+      "val_balanced_accuracy": 0.6077528610703687,
+      "accuracy": 0.6301686301686301,
+      "balanced_accuracy": 0.6301657007240644,
+      "macro_f1": 0.6265610698915701,
+      "per_ship_balanced_accuracy": 0.7138373426405952,
+      "per_class_recall": {
+        "background": 0.862116991643454,
+        "cargo": 0.6541666666666667,
+        "fishing": 0.4845505617977528,
+        "pleasurecraft": 0.6639118457300276,
+        "tanker": 0.512396694214876,
+        "tug": 0.6038514442916093
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 6,
+      "added": "loudness and impulsiveness",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines",
+        "loudness and impulsiveness"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 116,
+      "setting": 156,
+      "val_balanced_accuracy": 0.6063681932109474,
+      "accuracy": 0.610635838150289,
+      "balanced_accuracy": 0.6108386604123343,
+      "macro_f1": 0.604810476760452,
+      "per_ship_balanced_accuracy": 0.6966682002913888,
+      "per_class_recall": {
+        "background": 0.8545706371191135,
+        "cargo": 0.6291666666666667,
+        "fishing": 0.3650137741046832,
+        "pleasurecraft": 0.6559888579387186,
+        "tanker": 0.5688202247191011,
+        "tug": 0.5914718019257221
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 6,
+      "added": "loudness and impulsiveness",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines",
+        "loudness and impulsiveness"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 116,
+      "setting": 172,
+      "val_balanced_accuracy": 0.6211691682469016,
+      "accuracy": 0.6135890917494801,
+      "balanced_accuracy": 0.6139894259197141,
+      "macro_f1": 0.6079141783962715,
+      "per_ship_balanced_accuracy": 0.6840253146615307,
+      "per_class_recall": {
+        "background": 0.8518005540166205,
+        "cargo": 0.6416666666666667,
+        "fishing": 0.4325068870523416,
+        "pleasurecraft": 0.5947075208913649,
+        "tanker": 0.4793388429752066,
+        "tug": 0.6839160839160839
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 6,
+      "added": "loudness and impulsiveness",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines",
+        "loudness and impulsiveness"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 116,
+      "setting": 204,
+      "val_balanced_accuracy": 0.6116318941371581,
+      "accuracy": 0.62569573283859,
+      "balanced_accuracy": 0.6255297913344963,
+      "macro_f1": 0.6217006421678201,
+      "per_ship_balanced_accuracy": 0.7426442304562895,
+      "per_class_recall": {
+        "background": 0.8191933240611962,
+        "cargo": 0.6601941747572816,
+        "fishing": 0.4345991561181435,
+        "pleasurecraft": 0.6439499304589708,
+        "tanker": 0.5206611570247934,
+        "tug": 0.6745810055865922
+      }
+    },
+    {
+      "kind": "forward",
+      "step": 6,
+      "added": "loudness and impulsiveness",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines",
+        "loudness and impulsiveness"
+      ],
+      "n_groups": 6,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 116,
+      "setting": 143,
+      "val_balanced_accuracy": 0.609209972733733,
+      "accuracy": 0.6068197633959638,
+      "balanced_accuracy": 0.6069324268577653,
+      "macro_f1": 0.6025665564358715,
+      "per_ship_balanced_accuracy": 0.7097172414618477,
+      "per_class_recall": {
+        "background": 0.8191933240611962,
+        "cargo": 0.6361111111111111,
+        "fishing": 0.418732782369146,
+        "pleasurecraft": 0.6675938803894298,
+        "tanker": 0.5147679324894515,
+        "tug": 0.585195530726257
+      }
+    },
+    {
+      "kind": "forward",
+      "left_out": "(none)",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines",
+        "loudness and impulsiveness",
+        "spectral shape"
+      ],
+      "n_groups": 7,
+      "model": "gradient boosting",
+      "fold": 1,
+      "n_features": 144,
+      "setting": 149,
+      "val_balanced_accuracy": 0.5951964887025553,
+      "accuracy": 0.6253176253176254,
+      "balanced_accuracy": 0.6253486156142475,
+      "macro_f1": 0.6215983506648025,
+      "per_ship_balanced_accuracy": 0.7080870038872077,
+      "per_class_recall": {
+        "background": 0.8788300835654597,
+        "cargo": 0.6555555555555556,
+        "fishing": 0.4747191011235955,
+        "pleasurecraft": 0.628099173553719,
+        "tanker": 0.5234159779614325,
+        "tug": 0.5914718019257221
+      },
+      "step": 7,
+      "added": "spectral shape"
+    },
+    {
+      "kind": "forward",
+      "left_out": "(none)",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines",
+        "loudness and impulsiveness",
+        "spectral shape"
+      ],
+      "n_groups": 7,
+      "model": "gradient boosting",
+      "fold": 2,
+      "n_features": 144,
+      "setting": 172,
+      "val_balanced_accuracy": 0.6096103878007971,
+      "accuracy": 0.6115606936416185,
+      "balanced_accuracy": 0.6117925819559734,
+      "macro_f1": 0.6054589784948119,
+      "per_ship_balanced_accuracy": 0.6915220905861003,
+      "per_class_recall": {
+        "background": 0.8628808864265928,
+        "cargo": 0.6194444444444445,
+        "fishing": 0.36639118457300274,
+        "pleasurecraft": 0.6462395543175488,
+        "tanker": 0.5870786516853933,
+        "tug": 0.5887207702888583
+      },
+      "step": 7,
+      "added": "spectral shape"
+    },
+    {
+      "kind": "forward",
+      "left_out": "(none)",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines",
+        "loudness and impulsiveness",
+        "spectral shape"
+      ],
+      "n_groups": 7,
+      "model": "gradient boosting",
+      "fold": 3,
+      "n_features": 144,
+      "setting": 168,
+      "val_balanced_accuracy": 0.6239454130719105,
+      "accuracy": 0.6105847007164317,
+      "balanced_accuracy": 0.6109985687097587,
+      "macro_f1": 0.6043475022165731,
+      "per_ship_balanced_accuracy": 0.6789009022710228,
+      "per_class_recall": {
+        "background": 0.8545706371191135,
+        "cargo": 0.6416666666666667,
+        "fishing": 0.42699724517906334,
+        "pleasurecraft": 0.5974930362116991,
+        "tanker": 0.4669421487603306,
+        "tug": 0.6783216783216783
+      },
+      "step": 7,
+      "added": "spectral shape"
+    },
+    {
+      "kind": "forward",
+      "left_out": "(none)",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines",
+        "loudness and impulsiveness",
+        "spectral shape"
+      ],
+      "n_groups": 7,
+      "model": "gradient boosting",
+      "fold": 4,
+      "n_features": 144,
+      "setting": 179,
+      "val_balanced_accuracy": 0.6026682326226563,
+      "accuracy": 0.6356679035250464,
+      "balanced_accuracy": 0.6355523952103387,
+      "macro_f1": 0.6318234956199529,
+      "per_ship_balanced_accuracy": 0.7362418623141448,
+      "per_class_recall": {
+        "background": 0.8358831710709318,
+        "cargo": 0.6712898751733704,
+        "fishing": 0.46554149085794655,
+        "pleasurecraft": 0.655076495132128,
+        "tanker": 0.5165289256198347,
+        "tug": 0.6689944134078212
+      },
+      "step": 7,
+      "added": "spectral shape"
+    },
+    {
+      "kind": "forward",
+      "left_out": "(none)",
+      "groups": [
+        "1/3-octave levels",
+        "MFCC",
+        "propeller modulation (DEMON)",
+        "level changes over time",
+        "tonal lines",
+        "loudness and impulsiveness",
+        "spectral shape"
+      ],
+      "n_groups": 7,
+      "model": "gradient boosting",
+      "fold": 5,
+      "n_features": 144,
+      "setting": 153,
+      "val_balanced_accuracy": 0.6047447863864172,
+      "accuracy": 0.6100672697749941,
+      "balanced_accuracy": 0.6101446476157877,
+      "macro_f1": 0.6057861526096,
+      "per_ship_balanced_accuracy": 0.7115378156548426,
+      "per_class_recall": {
+        "background": 0.8317107093184979,
+        "cargo": 0.6472222222222223,
+        "fishing": 0.4297520661157025,
+        "pleasurecraft": 0.6773296244784422,
+        "tanker": 0.5189873417721519,
+        "tug": 0.5558659217877095
+      },
+      "step": 7,
+      "added": "spectral shape"
+    }
+  ]
+}

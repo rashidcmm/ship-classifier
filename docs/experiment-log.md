@@ -13,6 +13,8 @@ On 1 November the project was **simplified to 6 classes with classical models on
 background, cargo, fishing, pleasure craft, tanker, tug, on new balanced folds, with interpretable sound features.
 The same day, balancing by **removing data** (equal ships and clips per class) was compared with weights (4.10, lesson 14),
 and a **team of 25 balanced models** on different equal-ships subsets was tried (4.11, lesson 14 section 4).
+On 2–3 November, **fewer features** were tested: mel bands cut at a top frequency or merged, and whole groups of
+engineered features left out or added one at a time (4.12, lesson 15).
 
 **In one paragraph:** on ships it has never heard, every method we tried lands at about the same accuracy: 32 % for
 12 classes and 37 % for 9 classes (CNN and classical baseline alike), against 86 % when the test ships were heard in
@@ -660,6 +662,57 @@ Balanced accuracy, ± is the spread over the 5 folds.
 - Conclusion: it confirms that 4.10 lost ship diversity, not the balance. Weights remain the recommendation: one
   model, slightly better and 25 times cheaper to train.
 
+### 4.12 Fewer features: lower mel bands and whole feature groups (2–3 November)
+
+Asked for after 4.11: the professor suggested removing the high-frequency bins of the mel / MFCC spectrogram; also
+try fewer mel bands, and swap whole feature groups rather than single features (`src/six_classes_fewer.py`,
+`notebooks/15_fewer_features.ipynb`). Lesson 13's setup throughout: same folds and test ships, ship weights, LR and
+GB, every choice made on validation.
+
+**Bands** (68 min, CPU). The 128-band mel spectrogram (10 Hz–16 kHz) is cut at a top frequency (only the bands that
+lie entirely below it are kept) and neighbouring bands are merged (2, 4, 8 → 64, 32, 16 bands): 20 versions, each
+as band mean + spread and as MFCCs 1–19 of the kept bands.
+
+| Test balanced accuracy | Band levels, GB | Band levels, LR | MFCC, GB | MFCC, LR |
+|---|---|---|---|---|
+| **all: 128 bands up to 16 kHz** (256 / 57 numbers) | **58.4 %** | **56.9 %** | **53.8 %** | **50.7 %** |
+| up to 8 kHz (101 bands) | 58.2 % | 55.6 % | 51.6 % | 47.5 % |
+| up to 4 kHz (76) | 57.7 % | 55.2 % | 50.7 % | 48.3 % |
+| up to 2 kHz (53) | 55.8 % | 53.5 % | 49.1 % | 47.2 % |
+| up to 1 kHz (34) | 54.8 % | 52.2 % | 47.9 % | 46.0 % |
+| 64 bands, up to 16 kHz | 57.6 % | 56.5 % | 53.3 % | 50.4 % |
+| 32 bands | 57.0 % | 55.4 % | 52.8 % | 49.9 % |
+| 16 bands | 54.7 % | 52.2 % | 50.2 % | 46.5 % |
+
+- **No cut helps on average;** every cut costs, more the lower it goes, and MFCCs lose most (2–3 points at 8 kHz).
+  Up to 14 kHz the ship classes stay 6–12 dB above the background on average and still differ from each other;
+  pleasure craft and fishing boats swap order above about 2 kHz.
+- Picked on validation (fewest numbers within 0.5 points of the best): GB bands up to 8 kHz (202 numbers, 58.2 %),
+  LR 64 bands (128 numbers, 56.5 %), MFCC the full version. Fewer numbers for under half a point, never better.
+- These MFCCs (from 128 bands) score 1.4 (GB) and 3.5 (LR) points more alone than lesson 13's 40-band MFCCs.
+
+**Groups** (98 min, CPU). Lesson 13's 7 engineered groups: each left out once, and groups added one at a time (the
+one with the best mean validation score).
+
+| Test balanced accuracy | GB | LR |
+|---|---|---|
+| all seven groups (144 numbers) | 61.9 % | 60.8 % |
+| without loudness and impulsiveness (139) | 62.0 % | 61.0 % |
+| left out, largest loss | DEMON −1.1, 1/3-octave −1.0 | DEMON −1.2, MFCC −1.2 |
+| best single group: 1/3-octave levels (29) | 54.5 % | 54.2 % |
+| best 3 groups | 60.4 % (1/3-oct, MFCC, DEMON; 97) | 58.7 % (1/3-oct, DEMON, shape; 68) |
+| smallest set as good on validation | 61.3 % (4 groups, 106) | 61.0 % (6 groups, 139) |
+
+- No single group is essential (≤ 1.2 points each); they overlap. Loudness and impulsiveness can go (+0.2 for both).
+- Three engineered groups (68–97 numbers) beat the 256 mel-band numbers by about 2 points: the kind of feature
+  matters more than the number.
+- Conclusion: keep the full 128 bands up to 16 kHz; keep all seven groups or drop loudness and impulsiveness.
+
+**75 % as a target (estimate from lesson 13's saved predictions, no retraining):** engineered + GB, per clip / per
+ship: 6 classes 61.9 / 70.5 %; averaging GB and LR 62.8 / 69.9 %; with cargo and tanker merged into one class (5
+classes) 69.8 / **79.0 %**. Cargo and tanker have nearly identical spectra (lesson 15, section 1) and make up most of
+the errors.
+
 ---
 
 ## 5. Engineering notes from the training runs
@@ -679,6 +732,10 @@ Balanced accuracy, ± is the spread over the 5 folds.
   PyTorch's GPU libraries. Together that is more than the laptop's 16 GB, so Windows uses the page file. `--workers 2`
   should roughly halve the helpers' share; the GPU, not data loading, limits the speed here.
 - **Resuming:** every epoch is saved (`last.pt`), so a crash costs at most one epoch.
+- **Maths-library threads (2 November):** with the default thread count (one per logical core, on the i5-12500H's
+  mixed fast and slow cores), one logistic-regression fit on 13,000 clips × 257 numbers took 110 s; limited to 4
+  threads, 3 s. Gradient boosting got about twice as fast; 8 threads are no faster than 4. `src/six_classes_fewer.py`
+  limits the threads to 4 (`threadpoolctl`); the earlier scripts don't yet.
 
 ---
 
@@ -762,4 +819,5 @@ python src/six_classes.py features                                              
 python src/six_classes.py run                                                                                            # 6 classes: 5 folds, both feature sets, both models
 python src/six_classes_equal.py                                                                                          # 6 classes balanced by removal (4.10)
 python src/six_classes_equal.py --ensemble                                                                               # team of 25 balanced models (4.11)
+python src/six_classes_fewer.py all                                                                                      # fewer / lower mel bands and feature groups (4.12)
 ```

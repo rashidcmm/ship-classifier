@@ -15,7 +15,7 @@ subset of the same training folds, and their probabilities are averaged on the (
 balanced, but together they see most of the training ships.
 
   python src/six_classes_equal.py              # -> runs/six_classes_equal/ (a few minutes, CPU)
-  python src/six_classes_equal.py --ensemble   # -> runs/six_classes_equal/ensemble_* (about 30 minutes, CPU)
+  python src/six_classes_equal.py --ensemble   # -> runs/six_classes_equal/ensemble_* (about 70 minutes, CPU)
 """
 import argparse
 import json

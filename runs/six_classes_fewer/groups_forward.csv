@@ -1,0 +1,55 @@
+model,step,candidate,val_balanced_accuracy,chosen
+logistic regression,1,MFCC,0.4697869606683979,False
+logistic regression,1,1/3-octave levels,0.5432842209287831,True
+logistic regression,1,level changes over time,0.3080763210428552,False
+logistic regression,1,spectral shape,0.5136723190022294,False
+logistic regression,1,loudness and impulsiveness,0.4895436276924034,False
+logistic regression,1,tonal lines,0.3389603229501675,False
+logistic regression,1,propeller modulation (DEMON),0.36784506858373756,False
+logistic regression,2,MFCC,0.5657921137673302,False
+logistic regression,2,level changes over time,0.5583273165690448,False
+logistic regression,2,spectral shape,0.5630901130278713,False
+logistic regression,2,loudness and impulsiveness,0.5446725992030228,False
+logistic regression,2,tonal lines,0.5549024310187503,False
+logistic regression,2,propeller modulation (DEMON),0.5659155416771681,True
+logistic regression,3,MFCC,0.5831985292231952,False
+logistic regression,3,level changes over time,0.5796803020633841,False
+logistic regression,3,spectral shape,0.5864842218461069,True
+logistic regression,3,loudness and impulsiveness,0.5698454588687814,False
+logistic regression,3,tonal lines,0.5750904247316424,False
+logistic regression,4,MFCC,0.5951429688226836,True
+logistic regression,4,level changes over time,0.5904753324007961,False
+logistic regression,4,loudness and impulsiveness,0.5858672602265871,False
+logistic regression,4,tonal lines,0.5894721359131936,False
+logistic regression,5,level changes over time,0.5985931263978247,False
+logistic regression,5,loudness and impulsiveness,0.5937644766860581,False
+logistic regression,5,tonal lines,0.6003230119855766,True
+logistic regression,6,level changes over time,0.6055077099886436,True
+logistic regression,6,loudness and impulsiveness,0.5999897770357484,False
+gradient boosting,1,MFCC,0.5171073850483602,False
+gradient boosting,1,1/3-octave levels,0.5428714182790413,True
+gradient boosting,1,level changes over time,0.37573148458068395,False
+gradient boosting,1,spectral shape,0.5293828300813422,False
+gradient boosting,1,loudness and impulsiveness,0.48551016087138466,False
+gradient boosting,1,tonal lines,0.3879650017147365,False
+gradient boosting,1,propeller modulation (DEMON),0.4042167427188004,False
+gradient boosting,2,MFCC,0.5746306507325155,True
+gradient boosting,2,level changes over time,0.5670931043777612,False
+gradient boosting,2,spectral shape,0.5597800121946988,False
+gradient boosting,2,loudness and impulsiveness,0.5439570601045498,False
+gradient boosting,2,tonal lines,0.5492112357558182,False
+gradient boosting,2,propeller modulation (DEMON),0.5740865839598863,False
+gradient boosting,3,level changes over time,0.5850514479018905,False
+gradient boosting,3,spectral shape,0.5820992866075091,False
+gradient boosting,3,loudness and impulsiveness,0.5761322685668577,False
+gradient boosting,3,tonal lines,0.5863271328742161,False
+gradient boosting,3,propeller modulation (DEMON),0.5971463381821428,True
+gradient boosting,4,level changes over time,0.6070990426447261,True
+gradient boosting,4,spectral shape,0.5995473079494855,False
+gradient boosting,4,loudness and impulsiveness,0.5972038477570866,False
+gradient boosting,4,tonal lines,0.6017190132898163,False
+gradient boosting,5,spectral shape,0.6066648084717191,False
+gradient boosting,5,loudness and impulsiveness,0.6013202510399671,False
+gradient boosting,5,tonal lines,0.6112655065395132,True
+gradient boosting,6,spectral shape,0.6078529861882656,False
+gradient boosting,6,loudness and impulsiveness,0.6112264178798218,True
