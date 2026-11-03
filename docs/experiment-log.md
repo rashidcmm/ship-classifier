@@ -739,6 +739,27 @@ probabilities of all clips of a ship in the test fold averaged into one answer (
 - Price: cargo and tanker are no longer told apart. Merging classes changes the question: to agree with the
   professor. Not comparable with the paper's 66.5 % (different five classes, per clip).
 
+### 4.14 EfficientNet-B0 with the engineered features (3 November)
+
+Asked for after 4.13: one network that reads the mel spectrogram (EfficientNet-B0, ImageNet start) and the 139
+engineered numbers of 4.12 (all groups but loudness and impulsiveness), joined before the output layer
+(`src/fusion_cnn.py`, `notebooks/17_efficientnet_with_features.ipynb`). Five classes, **fold 1 only**, lesson 13's
+folds and ship weights; epoch kept by validation balanced accuracy. Two versions: 128 mel bands, or the 101 below
+8 kHz. About 15 min per run on the RTX 3050 Laptop.
+
+| Five classes, fold 1 test ships | Per clip | Per ship |
+|---|---|---|
+| EfficientNet-B0 + 139 features, 128 bands | 69.8 % | 77.6 % |
+| EfficientNet-B0 + 139 features, bands below 8 kHz | 68.6 % | 75.8 % |
+| logistic regression, same 139 numbers | 70.9 % | 77.9 % |
+| **gradient boosting, same 139 numbers** | **71.1 %** | **80.6 %** |
+
+- The CNN is no better than gradient boosting on the same numbers (−1.3 per clip, −3.0 per ship on this fold);
+  best epoch 4–5, then it memorises the training ships.
+- The CNN also needs the high frequencies: below 8 kHz only costs 1.2 / 1.8 points (background recall 86.5 → 78.8 %).
+- One fold, one seed: differences are within the fold spread. Gradient boosting on the 139 numbers stays the model
+  to report.
+
 ---
 
 ## 5. Engineering notes from the training runs
@@ -847,4 +868,5 @@ python src/six_classes_equal.py                                                 
 python src/six_classes_equal.py --ensemble                                                                               # team of 25 balanced models (4.11)
 python src/six_classes_fewer.py all                                                                                      # fewer / lower mel bands and feature groups (4.12)
 python src/five_classes.py                                                                                               # cargo + tanker merged, per clip and per ship (4.13)
+python src/fusion_cnn.py --top-hz 16000   # also --top-hz 8000 and --reference                                          # EfficientNet-B0 + features (4.14)
 ```

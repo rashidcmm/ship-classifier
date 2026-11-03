@@ -22,6 +22,8 @@ website for access and for how to cite it.
   (`python src/six_classes_fewer.py all`, about 3 hours on the CPU; needs `data/mel.npy` and lesson 13's features)
 - **Five classes** (cargo and tanker merged), scored per clip and per ship: `notebooks/16_five_classes_per_ship.ipynb`
   (`python src/five_classes.py`, about 15 minutes on the CPU; needs lesson 13's features)
+- **EfficientNet-B0 + engineered features** (five classes, fold 1): `notebooks/17_efficientnet_with_features.ipynb`
+  (`python src/fusion_cnn.py --top-hz 16000`, GPU)
 
 ---
 
