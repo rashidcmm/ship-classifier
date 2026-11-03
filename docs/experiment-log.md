@@ -14,7 +14,8 @@ background, cargo, fishing, pleasure craft, tanker, tug, on new balanced folds, 
 The same day, balancing by **removing data** (equal ships and clips per class) was compared with weights (4.10, lesson 14),
 and a **team of 25 balanced models** on different equal-ships subsets was tried (4.11, lesson 14 section 4).
 On 2–3 November, **fewer features** were tested: mel bands cut at a top frequency or merged, and whole groups of
-engineered features left out or added one at a time (4.12, lesson 15).
+engineered features left out or added one at a time (4.12, lesson 15). On 3 November, **cargo and tanker were merged**
+(5 classes): 78.9 % balanced accuracy per ship, 69.9 % per clip (4.13, lesson 16).
 
 **In one paragraph:** on ships it has never heard, every method we tried lands at about the same accuracy: 32 % for
 12 classes and 37 % for 9 classes (CNN and classical baseline alike), against 86 % when the test ships were heard in
@@ -711,7 +712,32 @@ one with the best mean validation score).
 **75 % as a target (estimate from lesson 13's saved predictions, no retraining):** engineered + GB, per clip / per
 ship: 6 classes 61.9 / 70.5 %; averaging GB and LR 62.8 / 69.9 %; with cargo and tanker merged into one class (5
 classes) 69.8 / **79.0 %**. Cargo and tanker have nearly identical spectra (lesson 15, section 1) and make up most of
-the errors.
+the errors. Trained in 4.13.
+
+### 4.13 Five classes: cargo and tanker merged, per clip and per ship (3 November)
+
+Asked for after 4.12, to reach 75 %: cargo and tanker become one class, "cargo + tanker" (`src/five_classes.py`,
+`notebooks/16_five_classes_per_ship.ipynb`). Same folds, test ships, weights (cargo and tanker each half of the
+merged class), feature sets and models as 4.9; the two models' probabilities are also averaged. Per ship = the
+probabilities of all clips of a ship in the test fold averaged into one answer (background: per recording day).
+12 min, CPU.
+
+| Balanced accuracy, same test ships | 6 classes (4.9), per clip | per ship | **5 classes, per clip** | **per ship** |
+|---|---|---|---|---|
+| simple + logistic regression | 56.9 ± 1.3 % | 64.9 ± 2.5 % | 64.4 ± 1.4 % | 71.9 ± 2.7 % |
+| simple + gradient boosting | 58.4 ± 1.1 % | 66.6 ± 2.8 % | 66.6 ± 1.3 % | 74.4 ± 3.3 % |
+| engineered + logistic regression | 60.8 ± 1.3 % | 67.3 ± 1.8 % | 68.5 ± 1.8 % | 75.6 ± 2.5 % |
+| **engineered + gradient boosting** | 61.9 ± 1.1 % | 70.5 ± 2.2 % | 69.9 ± 1.3 % | **78.9 ± 2.2 %** |
+| engineered, both models averaged | 62.8 ± 1.3 % | 70.0 ± 1.6 % | **70.5 ± 1.5 %** | 78.2 ± 2.7 % |
+
+- **75 % is reached per ship** (engineered + GB: 78.9 %, every fold 76.4–82.5 %), **not per clip** (70.5 % at best).
+- Training on five classes = adding the six-class model's cargo and tanker probabilities afterwards (69.9 against
+  69.8 % per clip, 78.9 against 79.0 % per ship): the gain comes from the question, not from a better model.
+- The merged class is right 96 % of the time (cargo ships 96 %, tankers 96–99 %). The remaining errors are among
+  small boats: fishing 43 % per clip / 52 % per ship (called tug 26 %, pleasure craft 18 %). Per ship helps most
+  where ships have many clips: tug +18 points, pleasure craft +11, fishing +9, background +7.
+- Price: cargo and tanker are no longer told apart. Merging classes changes the question: to agree with the
+  professor. Not comparable with the paper's 66.5 % (different five classes, per clip).
 
 ---
 
@@ -820,4 +846,5 @@ python src/six_classes.py run                                                   
 python src/six_classes_equal.py                                                                                          # 6 classes balanced by removal (4.10)
 python src/six_classes_equal.py --ensemble                                                                               # team of 25 balanced models (4.11)
 python src/six_classes_fewer.py all                                                                                      # fewer / lower mel bands and feature groups (4.12)
+python src/five_classes.py                                                                                               # cargo + tanker merged, per clip and per ship (4.13)
 ```

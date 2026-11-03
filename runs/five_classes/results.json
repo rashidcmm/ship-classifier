@@ -1,0 +1,569 @@
+{
+  "classes": [
+    "background",
+    "cargo + tanker",
+    "fishing",
+    "pleasurecraft",
+    "tug"
+  ],
+  "merged": {
+    "cargo + tanker": [
+      "cargo",
+      "tanker"
+    ]
+  },
+  "seed": 0,
+  "minutes": 12.4,
+  "results": [
+    {
+      "fold": 1,
+      "features": "simple (no MFCC)",
+      "model": "logistic regression",
+      "n_features": 257,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6301046508974688,
+      "accuracy": 0.6909216909216909,
+      "balanced_accuracy": 0.6388777453829257,
+      "macro_f1": 0.6369817055857668,
+      "per_ship_balanced_accuracy": 0.7051552687589779,
+      "per_class_recall": {
+        "background": 0.8064066852367688,
+        "cargo + tanker": 0.9495159059474412,
+        "fishing": 0.4157303370786517,
+        "pleasurecraft": 0.5289256198347108,
+        "tug": 0.4938101788170564
+      }
+    },
+    {
+      "fold": 1,
+      "features": "simple (no MFCC)",
+      "model": "gradient boosting",
+      "n_features": 257,
+      "setting": 123,
+      "val_balanced_accuracy": 0.6615669334927764,
+      "accuracy": 0.7137907137907138,
+      "balanced_accuracy": 0.664768670069023,
+      "macro_f1": 0.660467884594737,
+      "per_ship_balanced_accuracy": 0.7599973300843091,
+      "per_class_recall": {
+        "background": 0.8704735376044568,
+        "cargo + tanker": 0.9571230982019364,
+        "fishing": 0.4143258426966292,
+        "pleasurecraft": 0.5564738292011019,
+        "tug": 0.5254470426409904
+      }
+    },
+    {
+      "fold": 1,
+      "features": "simple (no MFCC)",
+      "model": "both averaged",
+      "n_features": 257,
+      "accuracy": 0.7193347193347194,
+      "balanced_accuracy": 0.6702466300289462,
+      "macro_f1": 0.6659236382782325,
+      "per_ship_balanced_accuracy": 0.7440809661334357,
+      "per_class_recall": {
+        "background": 0.8676880222841226,
+        "cargo + tanker": 0.9626556016597511,
+        "fishing": 0.40730337078651685,
+        "pleasurecraft": 0.5771349862258953,
+        "tug": 0.5364511691884457
+      }
+    },
+    {
+      "fold": 1,
+      "features": "engineered",
+      "model": "logistic regression",
+      "n_features": 144,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6712132297175354,
+      "accuracy": 0.7491337491337491,
+      "balanced_accuracy": 0.7061515034862454,
+      "macro_f1": 0.7042839196655934,
+      "per_ship_balanced_accuracy": 0.7821361769815663,
+      "per_class_recall": {
+        "background": 0.8495821727019499,
+        "cargo + tanker": 0.9619640387275242,
+        "fishing": 0.48174157303370785,
+        "pleasurecraft": 0.640495867768595,
+        "tug": 0.5969738651994498
+      }
+    },
+    {
+      "fold": 1,
+      "features": "engineered",
+      "model": "gradient boosting",
+      "n_features": 144,
+      "setting": 133,
+      "val_balanced_accuracy": 0.6815196865569472,
+      "accuracy": 0.7495957495957496,
+      "balanced_accuracy": 0.7074256537357663,
+      "macro_f1": 0.7041366074097606,
+      "per_ship_balanced_accuracy": 0.7856822010634538,
+      "per_class_recall": {
+        "background": 0.8816155988857939,
+        "cargo + tanker": 0.9585062240663901,
+        "fishing": 0.47331460674157305,
+        "pleasurecraft": 0.6239669421487604,
+        "tug": 0.5997248968363136
+      }
+    },
+    {
+      "fold": 1,
+      "features": "engineered",
+      "model": "both averaged",
+      "n_features": 144,
+      "accuracy": 0.7574497574497574,
+      "balanced_accuracy": 0.7153998932716299,
+      "macro_f1": 0.7122452276089469,
+      "per_ship_balanced_accuracy": 0.8020715067349563,
+      "per_class_recall": {
+        "background": 0.8802228412256268,
+        "cargo + tanker": 0.9654218533886584,
+        "fishing": 0.4691011235955056,
+        "pleasurecraft": 0.6584022038567493,
+        "tug": 0.6038514442916093
+      }
+    },
+    {
+      "fold": 2,
+      "features": "simple (no MFCC)",
+      "model": "logistic regression",
+      "n_features": 257,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.6438960272166806,
+      "accuracy": 0.6841618497109827,
+      "balanced_accuracy": 0.6309609843455548,
+      "macro_f1": 0.6262443951129649,
+      "per_ship_balanced_accuracy": 0.6936406926406926,
+      "per_class_recall": {
+        "background": 0.7908587257617729,
+        "cargo + tanker": 0.9574022346368715,
+        "fishing": 0.34297520661157027,
+        "pleasurecraft": 0.5793871866295265,
+        "tug": 0.48418156808803303
+      }
+    },
+    {
+      "fold": 2,
+      "features": "simple (no MFCC)",
+      "model": "gradient boosting",
+      "n_features": 257,
+      "setting": 146,
+      "val_balanced_accuracy": 0.6621851465794031,
+      "accuracy": 0.7098265895953757,
+      "balanced_accuracy": 0.6607700795073245,
+      "macro_f1": 0.6540038037494617,
+      "per_ship_balanced_accuracy": 0.716246366355062,
+      "per_class_recall": {
+        "background": 0.8628808864265928,
+        "cargo + tanker": 0.9615921787709497,
+        "fishing": 0.34297520661157027,
+        "pleasurecraft": 0.5738161559888579,
+        "tug": 0.562585969738652
+      }
+    },
+    {
+      "fold": 2,
+      "features": "simple (no MFCC)",
+      "model": "both averaged",
+      "n_features": 257,
+      "accuracy": 0.7061271676300578,
+      "balanced_accuracy": 0.6558547198456981,
+      "macro_f1": 0.6492915334557336,
+      "per_ship_balanced_accuracy": 0.7241389986824769,
+      "per_class_recall": {
+        "background": 0.853185595567867,
+        "cargo + tanker": 0.9643854748603352,
+        "fishing": 0.34297520661157027,
+        "pleasurecraft": 0.5905292479108635,
+        "tug": 0.5281980742778541
+      }
+    },
+    {
+      "fold": 2,
+      "features": "engineered",
+      "model": "logistic regression",
+      "n_features": 144,
+      "setting": 1.0,
+      "val_balanced_accuracy": 0.6878338083430388,
+      "accuracy": 0.7209248554913295,
+      "balanced_accuracy": 0.6737178811510214,
+      "macro_f1": 0.6686620089756652,
+      "per_ship_balanced_accuracy": 0.736411349520045,
+      "per_class_recall": {
+        "background": 0.8490304709141274,
+        "cargo + tanker": 0.9629888268156425,
+        "fishing": 0.39944903581267216,
+        "pleasurecraft": 0.5807799442896936,
+        "tug": 0.5763411279229711
+      }
+    },
+    {
+      "fold": 2,
+      "features": "engineered",
+      "model": "gradient boosting",
+      "n_features": 144,
+      "setting": 151,
+      "val_balanced_accuracy": 0.6944377224901036,
+      "accuracy": 0.7315606936416185,
+      "balanced_accuracy": 0.6854695117063457,
+      "macro_f1": 0.6783331591688186,
+      "per_ship_balanced_accuracy": 0.7641958613045569,
+      "per_class_recall": {
+        "background": 0.871191135734072,
+        "cargo + tanker": 0.9685754189944135,
+        "fishing": 0.3677685950413223,
+        "pleasurecraft": 0.6448467966573816,
+        "tug": 0.5749656121045392
+      }
+    },
+    {
+      "fold": 2,
+      "features": "engineered",
+      "model": "both averaged",
+      "n_features": 144,
+      "accuracy": 0.7357225433526011,
+      "balanced_accuracy": 0.6904297195970335,
+      "macro_f1": 0.6832876819492839,
+      "per_ship_balanced_accuracy": 0.7466967954214331,
+      "per_class_recall": {
+        "background": 0.8781163434903048,
+        "cargo + tanker": 0.9685754189944135,
+        "fishing": 0.3760330578512397,
+        "pleasurecraft": 0.6434540389972145,
+        "tug": 0.5859697386519945
+      }
+    },
+    {
+      "fold": 3,
+      "features": "simple (no MFCC)",
+      "model": "logistic regression",
+      "n_features": 257,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.6629490710369869,
+      "accuracy": 0.6935521146290733,
+      "balanced_accuracy": 0.6421599901313577,
+      "macro_f1": 0.6348946433596556,
+      "per_ship_balanced_accuracy": 0.722398862535089,
+      "per_class_recall": {
+        "background": 0.850415512465374,
+        "cargo + tanker": 0.9488243430152143,
+        "fishing": 0.37052341597796146,
+        "pleasurecraft": 0.552924791086351,
+        "tug": 0.4881118881118881
+      }
+    },
+    {
+      "fold": 3,
+      "features": "simple (no MFCC)",
+      "model": "gradient boosting",
+      "n_features": 257,
+      "setting": 138,
+      "val_balanced_accuracy": 0.6764502400070912,
+      "accuracy": 0.7125028888375318,
+      "balanced_accuracy": 0.6643657943591234,
+      "macro_f1": 0.6572931981449612,
+      "per_ship_balanced_accuracy": 0.7294132258889789,
+      "per_class_recall": {
+        "background": 0.8573407202216067,
+        "cargo + tanker": 0.9522821576763485,
+        "fishing": 0.36639118457300274,
+        "pleasurecraft": 0.5807799442896936,
+        "tug": 0.5650349650349651
+      }
+    },
+    {
+      "fold": 3,
+      "features": "simple (no MFCC)",
+      "model": "both averaged",
+      "n_features": 257,
+      "accuracy": 0.7192049919112549,
+      "balanced_accuracy": 0.6706403458505739,
+      "macro_f1": 0.6642361515828193,
+      "per_ship_balanced_accuracy": 0.7361110309129497,
+      "per_class_recall": {
+        "background": 0.8698060941828255,
+        "cargo + tanker": 0.9605809128630706,
+        "fishing": 0.4022038567493113,
+        "pleasurecraft": 0.5877437325905293,
+        "tug": 0.5328671328671328
+      }
+    },
+    {
+      "fold": 3,
+      "features": "engineered",
+      "model": "logistic regression",
+      "n_features": 144,
+      "setting": 0.1,
+      "val_balanced_accuracy": 0.6982781904912712,
+      "accuracy": 0.7302981280332794,
+      "balanced_accuracy": 0.686962570682878,
+      "macro_f1": 0.6825778019187329,
+      "per_ship_balanced_accuracy": 0.7619666232577607,
+      "per_class_recall": {
+        "background": 0.8518005540166205,
+        "cargo + tanker": 0.946058091286307,
+        "fishing": 0.43388429752066116,
+        "pleasurecraft": 0.6016713091922006,
+        "tug": 0.6013986013986014
+      }
+    },
+    {
+      "fold": 3,
+      "features": "engineered",
+      "model": "gradient boosting",
+      "n_features": 144,
+      "setting": 192,
+      "val_balanced_accuracy": 0.7129391251958817,
+      "accuracy": 0.7370002311070025,
+      "balanced_accuracy": 0.6951176632491158,
+      "macro_f1": 0.6886380898417717,
+      "per_ship_balanced_accuracy": 0.7778720382444557,
+      "per_class_recall": {
+        "background": 0.8601108033240997,
+        "cargo + tanker": 0.946058091286307,
+        "fishing": 0.418732782369146,
+        "pleasurecraft": 0.5863509749303621,
+        "tug": 0.6643356643356644
+      }
+    },
+    {
+      "fold": 3,
+      "features": "engineered",
+      "model": "both averaged",
+      "n_features": 144,
+      "accuracy": 0.7476311532239427,
+      "balanced_accuracy": 0.7070293006936292,
+      "macro_f1": 0.70182500315055,
+      "per_ship_balanced_accuracy": 0.7719207535006928,
+      "per_class_recall": {
+        "background": 0.8614958448753463,
+        "cargo + tanker": 0.950207468879668,
+        "fishing": 0.44352617079889806,
+        "pleasurecraft": 0.6197771587743732,
+        "tug": 0.6601398601398601
+      }
+    },
+    {
+      "fold": 4,
+      "features": "simple (no MFCC)",
+      "model": "logistic regression",
+      "n_features": 257,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.63334444175184,
+      "accuracy": 0.7189239332096475,
+      "balanced_accuracy": 0.6683935830977601,
+      "macro_f1": 0.6657329823655069,
+      "per_ship_balanced_accuracy": 0.7625761858706153,
+      "per_class_recall": {
+        "background": 0.8289290681502086,
+        "cargo + tanker": 0.9647546648237734,
+        "fishing": 0.4472573839662447,
+        "pleasurecraft": 0.5549374130737135,
+        "tug": 0.5460893854748603
+      }
+    },
+    {
+      "fold": 4,
+      "features": "simple (no MFCC)",
+      "model": "gradient boosting",
+      "n_features": 257,
+      "setting": 166,
+      "val_balanced_accuracy": 0.6478013398997079,
+      "accuracy": 0.7367810760667903,
+      "balanced_accuracy": 0.687265540059373,
+      "macro_f1": 0.6839044862348164,
+      "per_ship_balanced_accuracy": 0.7959118558316439,
+      "per_class_recall": {
+        "background": 0.8344923504867872,
+        "cargo + tanker": 0.9771941948859709,
+        "fishing": 0.4191279887482419,
+        "pleasurecraft": 0.6175243393602226,
+        "tug": 0.5879888268156425
+      }
+    },
+    {
+      "fold": 4,
+      "features": "simple (no MFCC)",
+      "model": "both averaged",
+      "n_features": 257,
+      "accuracy": 0.7363172541743971,
+      "balanced_accuracy": 0.6871348806346769,
+      "macro_f1": 0.6834671628088793,
+      "per_ship_balanced_accuracy": 0.7791771840318973,
+      "per_class_recall": {
+        "background": 0.8456189151599444,
+        "cargo + tanker": 0.9751209398756047,
+        "fishing": 0.4191279887482419,
+        "pleasurecraft": 0.6008344923504868,
+        "tug": 0.5949720670391061
+      }
+    },
+    {
+      "fold": 4,
+      "features": "engineered",
+      "model": "logistic regression",
+      "n_features": 144,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.6627014305053467,
+      "accuracy": 0.7446660482374768,
+      "balanced_accuracy": 0.6975994618174657,
+      "macro_f1": 0.6958395708647943,
+      "per_ship_balanced_accuracy": 0.7762687561736621,
+      "per_class_recall": {
+        "background": 0.8205841446453408,
+        "cargo + tanker": 0.9737387698686939,
+        "fishing": 0.4838255977496484,
+        "pleasurecraft": 0.5827538247566064,
+        "tug": 0.6270949720670391
+      }
+    },
+    {
+      "fold": 4,
+      "features": "engineered",
+      "model": "gradient boosting",
+      "n_features": 144,
+      "setting": 189,
+      "val_balanced_accuracy": 0.6899920352311033,
+      "accuracy": 0.7620593692022264,
+      "balanced_accuracy": 0.7169025121621753,
+      "macro_f1": 0.7141956821811715,
+      "per_ship_balanced_accuracy": 0.8245486809776583,
+      "per_class_recall": {
+        "background": 0.8303198887343533,
+        "cargo + tanker": 0.9813407049067036,
+        "fishing": 0.4571026722925457,
+        "pleasurecraft": 0.6411682892906815,
+        "tug": 0.6745810055865922
+      }
+    },
+    {
+      "fold": 4,
+      "features": "engineered",
+      "model": "both averaged",
+      "n_features": 144,
+      "accuracy": 0.7669294990723562,
+      "balanced_accuracy": 0.7230703681679709,
+      "macro_f1": 0.7204472901489527,
+      "per_ship_balanced_accuracy": 0.8139398973964689,
+      "per_class_recall": {
+        "background": 0.8372739916550765,
+        "cargo + tanker": 0.9799585348997927,
+        "fishing": 0.47538677918424754,
+        "pleasurecraft": 0.6411682892906815,
+        "tug": 0.6815642458100558
+      }
+    },
+    {
+      "fold": 5,
+      "features": "simple (no MFCC)",
+      "model": "logistic regression",
+      "n_features": 257,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.6367140004626467,
+      "accuracy": 0.6912549292507539,
+      "balanced_accuracy": 0.6393046184792284,
+      "macro_f1": 0.6320593894002118,
+      "per_ship_balanced_accuracy": 0.7105147187505944,
+      "per_class_recall": {
+        "background": 0.827538247566064,
+        "cargo + tanker": 0.9559748427672956,
+        "fishing": 0.34573002754820936,
+        "pleasurecraft": 0.6091794158553546,
+        "tug": 0.4581005586592179
+      }
+    },
+    {
+      "fold": 5,
+      "features": "simple (no MFCC)",
+      "model": "gradient boosting",
+      "n_features": 257,
+      "setting": 144,
+      "val_balanced_accuracy": 0.6660099745568824,
+      "accuracy": 0.7028531663187195,
+      "balanced_accuracy": 0.6529011406805695,
+      "macro_f1": 0.6472500902823404,
+      "per_ship_balanced_accuracy": 0.7208491934410014,
+      "per_class_recall": {
+        "background": 0.8261474269819193,
+        "cargo + tanker": 0.9573724668064291,
+        "fishing": 0.3774104683195592,
+        "pleasurecraft": 0.6133518776077886,
+        "tug": 0.49022346368715086
+      }
+    },
+    {
+      "fold": 5,
+      "features": "simple (no MFCC)",
+      "model": "both averaged",
+      "n_features": 257,
+      "accuracy": 0.7067965669218279,
+      "balanced_accuracy": 0.6558274505861033,
+      "macro_f1": 0.6494603117147706,
+      "per_ship_balanced_accuracy": 0.7403690340314635,
+      "per_class_recall": {
+        "background": 0.8358831710709318,
+        "cargo + tanker": 0.9664570230607966,
+        "fishing": 0.371900826446281,
+        "pleasurecraft": 0.631432545201669,
+        "tug": 0.473463687150838
+      }
+    },
+    {
+      "fold": 5,
+      "features": "engineered",
+      "model": "logistic regression",
+      "n_features": 144,
+      "setting": 0.01,
+      "val_balanced_accuracy": 0.6994504208890957,
+      "accuracy": 0.7102760380422176,
+      "balanced_accuracy": 0.6606151778967371,
+      "macro_f1": 0.6563357988966027,
+      "per_ship_balanced_accuracy": 0.7255059588350548,
+      "per_class_recall": {
+        "background": 0.7969401947148818,
+        "cargo + tanker": 0.9636617749825297,
+        "fishing": 0.3677685950413223,
+        "pleasurecraft": 0.6369958275382476,
+        "tug": 0.5377094972067039
+      }
+    },
+    {
+      "fold": 5,
+      "features": "engineered",
+      "model": "gradient boosting",
+      "n_features": 144,
+      "setting": 170,
+      "val_balanced_accuracy": 0.6954116796726895,
+      "accuracy": 0.7332405474367896,
+      "balanced_accuracy": 0.6884685673781494,
+      "macro_f1": 0.6846458207215697,
+      "per_ship_balanced_accuracy": 0.791708097928437,
+      "per_class_recall": {
+        "background": 0.8233657858136301,
+        "cargo + tanker": 0.9615653389238294,
+        "fishing": 0.43112947658402206,
+        "pleasurecraft": 0.6606397774687065,
+        "tug": 0.5656424581005587
+      }
+    },
+    {
+      "fold": 5,
+      "features": "engineered",
+      "model": "both averaged",
+      "n_features": 144,
+      "accuracy": 0.7341684064022269,
+      "balanced_accuracy": 0.6890641122012756,
+      "macro_f1": 0.6847022822837067,
+      "per_ship_balanced_accuracy": 0.7738444615648005,
+      "per_class_recall": {
+        "background": 0.8261474269819193,
+        "cargo + tanker": 0.9643605870020965,
+        "fishing": 0.41597796143250687,
+        "pleasurecraft": 0.6648122392211405,
+        "tug": 0.5740223463687151
+      }
+    }
+  ]
+}
