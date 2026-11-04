@@ -221,8 +221,26 @@ ax[0].set_title("Merging bands"); ax[1].set_title("Keeping only the lowest bands
 ax[0].legend(fontsize=8); plt.tight_layout(); plt.show()
 
 # %% [markdown]
-# BANDS_TEXT
+# - **No reduction helps; every one costs, and the cost grows with the cut.** Gradient boosting, per clip, against all
+#   128 bands (50.4 %): 64 merged bands -0.9, 32 -1.8, 16 -3.8 points; only the lowest 64 bands (up to 2.8 kHz) -1.9,
+#   40 bands (1.2 kHz) -3.6, 30 bands (816 Hz) -3.9, 20 bands (487 Hz) -4.8. Logistic regression moves the same way.
+# - **Merging is cheaper than cutting:** 64 merged bands (128 numbers) lose 0.9 points; the lowest 64 bands (also 128
+#   numbers) lose 1.9. Keeping the whole range at a coarser resolution beats a fine resolution of the low end only,
+#   as in lesson 15 without "other".
+# - **The lowest 20 bands already carry most of it:** 40 numbers below 487 Hz give 45.6 %, 90 % of the full 50.4 %.
+#   The remaining 108 bands, up to 16 kHz, add the last 4.8 points.
+# - **Why not fewer bands, then?** The model would get smaller (128 instead of 256 numbers for 64 bands), but the
+#   computing cost hardly changes: the 128-band spectrogram (29 ms) has to be made first either way, and merging or
+#   cutting it is almost free. So fewer bands save training time and memory, not the per-clip cost, and they always
+#   cost accuracy.
 #
 # ## 5. What it means
 #
-# CONCLUSIONS
+# | Question | Answer (6 classes + other, 5 test folds) |
+# |---|---|
+# | 3. Which feature sets are worth their cost? | Added one at a time: 7 of 9 kept (523 numbers, 80 ms per clip), 55.7 % per clip; level with lesson 22's best set (56.2 %, 86 ms). Loudness and impulsiveness is dropped again. |
+# | 4. Fewer mel bands (64 / 32 / 16)? | -0.9 / -1.8 / -3.8 points (gradient boosting); no gain, and no saving in computing time per clip. |
+# | 5. Only the lowest 20 / 30 / 40 bands? | -4.8 / -3.9 / -3.6 points; the high frequencies still matter with "other". |
+#
+# Keep all 128 bands, and the engineered features with the mel mean + spread (lesson 22). Most of the per-clip cost
+# is reading the clip and making one spectrogram; the choice between equally good sets is a matter of training time.

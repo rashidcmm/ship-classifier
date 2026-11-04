@@ -101,8 +101,9 @@ def fig_bands():
         bars(ax, order, [g.get(s, np.nan) for s in order], color, off, 0.38)
     ax.set_yticks(range(len(order)), order, fontsize=14, color=INK); ax.invert_yaxis(); ax.set_xlim(0, 62)
     ax.set_xlabel("balanced accuracy per clip (%), mel band mean + spread only, 6 classes + other")
-    ax.legend(handles=[plt.Rectangle((0, 0), 1, 1, color=GB), plt.Rectangle((0, 0), 1, 1, color=LR)],
-              labels=["gradient boosting", "logistic regression"], loc="lower right", frameon=False, fontsize=13)
+    fig.legend(handles=[plt.Rectangle((0, 0), 1, 1, color=GB), plt.Rectangle((0, 0), 1, 1, color=LR)],
+               labels=["gradient boosting", "logistic regression"], loc="lower center", ncol=2, frameon=False,
+               fontsize=13, bbox_to_anchor=(0.6, -0.08))
     ax.grid(axis="x", color=GRID, lw=0.8); ax.set_axisbelow(True)
     save(fig, "23_mel_bands_with_other.png")
 

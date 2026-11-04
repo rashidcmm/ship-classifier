@@ -926,6 +926,26 @@ folds give lesson 17's per-ship scores exactly (77.6 / 76.4 / 76.2 / 77.6 / 74.0
   The per-ship GB reference with the same rules (`--reference`, CPU) is queued behind the other session's job.
 - Slide 20 of the review-3 deck (new) and "Next steps" item 02 updated.
 
+### 4.23 Fewer mel bands, with "other" (5 November)
+
+`python src/with_other.py bands`, lesson 23 section 4; 6 classes + other; band mean + spread only (no MFCC); 128 bands
+merged by 2 / 4 / 8, or only the lowest 20 / 30 / 40 / 64 kept. 80 fits, about 1 h 50 min, CPU.
+
+| Per clip, 5 test folds | GB | LR | GB per ship |
+|---|---|---|---|
+| all 128 bands, 10 Hz-16 kHz (256 numbers) | **50.4 %** | **48.1 %** | **57.7 %** |
+| 64 bands, merged (128) | 49.5 % | 47.9 % | 56.3 % |
+| 32 bands, merged (64) | 48.6 % | 46.7 % | 55.8 % |
+| 16 bands, merged (32) | 46.6 % | 44.0 % | 53.5 % |
+| lowest 64 bands, up to 2.8 kHz (128) | 48.5 % | 46.5 % | 56.5 % |
+| lowest 40 bands, up to 1.2 kHz (80) | 46.8 % | 44.2 % | 55.0 % |
+| lowest 30 bands, up to 816 Hz (60) | 46.5 % | 43.7 % | 54.7 % |
+| lowest 20 bands, up to 487 Hz (40) | 45.6 % | 43.5 % | 53.1 % |
+
+- Same picture as 4.12 without "other": no cut helps; merging costs less than cutting (64 merged −0.9, lowest 64
+  −1.9); the lowest 20 bands give 90 % of the full score.
+- Fewer bands don't lower the per-clip computing cost: the 128-band spectrogram (29 ms) is made first either way.
+
 ---
 
 ## 5. Engineering notes from the training runs
