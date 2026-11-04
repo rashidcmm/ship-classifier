@@ -24,6 +24,8 @@ website for access and for how to cite it.
   (`python src/five_classes.py`, about 15 minutes on the CPU; needs lesson 13's features)
 - **EfficientNet-B0 + engineered features** (five classes, fold 1): `notebooks/17_efficientnet_with_features.ipynb`
   (`python src/fusion_cnn.py --top-hz 16000`, GPU)
+- **Distance** with classical models: 250 m buckets (exact, next bucket counted as correct, 500 m) and a regression in
+  metres: `notebooks/18_distance_buckets_and_regression.ipynb` (`python src/distance_classical.py`, CPU, ~10 minutes)
 
 ---
 

@@ -760,6 +760,27 @@ folds and ship weights; epoch kept by validation balanced accuracy. Two versions
 - One fold, one seed: differences are within the fold spread. Gradient boosting on the 139 numbers stays the model
   to report.
 
+### 4.15 Distance: 250 m buckets and a regression, classical (4 November)
+
+Asked for after 4.14 (`src/distance_classical.py`, `notebooks/18_distance_buckets_and_regression.ipynb`): ship
+clips of the six-class set, lesson 13's folds and engineered features, gradient boosting only; every 250 m bucket
+counts the same in training, every ship the same within it. One classifier (8 buckets of 250 m, 0–2,000 m) and one
+regression (metres, absolute-error loss). Features chosen on validation: all 144 engineered (MFCC 1–8 + the rest:
+−0.7 points). 8 min, CPU.
+
+| Test folds (mean ± spread of 5) | Exact 250 m bucket | Exact or next bucket | 500 m bucket |
+|---|---|---|---|
+| classifier | 32.8 ± 2.3 % (balanced 37.4) | 69.9 ± 1.5 % | 54.0 ± 1.5 % |
+| regression, then bucketed | 31.5 ± 1.7 % | **75.2 ± 0.7 %** | 52.7 ± 1.3 % |
+
+- Regression: mean error 258 ± 8 m, median 204 m, 58 % within 250 m, R² 0.54. It rarely predicts beyond ~1,700 m,
+  so 1,750–2,000 m is placed too close (354 m mean error).
+- Big ships are placed better (cargo 192 m, tanker 176 m) than small boats (fishing 301, pleasure craft 328, tug 294).
+- Better than lesson 12 (fold 1, mel-band features): exact 29.3 → 32.8 %, right or next 70.2 → 75.2 %, mean error
+  ~274 → 258 m. Recommendation: the regression (one model, metres and buckets).
+- Engineering: gradient boosting's binning step costs ~10–16 s per fit on this laptop (joblib thread pool),
+  whatever the data size; tests use small feature sets.
+
 ---
 
 ## 5. Engineering notes from the training runs
@@ -869,4 +890,5 @@ python src/six_classes_equal.py --ensemble                                      
 python src/six_classes_fewer.py all                                                                                      # fewer / lower mel bands and feature groups (4.12)
 python src/five_classes.py                                                                                               # cargo + tanker merged, per clip and per ship (4.13)
 python src/fusion_cnn.py --top-hz 16000   # also --top-hz 8000 and --reference                                          # EfficientNet-B0 + features (4.14)
+python src/distance_classical.py                                                                                         # distance: 250 m buckets and regression (4.15)
 ```
