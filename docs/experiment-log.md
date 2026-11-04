@@ -817,6 +817,22 @@ validation (C = 1 chosen every fold). 12 min, CPU.
 - Distance buckets (regression, exact or next): 250 m 75.2 %, 300 m 80.9 %, 400 m 90.5 %; exact bucket (classifier)
   32.8 / 37.2 / 47.0 %. The mean error stays about 260 m: wider buckets ask a looser question, not a better estimate.
 
+### 4.18 The left-out ship types, and PANN embeddings (4 November)
+
+`src/panns_features.py` (one 10-minute pass over the audio: CNN14 PANN embeddings for all 43,208 clips, engineered
+features for the six left-out classes) and `src/open_set.py`, `notebooks/21_other_unknown_panns.ipynb`. Left out since
+4.9: sailing 212 ships, other 169, passenger 110, rescue 23, dredger 6, pilot vessel 2. Known classes keep their
+folds; left-out ships get their own five folds by ship. 29 min, CPU.
+
+- **A. "Other" class** (all left-out types): 5 classes + other 61.9 ± 0.6 % per clip / 70.7 ± 2.8 % per ship (other
+  recall 35 %); 4 classes + other 69.6 / 77.6 % (other 41 %). About 8-10 points below the same groupings without it.
+- **B. "Unknown" = low confidence** (threshold keeps 95 % of known validation clips; GB trained on 5 classes): only
+  9.5 % of unknown clips rejected, AUROC 67 % per clip; **per ship AUROC 83 %** (81-84 % on every fold). Unknown
+  clips are mostly called tug (30 %) or pleasure craft (27 %).
+- **C. PANN** (2,048 → 256 by PCA, 98.9 % of variance), 5 classes: alone 61.4 / 71.8 % (GB), well below the 144
+  engineered (70.0 / 78.7); together 70.4 / 79.4 % (GB, +0.7 per ship but worse on 2 of 5 folds) and 69.2 / 77.8 %
+  (LR, +2.2 per ship, better on every fold). Not worth its cost for GB.
+
 ---
 
 ## 5. Engineering notes from the training runs
@@ -930,4 +946,5 @@ python src/distance_classical.py                                                
 python src/fishing_boost.py                                                                                              # fishing boats: tree size and class offsets (4.16)
 python src/merged_classes.py                                                                                             # balanced merged classes, SVM, 4 classes (4.17)
 python src/distance_classical.py --width 300   # also --width 400                                                      # wider distance buckets (4.17)
+python src/panns_features.py && python src/open_set.py                                                                   # other class, unknown ships, PANN (4.18)
 ```

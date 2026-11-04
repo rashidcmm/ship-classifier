@@ -30,6 +30,9 @@ website for access and for how to cite it.
   (`python src/fishing_boost.py`, CPU, ~15 minutes)
 - **Merged classes with balanced weights, SVM, four classes (fishing + tug), 300/400 m distance buckets:**
   `notebooks/20_merged_classes_svm.ipynb` (`python src/merged_classes.py`; `python src/distance_classical.py --width 300`)
+- **The left-out ship types** (an "other" class, "unknown" from low confidence) and **PANN embeddings**:
+  `notebooks/21_other_unknown_panns.ipynb` (`python src/panns_features.py` (GPU, needs the CNN14 checkpoint in
+  `~/panns_data`, `pip install panns-inference`), then `python src/open_set.py`)
 
 ---
 

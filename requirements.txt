@@ -14,3 +14,4 @@ ipykernel
 nbformat
 nbclient
 pytest
+panns-inference  # lesson 21 only (PANN embeddings)
