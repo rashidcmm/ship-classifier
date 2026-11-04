@@ -189,6 +189,37 @@ def fig_distance():
     save(fig, "21_distance.png")
 
 
+def fig_distance_matrix():
+    """Slide 21 (user's choice): the confusion matrix, made readable: big numbers, rows add up to 100 %,
+    the diagonal (exact bucket) outlined, light cells in light grey text."""
+    d = pd.read_parquet(RUNS / "distance_classical_400m" / "predictions.parquet")
+    buckets = [b.replace(" m", "") for b in json.loads(
+        (RUNS / "distance_classical_400m" / "results.json").read_text())["buckets"]]
+    n = len(buckets)
+    cm = np.zeros((n, n))
+    for t, p in zip(d.true_bucket, d.clf_bucket):
+        cm[int(t), int(p)] += 1
+    cm = 100 * cm / cm.sum(1, keepdims=True)
+    fig, ax = plt.subplots(figsize=(11, 9))
+    ax.imshow(cm, cmap="Blues", vmin=0, vmax=80)
+    for i in range(n):
+        for j in range(n):
+            v = cm[i, j]
+            ax.text(j, i, f"{v:.0f} %", ha="center", va="center", fontsize=24,
+                    weight="bold" if i == j else "normal",
+                    color=SURFACE if v >= 45 else (INK if v >= 8 else MUTED))
+        ax.add_patch(plt.Rectangle((i - 0.5, i - 0.5), 1, 1, fill=False, edgecolor=INK, lw=3))
+    ax.set_xticks(range(n), [b.replace("-", "-\n") for b in buckets])
+    ax.set_yticks(range(n), buckets)
+    ax.set_xlabel("predicted distance (m)")
+    ax.set_ylabel("true distance (m)")
+    ax.tick_params(length=0)
+    for s in ax.spines.values():
+        s.set_visible(False)
+    print("distance diagonal:", np.diag(cm).round(1))
+    save(fig, "21_distance_matrix.png")
+
+
 def fig_speed():
     s = pd.read_parquet(RUNS / "speed_classical_4kn" / "predictions.parquet")
     buckets = json.loads((RUNS / "speed_classical_4kn" / "results.json").read_text())["buckets"]
