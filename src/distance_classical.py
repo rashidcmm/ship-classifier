@@ -36,6 +36,13 @@ MAX_TREES = 1000                                 # upper limit; early stopping o
 GB = dict(learning_rate=0.05, max_leaf_nodes=15, min_samples_leaf=50, l2_regularization=1.0)
 
 
+def set_width(width: int) -> None:
+    """Use buckets of another width (the last bucket ends at 2,000 m or later)."""
+    global WIDTH, N_BUCKETS, BUCKETS
+    WIDTH, N_BUCKETS = width, int(np.ceil(MAX_M / width))
+    BUCKETS = [f"{a}-{a + width} m" for a in range(0, N_BUCKETS * width, width)]
+
+
 def bucket_of(metres) -> np.ndarray:
     return np.clip(np.asarray(metres) // WIDTH, 0, N_BUCKETS - 1).astype(int)
 
@@ -45,10 +52,12 @@ def bucket_scores(true_b, pred_b) -> dict:
     true_b, pred_b = np.asarray(true_b), np.asarray(pred_b)
     near = np.abs(true_b - pred_b) <= 1
     per_bucket_near = [near[true_b == b].mean() for b in np.unique(true_b)]
-    return {"exact": float((true_b == pred_b).mean()), "exact_balanced": balanced_accuracy_score(true_b, pred_b),
-            "near": float(near.mean()), "near_balanced": float(np.mean(per_bucket_near)),
-            "exact_500m": float((true_b // 2 == pred_b // 2).mean()),
-            "exact_500m_balanced": balanced_accuracy_score(true_b // 2, pred_b // 2)}
+    out = {"exact": float((true_b == pred_b).mean()), "exact_balanced": balanced_accuracy_score(true_b, pred_b),
+           "near": float(near.mean()), "near_balanced": float(np.mean(per_bucket_near))}
+    if WIDTH == 250:                                         # pairs of 250 m buckets = 500 m buckets
+        out |= {"exact_500m": float((true_b // 2 == pred_b // 2).mean()),
+                "exact_500m_balanced": balanced_accuracy_score(true_b // 2, pred_b // 2)}
+    return out
 
 
 def feature_sets(columns) -> dict[str, list[str]]:
@@ -145,7 +154,7 @@ def _run_all(data_dir, out_dir, seed):
         print(f"[{(time.time() - t0) / 60:4.1f} min] fold {k}: classifier exact {results[-1]['classifier']['exact']:.3f}"
               f" near {results[-1]['classifier']['near']:.3f}, regression MAE {err.mean():.0f} m", flush=True)
     pd.concat(preds, ignore_index=True).to_parquet(out_dir / "predictions.parquet")
-    summary = {"buckets": BUCKETS, "chosen_features": chosen, "n_features": len(cols), "seed": seed,
+    summary = {"width_m": WIDTH, "buckets": BUCKETS, "chosen_features": chosen, "n_features": len(cols), "seed": seed,
                "minutes": round((time.time() - t0) / 60, 1), "results": results}
     (out_dir / "results.json").write_text(json.dumps(summary, indent=2))
     return summary
@@ -154,10 +163,13 @@ def _run_all(data_dir, out_dir, seed):
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--data-dir", type=Path, default=DATA_DIR)
-    p.add_argument("--out-dir", type=Path, default=OUT_DIR)
+    p.add_argument("--out-dir", type=Path, help="default: runs/distance_classical (250 m) or ..._<width>m")
+    p.add_argument("--width", type=int, default=250, help="bucket width in metres")
     a = p.parse_args(argv)
+    set_width(a.width)
+    out = a.out_dir or (OUT_DIR if a.width == 250 else RUNS_DIR / f"distance_classical_{a.width}m")
     with keep_awake():
-        run_all(a.data_dir, a.out_dir)
+        run_all(a.data_dir, out)
 
 
 if __name__ == "__main__":

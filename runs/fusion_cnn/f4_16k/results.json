@@ -1,0 +1,38 @@
+{
+  "model": "EfficientNet-B0 + engineered",
+  "top_hz": 16000,
+  "n_bands": 128,
+  "fold": 4,
+  "n_engineered": 139,
+  "best_epoch": 3,
+  "val_balanced_accuracy": 0.6876742820923545,
+  "epochs_run": 6,
+  "batch_size": 32,
+  "settings": {
+    "epochs": 12,
+    "patience": 3,
+    "lr": 0.0003,
+    "weight_decay": 0.01,
+    "warmup_epochs": 1,
+    "drop_rate": 0.3,
+    "eng_hidden": 128,
+    "specaugment": {
+      "freq_masks": 2,
+      "freq_width": 16,
+      "time_masks": 2,
+      "time_width": 50
+    }
+  },
+  "minutes": 9.8,
+  "accuracy": 0.7448979591836735,
+  "balanced_accuracy": 0.69701038032338,
+  "macro_f1": 0.6890403368612501,
+  "per_ship_balanced_accuracy": 0.7757981208354698,
+  "per_class_recall": {
+    "background": 0.8331015299026425,
+    "cargo + tanker": 0.9765031098825155,
+    "fishing": 0.3488045007032349,
+    "pleasurecraft": 0.7079276773296245,
+    "tug": 0.6187150837988827
+  }
+}

@@ -759,6 +759,8 @@ folds and ship weights; epoch kept by validation balanced accuracy. Two versions
 - The CNN also needs the high frequencies: below 8 kHz only costs 1.2 / 1.8 points (background recall 86.5 → 78.8 %).
 - One fold, one seed: differences are within the fold spread. Gradient boosting on the 139 numbers stays the model
   to report.
+- **All 5 folds (4 November):** EfficientNet-B0 + features 69.0 ± 1.6 % per clip, 76.4 ± 1.5 % per ship; gradient
+  boosting on the same 139 numbers 69.9 ± 1.7 / 78.9 ± 2.4 %, ahead per ship on 4 of 5 folds. Confirmed: no better.
 
 ### 4.15 Distance: 250 m buckets and a regression, classical (4 November)
 
@@ -794,6 +796,26 @@ Fishing was the weakest class of 4.13 (43 % recall per clip). `src/fishing_boost
 - Test: lesson 16 setting 69.9 % per clip / 78.9 % per ship (fishing 43.0 %); tuned trees 70.0 / 79.1 (42.6 %);
   + offsets 69.9 / 78.6 (42.1 %). No change beyond the fold spread. Many fishing boats sound like tugs; better would
   need other information (size, longer behaviour) or a merged "small working boat" class.
+
+### 4.17 Balanced merged classes, SVM, four classes, wider distance buckets (4 November)
+
+Questions after 4.16 (`src/merged_classes.py`, `notebooks/20_merged_classes_svm.ipynb`; `distance_classical.py
+--width`). Every merged class now gets the same total weight (inside it each original class the same, then each
+ship); lesson 16 had let cargo + tanker count double. SVM: RBF kernel on standardised features, C ∈ {1, 10} on
+validation (C = 1 chosen every fold). 12 min, CPU.
+
+| Test, 5 folds | Per clip | Per ship |
+|---|---|---|
+| 5 classes, GB, lesson 16 weights | 69.9 ± 1.3 % | 78.9 ± 2.2 % |
+| 5 classes, GB, balanced merged weights | 70.0 ± 1.2 % | 78.7 ± 2.9 % |
+| 5 classes, SVM | 69.9 ± 1.4 % | 77.0 ± 2.1 % |
+| **4 classes (+ fishing + tug), GB** | **80.2 ± 1.3 %** | **86.8 ± 0.5 %** |
+| 4 classes, SVM | 79.8 ± 1.2 % | 85.4 ± 0.6 % |
+
+- Balancing the merged class changes nothing beyond the spread; the SVM is no better than GB (−1.7 per ship).
+- Four classes: fishing + tug 73.5 % recall, pleasure craft 65.9 % (13 % called background, 19 % fishing + tug).
+- Distance buckets (regression, exact or next): 250 m 75.2 %, 300 m 80.9 %, 400 m 90.5 %; exact bucket (classifier)
+  32.8 / 37.2 / 47.0 %. The mean error stays about 260 m: wider buckets ask a looser question, not a better estimate.
 
 ---
 
@@ -906,4 +928,6 @@ python src/five_classes.py                                                      
 python src/fusion_cnn.py --top-hz 16000   # also --top-hz 8000 and --reference                                          # EfficientNet-B0 + features (4.14)
 python src/distance_classical.py                                                                                         # distance: 250 m buckets and regression (4.15)
 python src/fishing_boost.py                                                                                              # fishing boats: tree size and class offsets (4.16)
+python src/merged_classes.py                                                                                             # balanced merged classes, SVM, 4 classes (4.17)
+python src/distance_classical.py --width 300   # also --width 400                                                      # wider distance buckets (4.17)
 ```

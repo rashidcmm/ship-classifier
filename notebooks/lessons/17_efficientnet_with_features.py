@@ -15,7 +15,7 @@
 #
 # - The 139 engineered numbers are all groups except "loudness and impulsiveness" (lesson 15).
 # - Two versions: all 128 mel bands (10 Hz - 16 kHz), and only the 101 bands below 8 kHz.
-# - Five classes, **fold 1 only**, lesson 13's folds, test ships and ship weights. The epoch kept is the one with
+# - Five classes, lesson 13's folds, test ships and ship weights; fold 1 first, all five folds in section 3. The epoch kept is the one with
 #   the best balanced accuracy on the validation fold; the test fold is scored per clip and per ship (lesson 16).
 # - For a fair reference, gradient boosting and logistic regression are trained on the same 139 numbers, same fold.
 #
@@ -104,7 +104,27 @@ ax.set_xlabel("predicted"); ax.set_ylabel("true")
 ax.set_title("EfficientNet-B0 + features, 128 bands\n(per clip, fold 1)"); plt.tight_layout(); plt.show()
 
 # %% [markdown]
-# ## 3. What it means
+# ## 3. All five folds (128 bands)
+#
+# The same network on every fold, each with its gradient-boosting and logistic-regression reference on the same 139
+# numbers:
+
+# %%
+rows = []
+for k in range(1, 6):
+    r = json.loads((OUT / f"f{k}_16k" / "results.json").read_text())
+    rows.append({"fold": k, "model": "EfficientNet-B0 + features", "per clip": r["balanced_accuracy"],
+                 "per ship": r["per_ship_balanced_accuracy"]})
+    for g in json.loads((OUT / f"reference_f{k}.json").read_text()):
+        rows.append({"fold": k, "model": g["model"], "per clip": g["balanced_accuracy"],
+                     "per ship": g["per_ship_balanced_accuracy"]})
+folds5 = pd.DataFrame(rows)
+print((100 * folds5.pivot(index="fold", columns="model", values="per ship")).round(1))
+summary5 = folds5.groupby("model")[["per clip", "per ship"]].agg(["mean", "std"])
+print((100 * summary5).round(1))
+
+# %% [markdown]
+# ## 4. What it means
 #
 # | Five classes, fold 1 test ships | Per clip | Per ship |
 # |---|---|---|
@@ -113,13 +133,18 @@ ax.set_title("EfficientNet-B0 + features, 128 bands\n(per clip, fold 1)"); plt.t
 # | logistic regression, same 139 numbers | 70.9 % | 77.9 % |
 # | **gradient boosting, same 139 numbers** | **71.1 %** | **80.6 %** |
 #
+# | Five classes, all 5 test folds (mean ± spread) | Per clip | Per ship |
+# |---|---|---|
+# | EfficientNet-B0 + 139 features | 69.0 ± 1.6 % | 76.4 ± 1.5 % |
+# | logistic regression, same 139 numbers | 68.6 ± 1.9 % | 76.1 ± 2.0 % |
+# | **gradient boosting, same 139 numbers** | **69.9 ± 1.7 %** | **78.9 ± 2.4 %** |
+#
 # - **The CNN doesn't beat gradient boosting** on the same engineered numbers: 1.3 points lower per clip and 3.0
 #   per ship. Looking at the spectrogram as an image adds nothing that the 139 numbers don't already carry, and the
 #   CNN starts memorising the training ships after 4-5 epochs.
 # - **The CNN also needs the high frequencies:** without the bands above 8 kHz it loses 1.2 points per clip and 1.8
 #   per ship, as the classical models did in lesson 15. Background suffers most (86.5 → 78.8 % recall).
 # - **Cost:** about 15 minutes on the GPU per run, against about 1 minute on the CPU for gradient boosting.
-# - **Caution:** one fold and one random start. Differences of 1-2 points are within the fold-to-fold spread
-#   (about ±1.3 % per clip and ±2.2 % per ship in lesson 16), so the honest summary is "the CNN is no better", not
-#   "the CNN is worse". Running all 5 folds would settle it (about 75 minutes of GPU time).
+# - **All five folds confirm it:** gradient boosting is ahead per ship on 4 of 5 folds (78.9 against 76.4 % on
+#   average); the CNN wins only fold 2 (76.4 against 75.5 %).
 # - **Recommendation:** gradient boosting on the 139 engineered numbers stays the model to report.

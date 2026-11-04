@@ -28,6 +28,8 @@ website for access and for how to cite it.
   metres: `notebooks/18_distance_buckets_and_regression.ipynb` (`python src/distance_classical.py`, CPU, ~10 minutes)
 - **Fishing boats**, the weakest class: why, and two fixes that don't help: `notebooks/19_fishing_boats.ipynb`
   (`python src/fishing_boost.py`, CPU, ~15 minutes)
+- **Merged classes with balanced weights, SVM, four classes (fishing + tug), 300/400 m distance buckets:**
+  `notebooks/20_merged_classes_svm.ipynb` (`python src/merged_classes.py`; `python src/distance_classical.py --width 300`)
 
 ---
 

@@ -1,0 +1,131 @@
+{
+  "width_m": 400,
+  "buckets": [
+    "0-400 m",
+    "400-800 m",
+    "800-1200 m",
+    "1200-1600 m",
+    "1600-2000 m"
+  ],
+  "chosen_features": "MFCC 1-8 + the rest",
+  "n_features": 111,
+  "seed": 0,
+  "minutes": 8.2,
+  "results": [
+    {
+      "fold": 1,
+      "features": "MFCC 1-8 + the rest",
+      "n_features": 111,
+      "classifier": {
+        "exact": 0.45818282856348985,
+        "exact_balanced": 0.4785832074798183,
+        "near": 0.8416226729647124,
+        "near_balanced": 0.8448096129841642
+      },
+      "regression_binned": {
+        "exact": 0.43567657682689637,
+        "exact_balanced": 0.4300923703902136,
+        "near": 0.8949708252292303,
+        "near_balanced": 0.8894734355732851
+      },
+      "regression": {
+        "mae_m": 271.05104042255164,
+        "median_error_m": 221.85416765542186,
+        "within_250m": 0.5473742706307307,
+        "r2": 0.5041483705549015
+      }
+    },
+    {
+      "fold": 2,
+      "features": "MFCC 1-8 + the rest",
+      "n_features": 111,
+      "classifier": {
+        "exact": 0.4492914698527369,
+        "exact_balanced": 0.46714827979368767,
+        "near": 0.8535704362322868,
+        "near_balanced": 0.8485972988860772
+      },
+      "regression_binned": {
+        "exact": 0.44123367602111696,
+        "exact_balanced": 0.4231780028102542,
+        "near": 0.9058071686579605,
+        "near_balanced": 0.8924824791068131
+      },
+      "regression": {
+        "mae_m": 256.3027625406324,
+        "median_error_m": 200.13028203000476,
+        "within_250m": 0.5943317588218949,
+        "r2": 0.5334164361041168
+      }
+    },
+    {
+      "fold": 3,
+      "features": "MFCC 1-8 + the rest",
+      "n_features": 111,
+      "classifier": {
+        "exact": 0.4886111111111111,
+        "exact_balanced": 0.4973602646721476,
+        "near": 0.8566666666666667,
+        "near_balanced": 0.8555787145276188
+      },
+      "regression_binned": {
+        "exact": 0.45111111111111113,
+        "exact_balanced": 0.454703791591111,
+        "near": 0.9008333333333334,
+        "near_balanced": 0.896708969001657
+      },
+      "regression": {
+        "mae_m": 262.6566433291187,
+        "median_error_m": 209.36022378014684,
+        "within_250m": 0.5752777777777778,
+        "r2": 0.5513692398867074
+      }
+    },
+    {
+      "fold": 4,
+      "features": "MFCC 1-8 + the rest",
+      "n_features": 111,
+      "classifier": {
+        "exact": 0.46794871794871795,
+        "exact_balanced": 0.5064822258207136,
+        "near": 0.8528428093645485,
+        "near_balanced": 0.8574557457461438
+      },
+      "regression_binned": {
+        "exact": 0.46181716833890746,
+        "exact_balanced": 0.444721985614161,
+        "near": 0.9163879598662207,
+        "near_balanced": 0.9109500596988968
+      },
+      "regression": {
+        "mae_m": 249.50690574124835,
+        "median_error_m": 196.5117029848131,
+        "within_250m": 0.5944816053511706,
+        "r2": 0.5587573070481076
+      }
+    },
+    {
+      "fold": 5,
+      "features": "MFCC 1-8 + the rest",
+      "n_features": 111,
+      "classifier": {
+        "exact": 0.4878389712049203,
+        "exact_balanced": 0.5170456036324687,
+        "near": 0.8445624825272575,
+        "near_balanced": 0.8454469059328419
+      },
+      "regression_binned": {
+        "exact": 0.45876432764886776,
+        "exact_balanced": 0.46762228899835134,
+        "near": 0.9066256639642158,
+        "near_balanced": 0.8984601564579048
+      },
+      "regression": {
+        "mae_m": 258.19146010662945,
+        "median_error_m": 196.83388890469382,
+        "within_250m": 0.5909980430528375,
+        "r2": 0.5121762838570398
+      }
+    }
+  ]
+}
