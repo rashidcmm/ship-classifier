@@ -120,15 +120,23 @@ def _band_db(power, freqs, lo, hi, axis=-1):
     return 10 * np.log10(np.take(power, np.flatnonzero(sel), axis=axis).sum(axis=axis) + 1e-20)
 
 
-def engineered_features(wave: np.ndarray) -> dict[str, float]:
-    """One 5-s clip at 32 kHz -> named numbers, in seven groups (prefix before the first '_', see GROUPS)."""
+def _spectra(wave: np.ndarray) -> dict:
+    """What several groups share: the centred clip, its frames and power spectrogram (MFCC, level changes, spectral
+    shape), and the long-term Welch spectrum (1/3-octave levels, loudness, tonal lines)."""
     x = wave.astype(np.float64) - wave.mean()
     frames = np.lib.stride_tricks.sliding_window_view(x, N_FFT)[::HOP]
     P = np.abs(np.fft.rfft(frames * HANN, axis=1)) ** 2       # power spectrogram, (309 frames, 1025 bins)
-    out = {}
+    return {"x": x, "frames": frames, "P": P}
 
-    # MFCC: log-mel energies (40 bands, 20 Hz - 16 kHz) -> DCT; mean, spread and how fast each one changes
-    logmel = 10 * np.log10(P @ MEL_FB.T + 1e-20)
+
+def _welch(sp: dict) -> dict:
+    fw, psd = welch(sp["x"], SR, window="hann", nperseg=WELCH_SEG, noverlap=WELCH_SEG // 2)
+    return {**sp, "fw": fw, "psd": psd, "df": fw[1] - fw[0]}
+
+
+def _group_mfcc(sp, out):
+    """MFCC: log-mel energies (40 bands, 20 Hz - 16 kHz) -> DCT; mean, spread and how fast each one changes."""
+    logmel = 10 * np.log10(sp["P"] @ MEL_FB.T + 1e-20)
     c = dct(logmel, type=2, norm="ortho", axis=1)[:, 1:N_MFCC + 1]
     pad = np.pad(c, ((2, 2), (0, 0)), mode="edge")
     delta = (pad[3:-1] - pad[1:-3] + 2 * (pad[4:] - pad[:-4])) / 10
@@ -136,18 +144,22 @@ def engineered_features(wave: np.ndarray) -> dict[str, float]:
         out[f"mfcc_{k + 1}_mean"], out[f"mfcc_{k + 1}_std"] = c[:, k].mean(), c[:, k].std()
         out[f"mfcc_{k + 1}_change"] = delta[:, k].std()
 
-    # long-term spectrum (Welch, 2 Hz bins): level in each 1/3-octave band
-    fw, psd = welch(x, SR, window="hann", nperseg=WELCH_SEG, noverlap=WELCH_SEG // 2)
-    df = fw[1] - fw[0]
+
+def _group_third(sp, out):
+    """Long-term spectrum (Welch, 2 Hz bins): level in each 1/3-octave band."""
     for name, fc in zip(THIRD_OCTAVE_NAMES, THIRD_OCTAVES):
-        out[f"third_{name}Hz"] = _band_db(psd * df, fw, fc * 2 ** (-1 / 6), fc * 2 ** (1 / 6))
+        out[f"third_{name}Hz"] = _band_db(sp["psd"] * sp["df"], sp["fw"], fc * 2 ** (-1 / 6), fc * 2 ** (1 / 6))
 
-    # how much the level of each octave band changes during the clip (steady hum or fluctuating)
+
+def _group_octstd(sp, out):
+    """How much the level of each octave band changes during the clip (steady hum or fluctuating)."""
     for fc in OCTAVES:
-        out[f"octstd_{fc:.0f}Hz"] = _band_db(P, FREQS, fc / np.sqrt(2), fc * np.sqrt(2), axis=1).std()
+        out[f"octstd_{fc:.0f}Hz"] = _band_db(sp["P"], FREQS, fc / np.sqrt(2), fc * np.sqrt(2), axis=1).std()
 
-    # spectral shape, frame by frame: where the energy sits, how spread, how noise-like, how fast it changes
-    S, f = P[:, LOW:], FREQS[LOW:]
+
+def _group_shape(sp, out):
+    """Spectral shape, frame by frame: where the energy sits, how spread, how noise-like, how fast it changes."""
+    S, f = sp["P"][:, LOW:], FREQS[LOW:]
     p = S / (S.sum(1, keepdims=True) + 1e-30)
     centroid = p @ f
     out |= _stats("shape_centroid", centroid)
@@ -156,20 +168,28 @@ def engineered_features(wave: np.ndarray) -> dict[str, float]:
     out |= _stats("shape_flatness", np.exp(np.log(S + 1e-30).mean(1)) / (S.mean(1) + 1e-30))
     out |= _stats("shape_flux", np.sqrt((np.diff(p, axis=0) ** 2).sum(1)))
     out |= _stats("shape_energy", 10 * np.log10(S.sum(1) + 1e-20))
-    out |= _stats("shape_zcr", (np.diff(np.sign(frames), axis=1) != 0).mean(1))
+    out |= _stats("shape_zcr", (np.diff(np.sign(sp["frames"]), axis=1) != 0).mean(1))
 
-    # loudness, spectral slope and impulsiveness
-    density = np.array([out[f"third_{n}Hz"] for n in THIRD_OCTAVE_NAMES]) - 10 * np.log10(
+
+def _group_level(sp, out):
+    """Loudness, spectral slope and impulsiveness (uses the 1/3-octave levels, computed again if not there)."""
+    third = {}
+    _group_third(sp, third)
+    density = np.array([third[f"third_{n}Hz"] for n in THIRD_OCTAVE_NAMES]) - 10 * np.log10(
         THIRD_OCTAVES * (2 ** (1 / 6) - 2 ** (-1 / 6)))      # band level -> level per Hz
     fit = (THIRD_OCTAVES >= 50) & (THIRD_OCTAVES <= 10_000)
-    out["level_broadband"] = _band_db(psd * df, fw, 20.0, SR / 2)
+    x = sp["x"]
+    out["level_broadband"] = _band_db(sp["psd"] * sp["df"], sp["fw"], 20.0, SR / 2)
     out["level_slope_db_per_decade"] = np.polyfit(np.log10(THIRD_OCTAVES[fit]), density[fit], 1)[0]
     out["level_low_minus_high"] = (density[(THIRD_OCTAVES >= 20) & (THIRD_OCTAVES <= 200)].mean()
                                    - density[(THIRD_OCTAVES >= 2000) & (THIRD_OCTAVES <= 10_000)].mean())
     out["level_kurtosis"] = kurtosis(x)
     out["level_crest_db"] = 20 * np.log10(np.abs(x).max() / (x.std() + 1e-20) + 1e-20)
 
-    # tonal lines (LOFAR): narrow peaks standing out of the long-term spectrum below 1 kHz (engines, generators)
+
+def _group_tonal(sp, out):
+    """Tonal lines (LOFAR): narrow peaks standing out of the long-term spectrum below 1 kHz (engines, generators)."""
+    fw, psd = sp["fw"], sp["psd"]
     psd_db = 10 * np.log10(psd + 1e-30)
     prominence = psd_db - median_filter(psd_db, size=51)        # height above the spectrum within +-50 Hz
     band = np.flatnonzero((fw >= TONAL_RANGE[0]) & (fw <= TONAL_RANGE[1]))
@@ -184,8 +204,10 @@ def engineered_features(wave: np.ndarray) -> dict[str, float]:
         near_peak[max(pk - 1, 0):pk + 2] = True
     out["tonal_power_share"] = psd[band][near_peak].sum() / psd[band].sum()
 
-    # DEMON: envelope of the 2-10 kHz noise; its spectrum shows the propeller's shaft and blade rates
-    env = np.sqrt((sosfilt(DEMON_SOS, x) ** 2).reshape(-1, SR // DEMON_RATE).mean(1))
+
+def _group_demon(sp, out):
+    """DEMON: envelope of the 2-10 kHz noise; its spectrum shows the propeller's shaft and blade rates."""
+    env = np.sqrt((sosfilt(DEMON_SOS, sp["x"]) ** 2).reshape(-1, SR // DEMON_RATE).mean(1))
     out["demon_depth"] = env.std() / (env.mean() + 1e-20)
     M = np.abs(np.fft.rfft(detrend(env) * np.hanning(len(env)))) ** 2
     fm = np.fft.rfftfreq(len(env), 1 / DEMON_RATE)
@@ -196,6 +218,20 @@ def engineered_features(wave: np.ndarray) -> dict[str, float]:
     pk = in_range[np.argmax(M[in_range])]
     out["demon_peak_hz"] = fm[pk]
     out["demon_peak_db"] = 10 * np.log10(M[pk] / (np.median(M[in_range]) + 1e-30))
+
+
+# group prefix -> (function, what it needs first: "stft" = frames + power spectrogram, "welch" = long-term spectrum)
+GROUP_FUNCTIONS = {"mfcc": (_group_mfcc, "stft"), "third": (_group_third, "welch"), "octstd": (_group_octstd, "stft"),
+                   "shape": (_group_shape, "stft"), "level": (_group_level, "welch"),
+                   "tonal": (_group_tonal, "welch"), "demon": (_group_demon, "")}
+
+
+def engineered_features(wave: np.ndarray) -> dict[str, float]:
+    """One 5-s clip at 32 kHz -> named numbers, in seven groups (prefix before the first '_', see GROUPS)."""
+    sp = _welch(_spectra(wave))
+    out = {}
+    for fn, _ in GROUP_FUNCTIONS.values():
+        fn(sp, out)
     return {k: float(v) for k, v in out.items()}
 
 
