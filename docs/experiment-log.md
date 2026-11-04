@@ -846,6 +846,86 @@ buckets (only the exact bucket counts): 0-4, 4-8, 8-12, 12-16, 16+ knots.
 - Distance, strict 400 m buckets (4.17 run): classifier exact **47.0 ± 1.8 %** (balanced 49.3 %, chance 20 %);
   0-400 m right 65 %, 1,600-2,000 m 68 %, 800-1,200 m only 24 %.
 
+### 4.20 "Other" is always a class: mel bands, engineered features, both together (4-5 November)
+
+Rule set by the user on 4 November: whatever classes are kept, the ship types not named stay in, as one class "other"
+(sailing, the dataset's other, passenger ship, rescue, dredger, pilot vessel: 522 ships, 21,604 clips). Sections
+4.9-4.17 never had it. `src/with_other.py`, `notebooks/22_other_class_always.ipynb`. Main grouping: **6 classes +
+other** (chance 14.3 %); "other" gets the same total weight as each class, each type the same inside it, each ship the
+same inside that; folds of `open_set.all_folds` (lesson 13's for the six classes); settings on validation, refit on
+training + validation, test scored once. CPU, one job: about 1.5 h for the 50 fits.
+
+| 6 classes + other, 5 test folds | Numbers | GB per clip | GB per ship | LR per clip | "Other" recall (GB) | GB final fit |
+|---|---|---|---|---|---|---|
+| mel mean + spread (before MFCC) | 257 | 50.3 ± 1.5 % | 57.3 % | 48.1 % | 15 % | 136 s |
+| + percentiles (10/50/90th of each band) | 641 | 50.5 % | 56.5 % | 48.3 % | 16 % | 265 s |
+| engineered | 144 | 55.6 % | 63.9 % | 52.0 % | 32 % | 29 s |
+| **engineered + mel mean + spread** | **401** | **56.2 ± 0.4 %** | **65.0 ± 2.6 %** | 52.5 % | 33 % | 90 s |
+| engineered + mel mean + spread + percentiles | 785 | 56.3 % | 64.4 % | 52.4 % | 32 % | 338 s |
+
+- **"Other" costs 6-9 points per clip** (engineered GB 61.9 → 55.6 %): chance falls to 14.3 %, "other" itself is
+  recognised 32 % of the time, and the six named classes lose about 2 points (mean recall 60.1 against 61.9 %) because
+  "other" takes 8-10 % of the small boats' clips. Cargo and tanker go to "other" 1 % of the time.
+- **First time the engineered features and the mel statistics share one model:** +0.6 per clip, +1.1 per ship over
+  the engineered features alone; the percentiles add nothing. Chosen for the next steps on validation: the 401 set.
+- "Other" by type (GB, 401): dredger 45 %, passenger ship 37 %, pilot vessel 32 %, sailing 28 %, rescue 28 %, the
+  dataset's other 23 %. LR answers "other" only 14-18 % of the time.
+- Engineering: three such jobs in parallel (about 1.3-2 GB each) exhausted the laptop's memory and all died silently
+  after about 75 minutes; one job at a time from then on (the jsonl logs let them resume).
+
+### 4.21 Feature sets one at a time, with what they cost (4-5 November)
+
+`python src/with_other.py cost`, `notebooks/23_feature_cost_and_mel_bands.ipynb`; 6 classes + other. Asked for by the
+user: no search over all combinations; order the sets by their own score, start with the best, add the next and keep
+it only if the validation score rises. Nine sets: mel mean + spread, mel percentiles and the seven engineered groups.
+Each step is judged by logistic regression (C = 0.1) on the validation folds of all five rounds; 17 steps, 34 min.
+
+**Cost** (median ms per 5-s clip, one CPU thread, 120 clips): read + decode 15.9; 128-band mel spectrogram 29.0, then
+mean + spread 0.2, percentiles 1.2; short-window STFT 7.4 and Welch spectrum 7.7 (shared by the engineered groups);
+spectral shape 12.4, loudness and impulsiveness 7.5, DEMON 2.4, MFCC 1.5, level changes 0.9, tonal lines 0.7,
+1/3-octave levels 0.6. All 144 engineered: 57 ms; + mel mean + spread: 86 ms.
+
+| Step | Added | Validation | Kept | Numbers | ms per clip |
+|---|---|---|---|---|---|
+| 1 | mel percentiles (best alone) | 47.6 % | start | 384 | 46 |
+| 2 | mel mean + spread | 46.5 % | no (−1.1) | 641 | 46 |
+| 3 | 1/3-octave levels | 48.3 % | yes | 413 | 54 |
+| 4 | spectral shape | 49.7 % | yes | 441 | 74 |
+| 5 | loudness and impulsiveness | 49.7 % | no (−0.02) | 446 | 82 |
+| 6 | MFCC | 50.4 % | yes | 498 | 76 |
+| 7 | DEMON | 51.1 % | yes | 509 | 78 |
+| 8 | tonal lines | 51.9 % | yes | 514 | 79 |
+| 9 | level changes over time | 52.1 % | yes | 523 | 80 |
+
+- Test (5 folds) of the final set: GB 55.7 ± 0.6 % per clip, 63.6 ± 2.6 % per ship; LR 53.0 / 59.8 %. Level with
+  4.20's best set (56.2 / 65.0 %, 86 ms) at about the same cost; mel percentiles alone 48.2 / 54.0 % (GB).
+- The walk is judged by LR: it drops mel mean + spread, which still helps GB a little (4.20). Loudness and
+  impulsiveness is dropped again (as in 4.12), and it is one of the most expensive groups.
+
+### 4.22 Unknown ships with the CNN, judged per ship (5 November, lesson 26)
+
+`python src/unknown_cnn.py`, `notebooks/26_unknown_ships_cnn.ipynb`. Asked for by the user: unknown-ship detection
+with the CNN + engineered features, merchant vessels merged, per ship, every left-out type as unknown. No training:
+lesson 17's five fold models (EfficientNet-B0 + 139 engineered, 5 classes) run on their validation fold (sets the
+threshold: 95 % of known validation ships kept), their test fold, and the left-out ships of the same fold
+(`open_set.all_folds`: every one of the 522 tested once). Ship confidence = highest class probability after averaging
+the ship's clips. 3.5 min on the GPU, run next to another session's CPU job (the user's choice). The re-predicted test
+folds give lesson 17's per-ship scores exactly (77.6 / 76.4 / 76.2 / 77.6 / 74.0 %).
+
+| 5 folds | Per ship | Per clip |
+|---|---|---|
+| AUROC known vs never heard | 81.7 ± 2.5 % (GB, 4.18: 83.1 %) | 66.4 ± 2.5 % (GB: 67.0 %) |
+| known kept at the threshold | 95.0 % | 95.2 % |
+| never-heard called "unknown" | 22.3 ± 9.2 % (fold 1-5: 26, 15, 23, 12, 35 %) | 9.3 % |
+| accuracy, "unknown" as a sixth answer | 62.7 ± 1.2 % (closed, 5 known classes: 76.4 %) | |
+
+- Caught by type (pooled): rescue 12 of 23, pilot vessel 1 of 2, other 46 of 169, sailing 38 of 212, passenger ship
+  19 of 110, dredger 1 of 6. Not caught: called pleasure craft 32 % of all unknown ships, tug 14 %, cargo + tanker 12 %.
+- Known ships lost: fishing 26 %, tug 17 %, pleasure craft 14 %, background 3 %, cargo + tanker 1 %.
+- Per ship roughly doubles what is caught at the same cost, but the CNN is no better than gradient boosting at it.
+  The per-ship GB reference with the same rules (`--reference`, CPU) is queued behind the other session's job.
+- Slide 20 of the review-3 deck (new) and "Next steps" item 02 updated.
+
 ---
 
 ## 5. Engineering notes from the training runs
@@ -961,4 +1041,5 @@ python src/merged_classes.py                                                    
 python src/distance_classical.py --width 300   # also --width 400                                                      # wider distance buckets (4.17)
 python src/panns_features.py && python src/open_set.py                                                                   # other class, unknown ships, PANN (4.18)
 python src/distance_classical.py --target speed                                                                          # speed, strict 4-knot buckets (4.19)
+python src/unknown_cnn.py && python src/unknown_cnn.py --reference                                                       # unknown ships with the CNN, per ship (4.22)
 ```

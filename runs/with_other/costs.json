@@ -1,0 +1,15 @@
+{
+  "mel spectrogram (128 bands)": 28.958850001799874,
+  "mel mean + spread": 0.17109999862441327,
+  "mel percentiles": 1.1945999995077727,
+  "STFT (2,048 window)": 7.448849999491358,
+  "Welch spectrum": 7.718799999565817,
+  "MFCC": 1.5242500012391247,
+  "1/3-octave levels": 0.5736999992222991,
+  "level changes over time": 0.875000001542503,
+  "spectral shape": 12.387549999402836,
+  "loudness and impulsiveness": 7.452699999703327,
+  "tonal lines": 0.6548999990627635,
+  "propeller modulation (DEMON)": 2.405400000498048,
+  "read and decode": 15.865049999774783
+}
