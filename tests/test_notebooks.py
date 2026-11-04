@@ -14,7 +14,7 @@ EXPECTED = ["00_setup_check", "01_explore_data", "02_sound_to_spectrogram", "03_
             "13_six_classes_and_features", "14_six_classes_equal_ships", "15_fewer_features",
             "16_five_classes_per_ship", "17_efficientnet_with_features",
             "18_distance_buckets_and_regression", "19_fishing_boats",
-            "20_merged_classes_svm", "21_other_unknown_panns"]
+            "20_merged_classes_svm", "21_other_unknown_panns", "26_unknown_ships_cnn"]
 
 
 def test_parse_percent_cells():
