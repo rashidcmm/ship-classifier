@@ -781,6 +781,20 @@ regression (metres, absolute-error loss). Features chosen on validation: all 144
 - Engineering: gradient boosting's binning step costs ~10–16 s per fit on this laptop (joblib thread pool),
   whatever the data size; tests use small feature sets.
 
+### 4.16 Fishing boats: diagnosis and two fixes that don't work (4 November)
+
+Fishing was the weakest class of 4.13 (43 % recall per clip). `src/fishing_boost.py`,
+`notebooks/19_fishing_boats.ipynb`; five classes, all 144 engineered features, same folds; choices on validation.
+
+- Not distance: closer than 500 m, 44 % of fishing clips are still called tug. The errors stick to ships: 58 of
+  238 fishing boats are right on < 20 % of their clips, 27 on > 80 %. Fishing is the second choice for 64 % of
+  the wrong clips.
+- Tree size (leaves 15/31/63 × min leaf 20/50): all within 0.5 points on validation; chosen 31/50. Per-class offsets
+  on log-probabilities (chosen for validation balanced accuracy): mostly call cargo + tanker less, not fishing more.
+- Test: lesson 16 setting 69.9 % per clip / 78.9 % per ship (fishing 43.0 %); tuned trees 70.0 / 79.1 (42.6 %);
+  + offsets 69.9 / 78.6 (42.1 %). No change beyond the fold spread. Many fishing boats sound like tugs; better would
+  need other information (size, longer behaviour) or a merged "small working boat" class.
+
 ---
 
 ## 5. Engineering notes from the training runs
@@ -891,4 +905,5 @@ python src/six_classes_fewer.py all                                             
 python src/five_classes.py                                                                                               # cargo + tanker merged, per clip and per ship (4.13)
 python src/fusion_cnn.py --top-hz 16000   # also --top-hz 8000 and --reference                                          # EfficientNet-B0 + features (4.14)
 python src/distance_classical.py                                                                                         # distance: 250 m buckets and regression (4.15)
+python src/fishing_boost.py                                                                                              # fishing boats: tree size and class offsets (4.16)
 ```

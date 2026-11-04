@@ -26,6 +26,8 @@ website for access and for how to cite it.
   (`python src/fusion_cnn.py --top-hz 16000`, GPU)
 - **Distance** with classical models: 250 m buckets (exact, next bucket counted as correct, 500 m) and a regression in
   metres: `notebooks/18_distance_buckets_and_regression.ipynb` (`python src/distance_classical.py`, CPU, ~10 minutes)
+- **Fishing boats**, the weakest class: why, and two fixes that don't help: `notebooks/19_fishing_boats.ipynb`
+  (`python src/fishing_boost.py`, CPU, ~15 minutes)
 
 ---
 

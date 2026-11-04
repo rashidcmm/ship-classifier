@@ -1,0 +1,323 @@
+{
+  "classes": [
+    "background",
+    "cargo + tanker",
+    "fishing",
+    "pleasurecraft",
+    "tug"
+  ],
+  "chosen_trees": {
+    "leaves": 31,
+    "min_leaf": 50
+  },
+  "offsets": {
+    "1": {
+      "background": 0.0,
+      "cargo + tanker": -0.5,
+      "fishing": 0.0,
+      "pleasurecraft": 0.0,
+      "tug": 0.0
+    },
+    "2": {
+      "background": 0.0,
+      "cargo + tanker": -0.4,
+      "fishing": 0.1,
+      "pleasurecraft": 0.4,
+      "tug": 0.1
+    },
+    "3": {
+      "background": 0.0,
+      "cargo + tanker": -0.6,
+      "fishing": 0.0,
+      "pleasurecraft": 0.1,
+      "tug": 0.0
+    },
+    "4": {
+      "background": 0.0,
+      "cargo + tanker": -0.7,
+      "fishing": 0.0,
+      "pleasurecraft": -0.5,
+      "tug": 0.0
+    },
+    "5": {
+      "background": 0.0,
+      "cargo + tanker": -0.3,
+      "fishing": -0.1,
+      "pleasurecraft": 0.0,
+      "tug": 0.0
+    }
+  },
+  "minutes": 13.4,
+  "results": [
+    {
+      "fold": 1,
+      "version": "lesson 16 setting",
+      "leaves": 15,
+      "min_leaf": 50,
+      "trees": 133,
+      "accuracy": 0.7495957495957496,
+      "balanced_accuracy": 0.7074256537357663,
+      "macro_f1": 0.7041366074097606,
+      "per_ship_balanced_accuracy": 0.7856822010634538,
+      "per_class_recall": {
+        "background": 0.8816155988857939,
+        "cargo + tanker": 0.9585062240663901,
+        "fishing": 0.47331460674157305,
+        "pleasurecraft": 0.6239669421487604,
+        "tug": 0.5997248968363136
+      }
+    },
+    {
+      "fold": 1,
+      "version": "tuned trees",
+      "leaves": 31,
+      "min_leaf": 50,
+      "trees": 107,
+      "accuracy": 0.7507507507507507,
+      "balanced_accuracy": 0.7086521157961123,
+      "macro_f1": 0.7048451079367493,
+      "per_ship_balanced_accuracy": 0.7967282251453411,
+      "per_class_recall": {
+        "background": 0.8913649025069638,
+        "cargo + tanker": 0.9591977869986169,
+        "fishing": 0.46348314606741575,
+        "pleasurecraft": 0.6391184573002755,
+        "tug": 0.5900962861072903
+      }
+    },
+    {
+      "fold": 1,
+      "version": "tuned trees + class offsets",
+      "leaves": 31,
+      "min_leaf": 50,
+      "trees": 107,
+      "accuracy": 0.7482097482097482,
+      "balanced_accuracy": 0.7082427680312734,
+      "macro_f1": 0.7039371867885595,
+      "per_ship_balanced_accuracy": 0.8025052834247122,
+      "per_class_recall": {
+        "background": 0.8913649025069638,
+        "cargo + tanker": 0.946058091286307,
+        "fishing": 0.46769662921348315,
+        "pleasurecraft": 0.640495867768595,
+        "tug": 0.5955983493810179
+      }
+    },
+    {
+      "fold": 2,
+      "version": "lesson 16 setting",
+      "leaves": 15,
+      "min_leaf": 50,
+      "trees": 151,
+      "accuracy": 0.7315606936416185,
+      "balanced_accuracy": 0.6854695117063457,
+      "macro_f1": 0.6783331591688186,
+      "per_ship_balanced_accuracy": 0.7641958613045569,
+      "per_class_recall": {
+        "background": 0.871191135734072,
+        "cargo + tanker": 0.9685754189944135,
+        "fishing": 0.3677685950413223,
+        "pleasurecraft": 0.6448467966573816,
+        "tug": 0.5749656121045392
+      }
+    },
+    {
+      "fold": 2,
+      "version": "tuned trees",
+      "leaves": 31,
+      "min_leaf": 50,
+      "trees": 131,
+      "accuracy": 0.7359537572254335,
+      "balanced_accuracy": 0.6910068853206942,
+      "macro_f1": 0.6836020593430391,
+      "per_ship_balanced_accuracy": 0.7729833636572767,
+      "per_class_recall": {
+        "background": 0.8628808864265928,
+        "cargo + tanker": 0.9671787709497207,
+        "fishing": 0.3650137741046832,
+        "pleasurecraft": 0.6657381615598886,
+        "tug": 0.594222833562586
+      }
+    },
+    {
+      "fold": 2,
+      "version": "tuned trees + class offsets",
+      "leaves": 31,
+      "min_leaf": 50,
+      "trees": 131,
+      "accuracy": 0.736878612716763,
+      "balanced_accuracy": 0.6927342743574686,
+      "macro_f1": 0.684458386990609,
+      "per_ship_balanced_accuracy": 0.7618009877937414,
+      "per_class_recall": {
+        "background": 0.8476454293628809,
+        "cargo + tanker": 0.9643854748603352,
+        "fishing": 0.349862258953168,
+        "pleasurecraft": 0.7103064066852368,
+        "tug": 0.5914718019257221
+      }
+    },
+    {
+      "fold": 3,
+      "version": "lesson 16 setting",
+      "leaves": 15,
+      "min_leaf": 50,
+      "trees": 192,
+      "accuracy": 0.7370002311070025,
+      "balanced_accuracy": 0.6951176632491158,
+      "macro_f1": 0.6886380898417717,
+      "per_ship_balanced_accuracy": 0.7778720382444557,
+      "per_class_recall": {
+        "background": 0.8601108033240997,
+        "cargo + tanker": 0.946058091286307,
+        "fishing": 0.418732782369146,
+        "pleasurecraft": 0.5863509749303621,
+        "tug": 0.6643356643356644
+      }
+    },
+    {
+      "fold": 3,
+      "version": "tuned trees",
+      "leaves": 31,
+      "min_leaf": 50,
+      "trees": 139,
+      "accuracy": 0.7376935521146291,
+      "balanced_accuracy": 0.6949804507469146,
+      "macro_f1": 0.6888810892766383,
+      "per_ship_balanced_accuracy": 0.7833324810509612,
+      "per_class_recall": {
+        "background": 0.8545706371191135,
+        "cargo + tanker": 0.9508990318118948,
+        "fishing": 0.41597796143250687,
+        "pleasurecraft": 0.5933147632311978,
+        "tug": 0.6601398601398601
+      }
+    },
+    {
+      "fold": 3,
+      "version": "tuned trees + class offsets",
+      "leaves": 31,
+      "min_leaf": 50,
+      "trees": 139,
+      "accuracy": 0.7367691241044604,
+      "balanced_accuracy": 0.6971044719306742,
+      "macro_f1": 0.6898854641635077,
+      "per_ship_balanced_accuracy": 0.787682770400856,
+      "per_class_recall": {
+        "background": 0.8518005540166205,
+        "cargo + tanker": 0.9349930843706777,
+        "fishing": 0.4132231404958678,
+        "pleasurecraft": 0.6211699164345403,
+        "tug": 0.6643356643356644
+      }
+    },
+    {
+      "fold": 4,
+      "version": "lesson 16 setting",
+      "leaves": 15,
+      "min_leaf": 50,
+      "trees": 189,
+      "accuracy": 0.7620593692022264,
+      "balanced_accuracy": 0.7169025121621753,
+      "macro_f1": 0.7141956821811715,
+      "per_ship_balanced_accuracy": 0.8245486809776583,
+      "per_class_recall": {
+        "background": 0.8303198887343533,
+        "cargo + tanker": 0.9813407049067036,
+        "fishing": 0.4571026722925457,
+        "pleasurecraft": 0.6411682892906815,
+        "tug": 0.6745810055865922
+      }
+    },
+    {
+      "fold": 4,
+      "version": "tuned trees",
+      "leaves": 31,
+      "min_leaf": 50,
+      "trees": 122,
+      "accuracy": 0.7606679035250464,
+      "balanced_accuracy": 0.7158031376419605,
+      "macro_f1": 0.7132481021662055,
+      "per_ship_balanced_accuracy": 0.8107065880367372,
+      "per_class_recall": {
+        "background": 0.8331015299026425,
+        "cargo + tanker": 0.9785763648928818,
+        "fishing": 0.4641350210970464,
+        "pleasurecraft": 0.6356050069541029,
+        "tug": 0.6675977653631285
+      }
+    },
+    {
+      "fold": 4,
+      "version": "tuned trees + class offsets",
+      "leaves": 31,
+      "min_leaf": 50,
+      "trees": 122,
+      "accuracy": 0.75139146567718,
+      "balanced_accuracy": 0.7061576553519353,
+      "macro_f1": 0.7016350076098103,
+      "per_ship_balanced_accuracy": 0.7918883213426611,
+      "per_class_recall": {
+        "background": 0.8636995827538247,
+        "cargo + tanker": 0.9716655148583275,
+        "fishing": 0.4908579465541491,
+        "pleasurecraft": 0.5104311543810849,
+        "tug": 0.6941340782122905
+      }
+    },
+    {
+      "fold": 5,
+      "version": "lesson 16 setting",
+      "leaves": 15,
+      "min_leaf": 50,
+      "trees": 170,
+      "accuracy": 0.7332405474367896,
+      "balanced_accuracy": 0.6884685673781494,
+      "macro_f1": 0.6846458207215697,
+      "per_ship_balanced_accuracy": 0.791708097928437,
+      "per_class_recall": {
+        "background": 0.8233657858136301,
+        "cargo + tanker": 0.9615653389238294,
+        "fishing": 0.43112947658402206,
+        "pleasurecraft": 0.6606397774687065,
+        "tug": 0.5656424581005587
+      }
+    },
+    {
+      "fold": 5,
+      "version": "tuned trees",
+      "leaves": 31,
+      "min_leaf": 50,
+      "trees": 120,
+      "accuracy": 0.7346323358849455,
+      "balanced_accuracy": 0.6901536442181131,
+      "macro_f1": 0.6858141335935803,
+      "per_ship_balanced_accuracy": 0.7925944615648005,
+      "per_class_recall": {
+        "background": 0.8358831710709318,
+        "cargo + tanker": 0.9615653389238294,
+        "fishing": 0.4228650137741047,
+        "pleasurecraft": 0.6648122392211405,
+        "tug": 0.5656424581005587
+      }
+    },
+    {
+      "fold": 5,
+      "version": "tuned trees + class offsets",
+      "leaves": 31,
+      "min_leaf": 50,
+      "trees": 120,
+      "accuracy": 0.7325446532127117,
+      "balanced_accuracy": 0.6882948365175243,
+      "macro_f1": 0.6820094049712377,
+      "per_ship_balanced_accuracy": 0.7843706557096388,
+      "per_class_recall": {
+        "background": 0.8400556328233658,
+        "cargo + tanker": 0.9587700908455625,
+        "fishing": 0.3856749311294766,
+        "pleasurecraft": 0.6689847009735744,
+        "tug": 0.5879888268156425
+      }
+    }
+  ]
+}
