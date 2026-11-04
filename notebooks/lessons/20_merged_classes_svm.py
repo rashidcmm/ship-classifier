@@ -103,6 +103,19 @@ for w in (250, 300, 400):
                  "regression exact or next (%)": round(100 * reg.near, 1), "mean error (m)": round(mae)})
 print(pd.DataFrame(rows).set_index("bucket").to_string())
 
+# %%
+p400 = pd.read_parquet(RUNS_DIR / "distance_classical_400m" / "predictions.parquet")
+names400 = json.loads((RUNS_DIR / "distance_classical_400m" / "results.json").read_text())["buckets"]
+cm = confusion_matrix(p400.true_bucket, p400.clf_bucket, labels=range(len(names400)), normalize="true")
+fig, ax = plt.subplots(figsize=(5.8, 4.8))
+ax.imshow(cm, cmap="Blues", vmin=0, vmax=0.8)
+for i in range(len(names400)):
+    for j in range(len(names400)):
+        ax.text(j, i, f"{cm[i, j]:.0%}", ha="center", va="center", color="white" if cm[i, j] > 0.45 else "black")
+ax.set_xticks(range(len(names400)), names400, rotation=30); ax.set_yticks(range(len(names400)), names400)
+ax.set_xlabel("predicted"); ax.set_ylabel("true")
+ax.set_title("Strict 400 m buckets, classifier (rows add up to 100 %)"); plt.tight_layout(); plt.show()
+
 # %% [markdown]
 # - **Wider buckets are easier, as expected:** exact bucket 32.8 % (250 m), 37.2 % (300 m), 47.0 % (400 m); exact
 #   or next bucket with the regression 75.2 %, 80.9 % and 90.5 %.

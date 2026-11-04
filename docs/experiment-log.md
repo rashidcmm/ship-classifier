@@ -833,6 +833,19 @@ folds; left-out ships get their own five folds by ship. 29 min, CPU.
   engineered (70.0 / 78.7); together 70.4 / 79.4 % (GB, +0.7 per ship but worse on 2 of 5 folds) and 69.2 / 77.8 %
   (LR, +2.2 per ship, better on every fold). Not worth its cost for GB.
 
+### 4.19 Speed from sound, and strict 400 m distance buckets (4 November)
+
+`python src/distance_classical.py --target speed` (lesson 18, section 6): ship clips, same folds, speed over ground
+(AIS, 0-46 knots, median 10), gradient boosting; features chosen on validation (MFCC 1-8 + the rest, 111). Strict
+buckets (only the exact bucket counts): 0-4, 4-8, 8-12, 12-16, 16+ knots.
+
+- Speed: classifier exact 4-knot bucket **51.3 ± 1.0 %** (balanced 44.9 %, chance 20 %); regression mean error
+  **2.1 knots**, median 1.5, 89 % within 4 knots, R² 0.32. Tanker 1.4 kn, cargo 1.6, pleasure craft 3.3 kn mean error.
+  It mostly separates slow (4-8 kn, 80 % right) from fast (12-16 kn, 72 %); 8-12 kn only 19 %. Part of the signal is
+  the ship type (cargo/tanker about 13 kn, tug/fishing 7-8 kn).
+- Distance, strict 400 m buckets (4.17 run): classifier exact **47.0 ± 1.8 %** (balanced 49.3 %, chance 20 %);
+  0-400 m right 65 %, 1,600-2,000 m 68 %, 800-1,200 m only 24 %.
+
 ---
 
 ## 5. Engineering notes from the training runs
@@ -947,4 +960,5 @@ python src/fishing_boost.py                                                     
 python src/merged_classes.py                                                                                             # balanced merged classes, SVM, 4 classes (4.17)
 python src/distance_classical.py --width 300   # also --width 400                                                      # wider distance buckets (4.17)
 python src/panns_features.py && python src/open_set.py                                                                   # other class, unknown ships, PANN (4.18)
+python src/distance_classical.py --target speed                                                                          # speed, strict 4-knot buckets (4.19)
 ```

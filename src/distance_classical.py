@@ -29,6 +29,7 @@ from paths import DATA_DIR, RUNS_DIR
 
 OUT_DIR = RUNS_DIR / "distance_classical"
 WIDTH, MAX_M = 250, 2000
+TARGET, UNIT = "mean_distance", "m"            # --target speed: "mean_sog", "kn" (speed over ground, knots)
 N_BUCKETS = MAX_M // WIDTH                      # 8
 BUCKETS = [f"{a}-{a + WIDTH} m" for a in range(0, MAX_M, WIDTH)]
 REDUCED_MFCC = 8
@@ -40,7 +41,15 @@ def set_width(width: int) -> None:
     """Use buckets of another width (the last bucket ends at 2,000 m or later)."""
     global WIDTH, N_BUCKETS, BUCKETS
     WIDTH, N_BUCKETS = width, int(np.ceil(MAX_M / width))
-    BUCKETS = [f"{a}-{a + width} m" for a in range(0, N_BUCKETS * width, width)]
+    BUCKETS = [f"{a}-{a + width} {UNIT}" for a in range(0, N_BUCKETS * width, width)]
+    if TARGET == "mean_sog":                                  # the last speed bucket is open-ended
+        BUCKETS[-1] = f"{(N_BUCKETS - 1) * width}+ {UNIT}"
+
+
+def set_target(target: str) -> None:
+    """'distance' (metres, up to 2,000 m) or 'speed' (knots; buckets up to 16 kn, the last one open)."""
+    global TARGET, UNIT, MAX_M
+    TARGET, UNIT, MAX_M = ("mean_distance", "m", 2000) if target == "distance" else ("mean_sog", "kn", 20)
 
 
 def bucket_of(metres) -> np.ndarray:
@@ -94,9 +103,9 @@ def _run_all(data_dir, out_dir, seed):
     out_dir.mkdir(parents=True, exist_ok=True)
     table, _, eng = S.load_features(data_dir)
     folds = S.make_folds(table, seed=seed)
-    ok = (table.label.isin(S.CLASSES6) & (table.label != "background") & table.mean_distance.notna()).to_numpy()
+    ok = (table.label.isin(S.CLASSES6) & (table.label != "background") & table[TARGET].notna()).to_numpy()
     folds = np.where(ok, folds, 0)                              # ship clips with a known distance only
-    dist = table.mean_distance.to_numpy(float)
+    dist = table[TARGET].to_numpy(float)
     ships = S.ship_key(table).to_numpy()
     sets = feature_sets(eng.columns)
 
@@ -146,7 +155,7 @@ def _run_all(data_dir, out_dir, seed):
         results.append({"fold": k, "features": chosen, "n_features": len(cols),
                         "classifier": bucket_scores(bs, pb), "regression_binned": bucket_scores(bs, rb),
                         "regression": {"mae_m": float(err.mean()), "median_error_m": float(np.median(err)),
-                                       "within_250m": float((err <= 250).mean()),
+                                       f"within_{WIDTH}{UNIT}": float((err <= WIDTH).mean()),
                                        "r2": float(1 - ((metres - ds) ** 2).sum() / ((ds - ds.mean()) ** 2).sum())}})
         preds.append(pd.DataFrame(full, columns=[f"p_{b}" for b in BUCKETS]).assign(
             row=r["test"], fold=k, true_m=ds, true_bucket=bs, clf_bucket=pb, reg_m=metres, reg_bucket=rb,
@@ -154,7 +163,7 @@ def _run_all(data_dir, out_dir, seed):
         print(f"[{(time.time() - t0) / 60:4.1f} min] fold {k}: classifier exact {results[-1]['classifier']['exact']:.3f}"
               f" near {results[-1]['classifier']['near']:.3f}, regression MAE {err.mean():.0f} m", flush=True)
     pd.concat(preds, ignore_index=True).to_parquet(out_dir / "predictions.parquet")
-    summary = {"width_m": WIDTH, "buckets": BUCKETS, "chosen_features": chosen, "n_features": len(cols), "seed": seed,
+    summary = {"target": TARGET, "unit": UNIT, "width": WIDTH, "buckets": BUCKETS, "chosen_features": chosen, "n_features": len(cols), "seed": seed,
                "minutes": round((time.time() - t0) / 60, 1), "results": results}
     (out_dir / "results.json").write_text(json.dumps(summary, indent=2))
     return summary
@@ -164,10 +173,14 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--data-dir", type=Path, default=DATA_DIR)
     p.add_argument("--out-dir", type=Path, help="default: runs/distance_classical (250 m) or ..._<width>m")
-    p.add_argument("--width", type=int, default=250, help="bucket width in metres")
+    p.add_argument("--target", choices=["distance", "speed"], default="distance")
+    p.add_argument("--width", type=int, help="bucket width (default 250 m, or 4 knots for speed)")
     a = p.parse_args(argv)
-    set_width(a.width)
-    out = a.out_dir or (OUT_DIR if a.width == 250 else RUNS_DIR / f"distance_classical_{a.width}m")
+    set_target(a.target)
+    width = a.width or (250 if a.target == "distance" else 4)
+    set_width(width)
+    out = a.out_dir or (RUNS_DIR / f"speed_classical_{width}kn" if a.target == "speed" else
+                        OUT_DIR if width == 250 else RUNS_DIR / f"distance_classical_{width}m")
     with keep_awake():
         run_all(a.data_dir, out)
 

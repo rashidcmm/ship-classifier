@@ -163,3 +163,52 @@ print(preds.assign(err=err).groupby("label").err.mean().round(0).to_frame().T)
 # - **What limits it:** loudness falls with distance, but it also depends on how loud the ship itself is. A big
 #   tanker far away can sound like a small boat close by. That is why big ships are placed better (about 180 m mean
 #   error) than small boats (about 300 m), and why the far distances blur together.
+
+# %% [markdown]
+# ## 6. Speed, the same way
+#
+# The ship's speed over ground (AIS, knots) at the clip, for the same ship clips and folds: one regression in knots,
+# and one classifier for **strict 4-knot buckets** (0-4, 4-8, 8-12, 12-16 and 16 knots or more; only the exact bucket
+# counts). Distances were also run with strict 400 m buckets (lesson 20): 47.0 % exact with the classifier.
+#
+# ```
+# python src/distance_classical.py --target speed     # -> runs/speed_classical_4kn/
+# ```
+
+# %%
+speed = json.loads((DC.RUNS_DIR / "speed_classical_4kn" / "results.json").read_text())
+sp = pd.read_parquet(DC.RUNS_DIR / "speed_classical_4kn" / "predictions.parquet")
+clf_s = pd.DataFrame([r["classifier"] for r in speed["results"]])
+reg_s = pd.DataFrame([r["regression"] for r in speed["results"]])
+regb_s = pd.DataFrame([r["regression_binned"] for r in speed["results"]])
+print(f"features chosen on validation: {speed['chosen_features']}")
+print(f"classifier, exact 4-knot bucket: {100 * clf_s.exact.mean():.1f} ± {100 * clf_s.exact.std():.1f} % "
+      f"(balanced {100 * clf_s.exact_balanced.mean():.1f} %, chance {100 / len(speed['buckets']):.0f} %)")
+print(f"regression, then bucketed, exact: {100 * regb_s.exact.mean():.1f} %")
+print(f"regression: mean error {reg_s.mae_m.mean():.2f} knots, median {reg_s.median_error_m.mean():.2f} knots, "
+      f"within 4 knots {100 * reg_s['within_4kn'].mean():.1f} %, R² {reg_s.r2.mean():.2f}")
+print("\nmean error by ship class (knots):")
+print((sp.reg_m - sp.true_m).abs().groupby(sp.label).mean().round(2).to_frame("error").T)
+
+cm = confusion_matrix(sp.true_bucket, sp.clf_bucket, labels=range(len(speed["buckets"])), normalize="true")
+fig, ax = plt.subplots(1, 2, figsize=(12, 4.4))
+ax[0].imshow(cm, cmap="Blues", vmin=0, vmax=0.8)
+for i in range(cm.shape[0]):
+    for j in range(cm.shape[1]):
+        ax[0].text(j, i, f"{cm[i, j]:.0%}", ha="center", va="center", fontsize=8, color="white" if cm[i, j] > 0.45 else "black")
+ax[0].set_xticks(range(len(speed["buckets"])), speed["buckets"], rotation=30); ax[0].set_yticks(range(len(speed["buckets"])), speed["buckets"])
+ax[0].set_xlabel("predicted"); ax[0].set_ylabel("true"); ax[0].set_title("Speed buckets, classifier (rows add up to 100 %)")
+ax[1].hexbin(sp.true_m, sp.reg_m, gridsize=40, cmap="Blues", mincnt=1, extent=(0, 25, 0, 25))
+ax[1].plot([0, 25], [0, 25], color="#c0392b", lw=1)
+ax[1].set_xlabel("true speed (knots)"); ax[1].set_ylabel("predicted speed (knots)"); ax[1].set_title("Regression, every test clip")
+plt.tight_layout(); plt.show()
+
+# %% [markdown]
+# - **Strict 4-knot buckets: 51.3 ± 1.0 % of the clips in the exact bucket** (balanced 44.9 %, chance 20 %); the
+#   regression, put into buckets, 54.0 %.
+# - **Regression: mean error 2.1 knots, median 1.5 knots; 89 % of the clips within 4 knots** (R² 0.32).
+# - **Part of it is the ship type:** cargo ships and tankers run at about 13 knots, tugs and fishing boats at 7-8, so
+#   recognising the type already narrows the speed. Big ships are estimated best (tanker 1.4 kn, cargo 1.6 kn mean
+#   error), pleasure craft worst (3.3 kn), as they range from drifting to planing.
+# - **The model mostly tells slow from fast ships:** 4-8 knots right 80 % of the time and 12-16 knots 72 %, but the
+#   common 8-12 knot bucket only 19 % (59 % called 4-8), under 4 knots 4 % and over 16 knots 49 %.
