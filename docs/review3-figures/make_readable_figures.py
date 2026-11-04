@@ -220,6 +220,70 @@ def fig_distance_matrix():
     save(fig, "21_distance_matrix.png")
 
 
+def matrix_panel(ax, pred, labels, axis_name):
+    n = len(labels)
+    cm = np.zeros((n, n))
+    for t, p in zip(pred.true_bucket, pred.clf_bucket):
+        cm[int(t), int(p)] += 1
+    cm = 100 * cm / cm.sum(1, keepdims=True)
+    ax.imshow(cm, cmap="Blues", vmin=0, vmax=80)
+    for i in range(n):
+        for j in range(n):
+            v = cm[i, j]
+            ax.text(j, i, f"{v:.0f} %", ha="center", va="center", fontsize=22,
+                    weight="bold" if i == j else "normal",
+                    color=SURFACE if v >= 45 else (INK if v >= 8 else MUTED))
+        ax.add_patch(plt.Rectangle((i - 0.5, i - 0.5), 1, 1, fill=False, edgecolor=INK, lw=3))
+    ax.set_xticks(range(n), [b.replace("-", "-\n") if len(b) > 5 else b for b in labels])
+    ax.set_yticks(range(n), labels)
+    ax.set_xlabel(f"predicted {axis_name}")
+    ax.set_ylabel(f"true {axis_name}")
+    ax.tick_params(length=0)
+    for s in ax.spines.values():
+        s.set_visible(False)
+    return np.diag(cm)
+
+
+def scatter_panel(ax, true, pred, top, unit, ticks):
+    rng = np.random.default_rng(0)
+    keep = rng.permutation(len(true))[:6000]                 # 6,000 random clips: readable, same picture
+    ax.scatter(true[keep], pred[keep], s=10, alpha=0.25, color=BLUE, edgecolor="none", rasterized=True,
+               label="one test clip")
+    ax.plot([0, top], [0, top], color=INK, lw=3, label="perfect prediction")
+    ax.set_xlim(0, top); ax.set_ylim(0, top)
+    ax.set_xticks(ticks); ax.set_yticks(ticks)
+    ax.set_xlabel(f"true {unit}"); ax.set_ylabel(f"predicted {unit}")
+    ax.set_aspect("equal")
+    ax.legend(loc="upper left", markerscale=3)
+    err = np.abs(pred - true)
+    return np.median(err), err.mean()
+
+
+def fig_distance_both():
+    d = pd.read_parquet(RUNS / "distance_classical_400m" / "predictions.parquet")
+    buckets = [b.replace(" m", "") for b in json.loads(
+        (RUNS / "distance_classical_400m" / "results.json").read_text())["buckets"]]
+    fig, (a, b) = plt.subplots(1, 2, figsize=(19, 8.2), gridspec_kw={"wspace": 0.35})
+    diag = matrix_panel(a, d, buckets, "distance (m)")
+    med, mean = scatter_panel(b, d.true_m.to_numpy(), d.reg_m.to_numpy(), 2000, "distance (m)",
+                              [0, 500, 1000, 1500, 2000])
+    print("distance diagonal", diag.round(1), "regression median / mean error", round(med), round(mean))
+    save(fig, "21_distance_matrix_regression.png")
+
+
+def fig_speed_both():
+    s = pd.read_parquet(RUNS / "speed_classical_4kn" / "predictions.parquet")
+    buckets = [x.replace(" kn", "") for x in json.loads(
+        (RUNS / "speed_classical_4kn" / "results.json").read_text())["buckets"]]
+    fig, (a, b) = plt.subplots(1, 2, figsize=(19, 8.2), gridspec_kw={"wspace": 0.35})
+    diag = matrix_panel(a, s, buckets, "speed (knots)")
+    med, mean = scatter_panel(b, s.true_m.to_numpy(), s.reg_m.to_numpy(), 25, "speed (knots)",
+                              [0, 5, 10, 15, 20, 25])
+    print("speed diagonal", diag.round(1), "regression median / mean error", round(med, 2), round(mean, 2),
+          "within 4 kn", round(100 * (np.abs(s.reg_m - s.true_m) <= 4).mean(), 1))
+    save(fig, "22_speed_matrix_regression.png")
+
+
 def fig_speed():
     s = pd.read_parquet(RUNS / "speed_classical_4kn" / "predictions.parquet")
     buckets = json.loads((RUNS / "speed_classical_4kn" / "results.json").read_text())["buckets"]
