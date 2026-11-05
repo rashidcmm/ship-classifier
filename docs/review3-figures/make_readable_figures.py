@@ -386,6 +386,53 @@ def fig_open_set_by_type():
     save(fig, "20_open_set_by_type.png")
 
 
+def fig_merge_fishing_tug():
+    """Slide 16: before and after merging fishing and tug (lesson 20, gradient boosting, engineered features,
+    per clip, all five test folds; rows add up to 100 %)."""
+    p = pd.read_parquet(RUNS / "merged_classes" / "predictions.parquet")
+    p = p[p.model == "gradient boosting"]
+    panels = [("5 classes", ["background", "cargo + tanker", "fishing", "pleasurecraft", "tug"]),
+              ("4 classes", ["background", "cargo + tanker", "fishing + tug", "pleasurecraft"])]
+    lab = {"background": "back-\nground", "cargo + tanker": "cargo +\ntanker", "fishing": "fishing",
+           "pleasurecraft": "pleasure\ncraft", "tug": "tug", "fishing + tug": "fishing\n+ tug"}
+    ylab = {"background": "background", "cargo + tanker": "cargo + tanker", "fishing": "fishing",
+            "pleasurecraft": "pleasure craft", "tug": "tug", "fishing + tug": "fishing + tug"}
+    fig, axes = plt.subplots(1, 2, figsize=(21, 8.6), gridspec_kw={"width_ratios": [5, 4], "wspace": 0.42})
+    for ax, (grouping, names) in zip(axes, panels):
+        g = p[p.grouping == grouping]
+        probs = g[[f"p_{n}" for n in names]].to_numpy()
+        y, pred = g.y.to_numpy().astype(int), probs.argmax(1)
+        k = len(names)
+        cm = np.zeros((k, k))
+        for t, q in zip(y, pred):
+            cm[t, q] += 1
+        cm = 100 * cm / cm.sum(1, keepdims=True)
+        ax.imshow(cm, cmap="Blues", vmin=0, vmax=90)
+        for i in range(k):
+            for j in range(k):
+                v = cm[i, j]
+                focus = names[i] in ("fishing", "tug", "fishing + tug")
+                ax.text(j, i, f"{v:.0f} %", ha="center", va="center", fontsize=23,
+                        weight="bold" if i == j else "normal",
+                        color=SURFACE if v >= 50 else (INK if v >= 8 else MUTED))
+            ax.add_patch(plt.Rectangle((i - 0.5, i - 0.5), 1, 1, fill=False, edgecolor=INK, lw=3))
+        for n in ("fishing", "tug", "fishing + tug"):
+            if n in names:
+                i = names.index(n)
+                ax.add_patch(plt.Rectangle((-0.5, i - 0.5), k, 1, fill=False, edgecolor=ORANGE, lw=3.5))
+        ax.set_xticks(range(k), [lab[n] for n in names])
+        ax.set_yticks(range(k), [ylab[n] for n in names])
+        ax.set_xlabel("predicted"); ax.set_ylabel("true")
+        bal = np.mean(np.diag(cm))
+        ax.set_title(f"{'Before' if k == 5 else 'After'}: {grouping} · {bal:.1f} % per clip", loc="left",
+                     color=INK, fontsize=24, pad=14)
+        ax.tick_params(length=0)
+        for s in ax.spines.values():
+            s.set_visible(False)
+        print(grouping, "diagonal:", dict(zip(names, np.diag(cm).round(1))), "balanced", round(bal, 1))
+    save(fig, "16_merge_fishing_tug.png")
+
+
 def fig_speed():
     s = pd.read_parquet(RUNS / "speed_classical_4kn" / "predictions.parquet")
     buckets = json.loads((RUNS / "speed_classical_4kn" / "results.json").read_text())["buckets"]
