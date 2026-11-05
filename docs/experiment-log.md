@@ -946,6 +946,24 @@ merged by 2 / 4 / 8, or only the lowest 20 / 30 / 40 / 64 kept. 80 fits, about 1
   −1.9); the lowest 20 bands give 90 % of the full score.
 - Fewer bands don't lower the per-clip computing cost: the 128-band spectrogram (29 ms) is made first either way.
 
+### 4.24 Per clip, per encounter, per ship, and listening time (5 November)
+
+`python src/listening_time.py`; no training: the saved test predictions of lesson 13 (engineered, GB, 6 classes)
+and lesson 22 (401 set, GB, 6 classes + other). Asked for by the user ("would a 1-2 min recording count as per
+ship?"). A passage = one ship's clips with no gap over 10 min; consecutive clips of a passage averaged in blocks.
+
+| 6 classes, balanced accuracy | One 5-s clip | One passage (encounter) | One ship (all passages) |
+|---|---|---|---|
+| without "other" | 61.9 % | 65.0 % | 70.5 % |
+| with "other" (7 answers) | 56.1 % | 60.3 % | 65.0 % |
+
+- "Per ship" pools separate passages: a tug has a median of 4 passages on 4 days (tug 66 % per passage, 82 % per
+  ship); background 87 % per recording, 92 % per day. Cargo has 1-2 clips per ship, so per ship = per clip for it.
+- Listening longer to one passage helps slowly (fishing, pleasure craft, tanker, tug; no "other"): 55.3 % at 5 s of
+  audio, 57.1 % at 10 s, 57.9 % at 15 s, 58.7 % at 30 s, 60.3 % at 45 s. The clips are spread out (45 s of audio
+  spans about 4 min) and alike, so extra clips of one passage add less than separate passages.
+- Slide 12 of review 3 (`docs/review3-figures/make_listening_figure.py`).
+
 ---
 
 ## 5. Engineering notes from the training runs
