@@ -1,0 +1,138 @@
+{
+  "model": "gb",
+  "neighbours": false,
+  "speed_input": false,
+  "ship_type_input": false,
+  "size_input": true,
+  "target": "mean_sog",
+  "unit": "kn",
+  "width": 4,
+  "buckets": [
+    "0-4 kn",
+    "4-8 kn",
+    "8-12 kn",
+    "12-16 kn",
+    "16+ kn"
+  ],
+  "chosen_features": "MFCC 1-8 + the rest + size + hydrophone",
+  "n_features": 115,
+  "seed": 0,
+  "minutes": 16.0,
+  "results": [
+    {
+      "fold": 1,
+      "features": "MFCC 1-8 + the rest + size + hydrophone",
+      "n_features": 115,
+      "classifier": {
+        "exact": 0.5516477430074771,
+        "exact_balanced": 0.4752456709566462,
+        "near": 0.9498753807809471,
+        "near_balanced": 0.9014458092555986
+      },
+      "regression_binned": {
+        "exact": 0.5743561340348934,
+        "exact_balanced": 0.46306806145015617,
+        "near": 0.9656604818609803,
+        "near_balanced": 0.9005987505449141
+      },
+      "regression": {
+        "mae_m": 1.9409070267279869,
+        "median_error_m": 1.3391161727979988,
+        "within_4kn": 0.8975353087787317,
+        "r2": 0.41818042043841064
+      }
+    },
+    {
+      "fold": 2,
+      "features": "MFCC 1-8 + the rest + size + hydrophone",
+      "n_features": 115,
+      "classifier": {
+        "exact": 0.5592561754093811,
+        "exact_balanced": 0.5157059696563453,
+        "near": 0.9492089925062448,
+        "near_balanced": 0.9091548718440163
+      },
+      "regression_binned": {
+        "exact": 0.5656397446572301,
+        "exact_balanced": 0.5138220855286604,
+        "near": 0.9700249791840133,
+        "near_balanced": 0.9212862948956418
+      },
+      "regression": {
+        "mae_m": 1.8609986080562728,
+        "median_error_m": 1.3797612535348058,
+        "within_4kn": 0.9023036358590064,
+        "r2": 0.429486392632736
+      }
+    },
+    {
+      "fold": 3,
+      "features": "MFCC 1-8 + the rest + size + hydrophone",
+      "n_features": 115,
+      "classifier": {
+        "exact": 0.5697642163661581,
+        "exact_balanced": 0.5058282678399341,
+        "near": 0.9531206657420249,
+        "near_balanced": 0.9032448924846129
+      },
+      "regression_binned": {
+        "exact": 0.5850208044382802,
+        "exact_balanced": 0.4858788671426881,
+        "near": 0.9725381414701803,
+        "near_balanced": 0.9253775540713715
+      },
+      "regression": {
+        "mae_m": 1.6811885313439658,
+        "median_error_m": 1.2205490568721356,
+        "within_4kn": 0.9276005547850208,
+        "r2": 0.5256413751709434
+      }
+    },
+    {
+      "fold": 4,
+      "features": "MFCC 1-8 + the rest + size + hydrophone",
+      "n_features": 115,
+      "classifier": {
+        "exact": 0.5686056220428611,
+        "exact_balanced": 0.5163442030161528,
+        "near": 0.9638185360423045,
+        "near_balanced": 0.9142121689813036
+      },
+      "regression_binned": {
+        "exact": 0.5892012246033955,
+        "exact_balanced": 0.5093458394781705,
+        "near": 0.9643751739493459,
+        "near_balanced": 0.906590840711768
+      },
+      "regression": {
+        "mae_m": 1.8695682137356895,
+        "median_error_m": 1.303072020948111,
+        "within_4kn": 0.9201224603395491,
+        "r2": 0.4082299711237036
+      }
+    },
+    {
+      "fold": 5,
+      "features": "MFCC 1-8 + the rest + size + hydrophone",
+      "n_features": 115,
+      "classifier": {
+        "exact": 0.5623608017817372,
+        "exact_balanced": 0.481434906634585,
+        "near": 0.9448775055679287,
+        "near_balanced": 0.8674426120559555
+      },
+      "regression_binned": {
+        "exact": 0.6024498886414253,
+        "exact_balanced": 0.4762249695542577,
+        "near": 0.9649220489977728,
+        "near_balanced": 0.8775280536271941
+      },
+      "regression": {
+        "mae_m": 1.9206503072359755,
+        "median_error_m": 1.1850248997857347,
+        "within_4kn": 0.9181514476614699,
+        "r2": 0.22724494180961896
+      }
+    }
+  ]
+}

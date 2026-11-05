@@ -1,0 +1,11 @@
+features,fold,n_features,val_exact_balanced,val_mae_m,clf_trees,reg_trees
+all engineered + size + hydrophone,1,148,0.5371096765668316,1.976580249325916,79,158
+all engineered + size + hydrophone,2,148,0.4955421027039284,2.0647541803645497,76,392
+all engineered + size + hydrophone,3,148,0.5314272990067074,2.0666529411004855,82,351
+all engineered + size + hydrophone,4,148,0.4635176283182275,2.246629965600561,91,428
+all engineered + size + hydrophone,5,148,0.4748079797524284,2.1174550815678828,72,282
+MFCC 1-8 + the rest + size + hydrophone,1,115,0.543153401959167,1.9761512889483221,78,293
+MFCC 1-8 + the rest + size + hydrophone,2,115,0.5010455835366224,2.0727259092804315,71,498
+MFCC 1-8 + the rest + size + hydrophone,3,115,0.5235957852407979,2.086952600860471,80,396
+MFCC 1-8 + the rest + size + hydrophone,4,115,0.470645297267135,2.2647284524553606,93,187
+MFCC 1-8 + the rest + size + hydrophone,5,115,0.46577900731141053,2.1068339878895377,75,356

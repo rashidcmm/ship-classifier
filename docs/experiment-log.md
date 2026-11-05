@@ -981,6 +981,34 @@ ones (floating); then a second pass over the left-out sets and the left-out sets
   errors. With 5 folds, "better in 4 of 5" happens by chance 19 % of the time; only 5 of 5 (3 %) is convincing.
   A threshold from a null (gain from adding shuffled features) would be the cleaner rule.
 
+### 4.26 Distance and speed: the model, the features, or missing information? (5 November)
+
+`src/distance_classical.py` with `--model linear`, `--size` (AIS length, beam, draught + which hydrophone) and
+`--neighbours` (the same ship's other clips in the passage, same hydrophone, gaps up to 5 min: level trend in dB/min,
+level below the passage's loudest clip, level minus the passage mean, strongest-tone change in Hz/min, number of clips,
+passage length, position; audio and clip times only, never labels; 83 % of ship clips have a neighbour). Same folds,
+weights and test ships as 4.15 / 4.19; gradient boosting unless named. `src/distance_error_check.py` (no training)
+looks at where 4.15 / 4.19's errors come from. SVM and the ship-type input were dropped (minimal queue).
+
+| 5 test folds | Distance mean error | Exact 250 m bucket | Speed mean error | Exact 4-kn bucket |
+|---|---|---|---|---|
+| GB (4.15 / 4.19) | 258 ± 7 m | 32.8 % | 2.06 ± 0.09 kn | 51.3 % |
+| linear (logistic + ridge), same features | 271 ± 8 m | 32.4 % | 2.42 ± 0.05 kn | 48.8 % |
+| GB + ship size + hydrophone (AIS) | 250 ± 6 m | 33.6 % | **1.85 ± 0.09 kn** | **56.2 %** |
+| **GB + neighbour clips** | **237 ± 6 m** | **38.0 %** | 1.93 ± 0.08 kn | 54.1 % |
+
+- Not the model: linear, GB and the CNN (E9/E10, fold 1: 275 m) land within about 5 %.
+- Features matter most for distance: the neighbour clips beat knowing the ship's size (better on 5 of 5 folds,
+  R² 0.54 → 0.59). For speed, ship size helps more (R² 0.32 → 0.40; neighbours 0.43 R², 1.93 kn).
+- Errors stick to ships: a constant offset per ship is 59 % of the squared distance error and 83 % of the speed error
+  (known offsets would give 167 m / 0.97 kn). Small boats are placed too far (+109 m under 20 m length). Clips whose
+  distance differs more from the interval mean have no larger errors: no sign of label noise.
+- Speed is mostly ship type: "know the true type, guess its median speed" gives 1.88 kn / 56.8 % exact against the
+  model's 2.06 kn / 54.0 %; inside a type the prediction follows the true speed weakly (r: cargo 0.56, tanker 0.41,
+  tug 0.24, pleasure craft 0.19, fishing 0.16).
+- Engineering: Claude Code stopped its background queue three times when memory ran low next to the ship-type CNN /
+  feature_walk2.py; the runs finished when started with the session active.
+
 ---
 
 ## 5. Engineering notes from the training runs
@@ -1096,5 +1124,7 @@ python src/merged_classes.py                                                    
 python src/distance_classical.py --width 300   # also --width 400                                                      # wider distance buckets (4.17)
 python src/panns_features.py && python src/open_set.py                                                                   # other class, unknown ships, PANN (4.18)
 python src/distance_classical.py --target speed                                                                          # speed, strict 4-knot buckets (4.19)
+python src/distance_classical.py --model linear   # also --size, --neighbours; add --target speed               # model / size / neighbour clips (4.26)
+python src/distance_error_check.py > runs/distance_error_check.txt                                                 # where the errors come from (4.26)
 python src/unknown_cnn.py && python src/unknown_cnn.py --reference                                                       # unknown ships with the CNN, per ship (4.22)
 ```

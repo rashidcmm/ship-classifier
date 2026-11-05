@@ -1,0 +1,161 @@
+{
+  "model": "gb",
+  "neighbours": true,
+  "speed_input": false,
+  "ship_type_input": false,
+  "size_input": false,
+  "target": "mean_distance",
+  "unit": "m",
+  "width": 250,
+  "buckets": [
+    "0-250 m",
+    "250-500 m",
+    "500-750 m",
+    "750-1000 m",
+    "1000-1250 m",
+    "1250-1500 m",
+    "1500-1750 m",
+    "1750-2000 m"
+  ],
+  "chosen_features": "MFCC 1-8 + the rest + neighbours",
+  "n_features": 118,
+  "seed": 0,
+  "minutes": 17.7,
+  "results": [
+    {
+      "fold": 1,
+      "features": "MFCC 1-8 + the rest + neighbours",
+      "n_features": 118,
+      "classifier": {
+        "exact": 0.3737149208113365,
+        "exact_balanced": 0.40001548538929915,
+        "near": 0.7465962767435399,
+        "near_balanced": 0.762141271337436,
+        "exact_500m": 0.5662684078910809,
+        "exact_500m_balanced": 0.5738656992649543
+      },
+      "regression_binned": {
+        "exact": 0.342039455404279,
+        "exact_balanced": 0.34538111169775165,
+        "near": 0.7671575437621562,
+        "near_balanced": 0.7683856107341487,
+        "exact_500m": 0.5507085301472632,
+        "exact_500m_balanced": 0.5518704628548483
+      },
+      "regression": {
+        "mae_m": 248.78701964025205,
+        "median_error_m": 188.3909380709722,
+        "within_250m": 0.6168380105584884,
+        "r2": 0.5511367353810253
+      }
+    },
+    {
+      "fold": 2,
+      "features": "MFCC 1-8 + the rest + neighbours",
+      "n_features": 118,
+      "classifier": {
+        "exact": 0.35648791330925256,
+        "exact_balanced": 0.39474342229226933,
+        "near": 0.7504862461794943,
+        "near_balanced": 0.768058071617442,
+        "exact_500m": 0.575993331480967,
+        "exact_500m_balanced": 0.5893996796803467
+      },
+      "regression_binned": {
+        "exact": 0.3506529591553209,
+        "exact_balanced": 0.34879215084252735,
+        "near": 0.7829952764656849,
+        "near_balanced": 0.770192145750908,
+        "exact_500m": 0.5693248124479022,
+        "exact_500m_balanced": 0.5652978657825795
+      },
+      "regression": {
+        "mae_m": 236.72160335958006,
+        "median_error_m": 178.39587880093472,
+        "within_250m": 0.63073075854404,
+        "r2": 0.5911529644484617
+      }
+    },
+    {
+      "fold": 3,
+      "features": "MFCC 1-8 + the rest + neighbours",
+      "n_features": 118,
+      "classifier": {
+        "exact": 0.4027777777777778,
+        "exact_balanced": 0.437264098643646,
+        "near": 0.7691666666666667,
+        "near_balanced": 0.7728371474739903,
+        "exact_500m": 0.5991666666666666,
+        "exact_500m_balanced": 0.6085092016937519
+      },
+      "regression_binned": {
+        "exact": 0.36694444444444446,
+        "exact_balanced": 0.39173614392775746,
+        "near": 0.7866666666666666,
+        "near_balanced": 0.7850551767034206,
+        "exact_500m": 0.5672222222222222,
+        "exact_500m_balanced": 0.5673816144843595
+      },
+      "regression": {
+        "mae_m": 235.46902144981644,
+        "median_error_m": 172.3171976846939,
+        "within_250m": 0.6538888888888889,
+        "r2": 0.6161985267101409
+      }
+    },
+    {
+      "fold": 4,
+      "features": "MFCC 1-8 + the rest + neighbours",
+      "n_features": 118,
+      "classifier": {
+        "exact": 0.38545150501672243,
+        "exact_balanced": 0.4297290243632893,
+        "near": 0.7672798216276477,
+        "near_balanced": 0.7868775434895638,
+        "exact_500m": 0.5953177257525084,
+        "exact_500m_balanced": 0.6175444692927511
+      },
+      "regression_binned": {
+        "exact": 0.36789297658862874,
+        "exact_balanced": 0.37496733073950317,
+        "near": 0.7873467112597548,
+        "near_balanced": 0.7897660031355084,
+        "exact_500m": 0.5808249721293199,
+        "exact_500m_balanced": 0.5853166288166339
+      },
+      "regression": {
+        "mae_m": 229.73241206798193,
+        "median_error_m": 174.76210402380417,
+        "within_250m": 0.6413043478260869,
+        "r2": 0.6130586363708317
+      }
+    },
+    {
+      "fold": 5,
+      "features": "MFCC 1-8 + the rest + neighbours",
+      "n_features": 118,
+      "classifier": {
+        "exact": 0.38216382443388314,
+        "exact_balanced": 0.4351995293415555,
+        "near": 0.7514677103718199,
+        "near_balanced": 0.7668421325296274,
+        "exact_500m": 0.5862454570869444,
+        "exact_500m_balanced": 0.6010803267599932
+      },
+      "regression_binned": {
+        "exact": 0.36175566116857705,
+        "exact_balanced": 0.3909597499851343,
+        "near": 0.7953592395862454,
+        "near_balanced": 0.7946330067693109,
+        "exact_500m": 0.588202404249371,
+        "exact_500m_balanced": 0.5941624374176915
+      },
+      "regression": {
+        "mae_m": 234.22276024799248,
+        "median_error_m": 172.0980879147737,
+        "within_250m": 0.6483086385239027,
+        "r2": 0.5844274485101284
+      }
+    }
+  ]
+}

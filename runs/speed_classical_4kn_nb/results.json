@@ -1,0 +1,138 @@
+{
+  "model": "gb",
+  "neighbours": true,
+  "speed_input": false,
+  "ship_type_input": false,
+  "size_input": false,
+  "target": "mean_sog",
+  "unit": "kn",
+  "width": 4,
+  "buckets": [
+    "0-4 kn",
+    "4-8 kn",
+    "8-12 kn",
+    "12-16 kn",
+    "16+ kn"
+  ],
+  "chosen_features": "MFCC 1-8 + the rest + neighbours",
+  "n_features": 118,
+  "seed": 0,
+  "minutes": 15.3,
+  "results": [
+    {
+      "fold": 1,
+      "features": "MFCC 1-8 + the rest + neighbours",
+      "n_features": 118,
+      "classifier": {
+        "exact": 0.5425090002769316,
+        "exact_balanced": 0.5090068052633163,
+        "near": 0.9354749376903905,
+        "near_balanced": 0.9007213119396134
+      },
+      "regression_binned": {
+        "exact": 0.5660481860980338,
+        "exact_balanced": 0.44585204523802646,
+        "near": 0.9642758238715038,
+        "near_balanced": 0.8965519342971394
+      },
+      "regression": {
+        "mae_m": 1.9777057828234268,
+        "median_error_m": 1.4679232657810752,
+        "within_4kn": 0.90473553032401,
+        "r2": 0.46665338809224277
+      }
+    },
+    {
+      "fold": 2,
+      "features": "MFCC 1-8 + the rest + neighbours",
+      "n_features": 118,
+      "classifier": {
+        "exact": 0.5392728281987232,
+        "exact_balanced": 0.524341172863932,
+        "near": 0.9353316680543992,
+        "near_balanced": 0.9143197582263085
+      },
+      "regression_binned": {
+        "exact": 0.5478767693588676,
+        "exact_balanced": 0.44763724036073305,
+        "near": 0.9728004440743825,
+        "near_balanced": 0.9269925962906733
+      },
+      "regression": {
+        "mae_m": 1.8738014959229183,
+        "median_error_m": 1.4753960134908635,
+        "within_4kn": 0.9109075770191507,
+        "r2": 0.45917067008415435
+      }
+    },
+    {
+      "fold": 3,
+      "features": "MFCC 1-8 + the rest + neighbours",
+      "n_features": 118,
+      "classifier": {
+        "exact": 0.536754507628294,
+        "exact_balanced": 0.5176450285337972,
+        "near": 0.939251040221914,
+        "near_balanced": 0.9243908005311641
+      },
+      "regression_binned": {
+        "exact": 0.5533980582524272,
+        "exact_balanced": 0.43482345561372027,
+        "near": 0.9750346740638003,
+        "near_balanced": 0.9508870861507054
+      },
+      "regression": {
+        "mae_m": 1.8154240441927665,
+        "median_error_m": 1.3723742271716732,
+        "within_4kn": 0.9059639389736477,
+        "r2": 0.4995557794205209
+      }
+    },
+    {
+      "fold": 4,
+      "features": "MFCC 1-8 + the rest + neighbours",
+      "n_features": 118,
+      "classifier": {
+        "exact": 0.5374338992485388,
+        "exact_balanced": 0.5066179849442904,
+        "near": 0.9557472863902031,
+        "near_balanced": 0.9266401799663466
+      },
+      "regression_binned": {
+        "exact": 0.5699972168104648,
+        "exact_balanced": 0.453207216733497,
+        "near": 0.971611466740885,
+        "near_balanced": 0.9109633804826294
+      },
+      "regression": {
+        "mae_m": 1.933846240708001,
+        "median_error_m": 1.4618508426109784,
+        "within_4kn": 0.9020317283607013,
+        "r2": 0.47034839790814154
+      }
+    },
+    {
+      "fold": 5,
+      "features": "MFCC 1-8 + the rest + neighbours",
+      "n_features": 118,
+      "classifier": {
+        "exact": 0.5478841870824054,
+        "exact_balanced": 0.47461296300539546,
+        "near": 0.9345768374164811,
+        "near_balanced": 0.865355453476436
+      },
+      "regression_binned": {
+        "exact": 0.5734966592427617,
+        "exact_balanced": 0.4333721216125195,
+        "near": 0.9510022271714922,
+        "near_balanced": 0.8505687853027488
+      },
+      "regression": {
+        "mae_m": 2.0299623048980844,
+        "median_error_m": 1.338725957573661,
+        "within_4kn": 0.8964365256124721,
+        "r2": 0.26652499993593926
+      }
+    }
+  ]
+}
