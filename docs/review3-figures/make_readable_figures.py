@@ -284,6 +284,54 @@ def fig_speed_both():
     save(fig, "22_speed_matrix_regression.png")
 
 
+def fig_open_set_matrix():
+    """Slide after 19: per ship, 5 known classes + never-heard ships (rows) against the 5 classes + "unknown"
+    (columns). Each fold's own threshold (95 % of known validation ships kept); five folds pooled."""
+    res = pd.DataFrame(json.loads((RUNS / "unknown_cnn" / "results.json").read_text())["results"]).set_index("fold")
+    p = pd.read_parquet(RUNS / "unknown_cnn" / "predictions.parquet")
+    cols = [c for c in p.columns if c.startswith("p_")]
+    names = [c[2:] for c in cols]
+    s = (p[p.split.isin(["test", "unknown"])].groupby(["fold", "split", "ship"])
+         .agg(**{c: (c, "mean") for c in cols}, label=("label", "first")).reset_index())
+    conf, arg = s[cols].max(axis=1).to_numpy(), s[cols].to_numpy().argmax(1)
+    pred = np.where(conf < s.fold.map(res.threshold_ship).to_numpy(), len(names), arg)
+    merged = {"cargo": "cargo + tanker", "tanker": "cargo + tanker"}
+    true_name = np.where(s.split == "unknown", "never heard",
+                         s.label.map(lambda l: merged.get(l, l)).to_numpy())
+    rows = names + ["never heard"]
+    true = np.array([rows.index(t) for t in true_name])
+    k = len(rows)
+    counts = np.zeros((k, k))
+    for t, q in zip(true, pred):
+        counts[t, q] += 1
+    pct = 100 * counts / counts.sum(1, keepdims=True)
+    short = {"background": "background", "cargo + tanker": "cargo +\ntanker", "fishing": "fishing",
+             "pleasurecraft": "pleasure\ncraft", "tug": "tug", "never heard": "never\nheard", "unknown": "\"unknown\""}
+    fig, ax = plt.subplots(figsize=(13, 10.5))
+    ax.imshow(pct, cmap="Blues", vmin=0, vmax=90)
+    for i in range(k):
+        for j in range(k):
+            v = pct[i, j]
+            ax.text(j, i, f"{v:.0f} %", ha="center", va="center", fontsize=23,
+                    weight="bold" if i == j else "normal",
+                    color=SURFACE if v >= 50 else (INK if v >= 8 else MUTED))
+        ax.add_patch(plt.Rectangle((i - 0.5, i - 0.5), 1, 1, fill=False, edgecolor=INK, lw=3))
+    ax.axhline(k - 1.5, color=RED, lw=3); ax.axvline(k - 1.5, color=RED, lw=3)
+    xshort = {**short, "background": "back-\nground"}
+    ax.set_xticks(range(k), [xshort[n] for n in names] + [xshort["unknown"]])
+    ax.set_yticks(range(k), [f"{short[r]} ({int(counts[i].sum())})" for i, r in enumerate(rows)])
+    ax.set_xlabel("answer, per ship")
+    ax.set_ylabel("true type (ships)")
+    ax.tick_params(length=0)
+    for sp in ax.spines.values():
+        sp.set_visible(False)
+    print("rows (ships):", dict(zip(rows, counts.sum(1).astype(int))))
+    print("diagonal %:", dict(zip(rows, np.diag(pct).round(1))))
+    print("known ships called unknown %:", round(100 * counts[:-1, -1].sum() / counts[:-1].sum(), 1),
+          "| never-heard called known: ", dict(zip(names, pct[-1, :-1].round(1))))
+    save(fig, "19b_open_set_matrix.png")
+
+
 def fig_speed():
     s = pd.read_parquet(RUNS / "speed_classical_4kn" / "predictions.parquet")
     buckets = json.loads((RUNS / "speed_classical_4kn" / "results.json").read_text())["buckets"]
