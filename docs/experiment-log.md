@@ -964,6 +964,23 @@ ship?"). A passage = one ship's clips with no gap over 10 min; consecutive clips
   spans about 4 min) and alike, so extra clips of one passage add less than separate passages.
 - Slide 12 of review 3 (`docs/review3-figures/make_listening_figure.py`).
 
+### 4.25 The feature walk with its weak points fixed (5 November, lesson 27)
+
+`python src/feature_walk2.py --judge lr` (then `--judge gb`, running). 4.21's walk, 6 classes + other, with: keep a set
+only if +0.5 points or more AND better in at least 3 of 5 validation folds; after each kept set, re-check the earlier
+ones (floating); then a second pass over the left-out sets and the left-out sets in pairs. Logistic regression judge
+(C = 0.1), 52 subsets, 60 min; the final set tested like every other set.
+
+- Final set: mel percentiles, 1/3-octave levels, spectral shape, MFCC, DEMON, tonal lines (514 numbers, 79 ms,
+  validation 51.9 %). Same as 4.21 minus level changes (+0.08 / +0.15 when retried).
+- MFCC was dropped once after DEMON came in (+0.24) and came back in the second pass (+0.51); tonal lines passed on
+  the bar (+0.50, t = 2.0). No pair of left-out sets helped (best +0.05).
+- Test, 5 folds: GB **55.7 ± 0.6 %** per clip, 63.3 ± 3.1 % per ship; LR 52.7 / 59.3 % (4.21's 523 set: 55.7 / 63.6,
+  53.0 / 59.8 %). The original walk holds.
+- Noise of a step's gain (paired over the 5 folds): standard error 0.1-0.35 points, so 0.5 is about two standard
+  errors. With 5 folds, "better in 4 of 5" happens by chance 19 % of the time; only 5 of 5 (3 %) is convincing.
+  A threshold from a null (gain from adding shuffled features) would be the cleaner rule.
+
 ---
 
 ## 5. Engineering notes from the training runs
