@@ -332,6 +332,60 @@ def fig_open_set_matrix():
     save(fig, "19b_open_set_matrix.png")
 
 
+def fig_open_set_by_type():
+    """Slide 20 (user's choice): an unsymmetrical matrix. Rows: every ship type of the data (the six trained
+    types, cargo and tanker separately, then the six never-heard types). Columns: the model's five answers
+    plus "unknown". Per ship, each fold's own threshold, five folds pooled."""
+    res = pd.DataFrame(json.loads((RUNS / "unknown_cnn" / "results.json").read_text())["results"]).set_index("fold")
+    p = pd.read_parquet(RUNS / "unknown_cnn" / "predictions.parquet")
+    cols = [c for c in p.columns if c.startswith("p_")]
+    names = [c[2:] for c in cols]
+    s = (p[p.split.isin(["test", "unknown"])].groupby(["fold", "split", "ship"])
+         .agg(**{c: (c, "mean") for c in cols}, label=("label", "first")).reset_index())
+    conf, arg = s[cols].max(axis=1).to_numpy(), s[cols].to_numpy().argmax(1)
+    pred = np.where(conf < s.fold.map(res.threshold_ship).to_numpy(), len(names), arg)
+    known = ["background", "cargo", "tanker", "fishing", "pleasurecraft", "tug"]
+    never = ["sailing", "other", "passengership", "rescue", "dredger", "pilotvessel"]
+    rows = known + never
+    nice = {"background": "background", "cargo": "cargo", "tanker": "tanker", "fishing": "fishing",
+            "pleasurecraft": "pleasure craft", "tug": "tug", "sailing": "sailing", "other": "other (dataset)",
+            "passengership": "passenger ship", "rescue": "rescue", "dredger": "dredger", "pilotvessel": "pilot vessel"}
+    counts = np.zeros((len(rows), len(names) + 1))
+    for lab, q in zip(s.label, pred):
+        counts[rows.index(lab), q] += 1
+    pct = 100 * counts / counts.sum(1, keepdims=True)
+    right = {r: names.index("cargo + tanker" if r in ("cargo", "tanker") else r) for r in known}
+    fig, ax = plt.subplots(figsize=(13, 14))
+    ax.imshow(pct, cmap="Blues", vmin=0, vmax=90, aspect="auto")
+    for i, r in enumerate(rows):
+        for j in range(len(names) + 1):
+            v = pct[i, j]
+            hit = (r in right and j == right[r]) or (r in never and j == len(names))
+            ax.text(j, i, f"{v:.0f} %", ha="center", va="center", fontsize=22, weight="bold" if hit else "normal",
+                    color=SURFACE if v >= 50 else (INK if v >= 8 else MUTED))
+            if hit:
+                ax.add_patch(plt.Rectangle((j - 0.5, i - 0.5), 1, 1, fill=False, edgecolor=INK, lw=3))
+    ax.axhline(len(known) - 0.5, color=RED, lw=3)
+    ax.axvline(len(names) - 0.5, color=RED, lw=3)
+    xl = {"background": "back-\nground", "cargo + tanker": "cargo +\ntanker", "fishing": "fishing",
+          "pleasurecraft": "pleasure\ncraft", "tug": "tug"}
+    ax.set_xticks(range(len(names) + 1), [xl[n] for n in names] + ["\"unknown\""])
+    ax.set_yticks(range(len(rows)), [f"{nice[r]} ({int(counts[i].sum())})" for i, r in enumerate(rows)])
+    for lab, r in zip(ax.get_yticklabels(), rows):
+        lab.set_color(INK if r in known else RED)
+    ax.set_xlabel("answer, per ship")
+    ax.tick_params(length=0)
+    ax.xaxis.set_label_position("bottom")
+    for sp in ax.spines.values():
+        sp.set_visible(False)
+    print("ships per row:", dict(zip(rows, counts.sum(1).astype(int))))
+    print("unknown column %:", dict(zip(rows, pct[:, -1].round(1))))
+    print("sailing row:", dict(zip(names + ["unknown"], pct[rows.index("sailing")].round(1))))
+    print("passenger row:", dict(zip(names + ["unknown"], pct[rows.index("passengership")].round(1))))
+    print("other row:", dict(zip(names + ["unknown"], pct[rows.index("other")].round(1))))
+    save(fig, "20_open_set_by_type.png")
+
+
 def fig_speed():
     s = pd.read_parquet(RUNS / "speed_classical_4kn" / "predictions.parquet")
     buckets = json.loads((RUNS / "speed_classical_4kn" / "results.json").read_text())["buckets"]
