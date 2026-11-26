@@ -8,31 +8,24 @@ website for access and for how to cite it.
 
 - Design and decisions: `docs/2026-10-24-ship-sound-plan.md`
 - Results so far, what we tried and what we learned: `docs/experiment-log.md`
-- Lessons (learn every step): `notebooks/` (start JupyterLab with `jupyter lab notebooks`)
-- Every result in one notebook, including the 5-class models: `notebooks/11_results_and_five_classes.ipynb`
-- Distance as near / mid / far classes and k-means clustering, without a CNN: `notebooks/12_distance_classes_and_clusters.ipynb`
-- **Six classes** (background, cargo, fishing, pleasure craft, tanker, tug) with balanced folds, ship weights and
-  interpretable sound features, logistic regression and gradient boosting only: `notebooks/13_six_classes_and_features.ipynb`
-  (`python src/six_classes.py features`, then `python src/six_classes.py run`; CPU only, needs the audio zip)
-- The same six classes balanced by **removing data** (equal ships and clips per class) instead of weights:
-  `notebooks/14_six_classes_equal_ships.ipynb` (`python src/six_classes_equal.py`, after lesson 13's two steps;
-  `python src/six_classes_equal.py --ensemble` for its team of 25 balanced models, about 70 minutes)
-- **Fewer features:** mel bands without the high frequencies or merged into fewer bands, and whole groups of
-  engineered features left out or added one at a time: `notebooks/15_fewer_features.ipynb`
-  (`python src/six_classes_fewer.py all`, about 3 hours on the CPU; needs `data/mel.npy` and lesson 13's features)
-- **Five classes** (cargo and tanker merged), scored per clip and per ship: `notebooks/16_five_classes_per_ship.ipynb`
-  (`python src/five_classes.py`, about 15 minutes on the CPU; needs lesson 13's features)
-- **EfficientNet-B0 + engineered features** (five classes, fold 1): `notebooks/17_efficientnet_with_features.ipynb`
-  (`python src/fusion_cnn.py --top-hz 16000`, GPU)
-- **Distance** with classical models: 250 m buckets (exact, next bucket counted as correct, 500 m) and a regression in
-  metres: `notebooks/18_distance_buckets_and_regression.ipynb` (`python src/distance_classical.py`, CPU, ~10 minutes)
-- **Fishing boats**, the weakest class: why, and two fixes that don't help: `notebooks/19_fishing_boats.ipynb`
-  (`python src/fishing_boost.py`, CPU, ~15 minutes)
-- **Merged classes with balanced weights, SVM, four classes (fishing + tug), 300/400 m distance buckets:**
-  `notebooks/20_merged_classes_svm.ipynb` (`python src/merged_classes.py`; `python src/distance_classical.py --width 300`)
-- **The left-out ship types** (an "other" class, "unknown" from low confidence) and **PANN embeddings**:
-  `notebooks/21_other_unknown_panns.ipynb` (`python src/panns_features.py` (GPU, needs the CNN14 checkpoint in
-  `~/panns_data`, `pip install panns-inference`), then `python src/open_set.py`)
+- Lessons (learn every step): `notebooks/` (start JupyterLab with `jupyter lab notebooks`). Lessons that a later
+  one replaced were removed on 26 November; their results stay in `docs/experiment-log.md` and their code in git
+  history. The numbers keep their gaps so that the log and the slides still point to the right lesson.
+
+| Lesson | What it covers | Script behind it |
+|---|---|---|
+| 00-02 | setup check, the data, from sound to a mel spectrogram | `src/check_setup.py`, `src/prepare_features.py` |
+| 03 | classical baseline: mel-band statistics + gradient boosting (12 classes) | `src/baseline_classical.py` |
+| 05 | fine-tuning EfficientNet-B0 (ImageNet) on log-mel spectrograms | `src/train.py`, `src/evaluate.py` |
+| 08 | trustworthy confidence: temperature scaling, ECE | `src/reliability.py` |
+| 11 | every review-2 result: leaky vs ship-disjoint split, 9 and 5 classes, the dataset paper | saved runs |
+| 13 | **six classes**, balanced folds, ship weights, the 144 interpretable features, LR and GB | `src/six_classes.py` |
+| 18 | distance and speed with classical models: buckets and regression | `src/distance_classical.py` |
+| 22 | **"other" is always a class**: mel bands, engineered features, both together | `src/with_other.py main` |
+| 23 | feature sets added one at a time with their cost; fewer or lower mel bands | `src/with_other.py cost bands` |
+| 24 | merged classes (5 + other, 4 + other), per ship, PANN embeddings | `src/with_other.py merged` |
+| 25 | CNNs with "other": mel, MFCC image, linear spectrogram, mel + features (fold 1) | `src/cnn_with_other.py` |
+| 26 | unknown ships with the CNN + features, judged per ship | `src/unknown_cnn.py` |
 
 ---
 

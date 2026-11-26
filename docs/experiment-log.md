@@ -1093,6 +1093,8 @@ These follow from 3.7. None has been tested.
 
 ## 9. Reproduce
 
+`src/six_classes_equal.py` (4.10-4.11) and `src/fishing_boost.py` (4.16) and the lessons that 22-26 replaced (04, 06, 07, 09, 10, 12, 14-17, 19-21) were removed on 26 November. To run one again, restore it from the last commit that had it, e.g. `git checkout 44f7999 -- src/fishing_boost.py`.
+
 ```
 python src/baseline_classical.py --fold 1                                      # E1 (--fold 2..5 for the other folds)
 python src/baseline_classical.py --fold 1 --features rich                      # E1 rich

@@ -1,0 +1,41 @@
+{
+  "input": "stft",
+  "rows": 513,
+  "features": false,
+  "n_engineered": 0,
+  "fold": 1,
+  "best_epoch": 5,
+  "val_balanced_accuracy": 0.5212545684920808,
+  "epochs_run": 8,
+  "batch_size": 7,
+  "settings": {
+    "epochs": 12,
+    "patience": 3,
+    "lr": 0.0003,
+    "weight_decay": 0.01,
+    "warmup_epochs": 1,
+    "drop_rate": 0.3,
+    "eng_hidden": 128,
+    "specaugment": {
+      "freq_masks": 2,
+      "freq_width": 16,
+      "time_masks": 2,
+      "time_width": 50
+    }
+  },
+  "minutes": 117.2,
+  "predict_us_per_clip_with_loading": 17450.00541281022,
+  "accuracy": 0.32796927859559294,
+  "balanced_accuracy": 0.5105687129239693,
+  "macro_f1": 0.35242044290881797,
+  "per_ship_balanced_accuracy": 0.5872781247834785,
+  "per_class_recall": {
+    "background": 0.871866295264624,
+    "cargo": 0.4708333333333333,
+    "fishing": 0.3146067415730337,
+    "pleasurecraft": 0.5041322314049587,
+    "tanker": 0.5977961432506887,
+    "tug": 0.6437414030261348,
+    "other": 0.17100484261501211
+  }
+}

@@ -8,13 +8,10 @@ sys.path.insert(0, str(ROOT / "notebooks"))
 import build_notebooks  # noqa: E402
 
 EXPECTED = ["00_setup_check", "01_explore_data", "02_sound_to_spectrogram", "03_classical_baseline",
-            "04_tiny_cnn_from_scratch", "05_training_the_real_model", "06_tuning_and_model_selection",
-            "07_unknown_ship_detection", "08_trustworthy_confidence", "09_distance_and_speed",
-            "10_stress_tests_and_report", "11_results_and_five_classes", "12_distance_classes_and_clusters",
-            "13_six_classes_and_features", "14_six_classes_equal_ships", "15_fewer_features",
-            "16_five_classes_per_ship", "17_efficientnet_with_features",
-            "18_distance_buckets_and_regression", "19_fishing_boats",
-            "20_merged_classes_svm", "21_other_unknown_panns", "26_unknown_ships_cnn"]
+            "05_training_the_real_model", "08_trustworthy_confidence", "11_results_and_five_classes",
+            "13_six_classes_and_features", "18_distance_buckets_and_regression", "22_other_class_always",
+            "23_feature_cost_and_mel_bands", "24_merged_classes_and_panns_with_other", "25_cnn_with_other",
+            "26_unknown_ships_cnn"]
 
 
 def test_parse_percent_cells():
